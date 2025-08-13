@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: carconfig
+server:
+  port: 8090
+  servlet:
+    context-path: "/carconfig/api"
+springdoc:
+  api-docs:
+    path: "/api-docs"
