@@ -1,6 +1,14 @@
 spring:
   application:
     name: carconfig
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/car_config_db"
+    username: "myuserHidden123"
+    password: "secret123"
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database-platform: "org.hibernate.dialect.PostgreSQLDialect"
 server:
   port: 8090
   servlet:

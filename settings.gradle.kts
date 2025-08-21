@@ -1,1 +1,1 @@
-rootProject.name = "carconfig-be"
+rootProject.name = "carconfig-api"
