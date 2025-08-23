@@ -1,0 +1,26 @@
+package com.computacenter.carconfig.controller.web;
+
+import com.computacenter.carconfig.dto.web.CarRimDto;
+import com.computacenter.carconfig.services.CarRimsService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Slf4j
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/web/car-rims")
+public class CarRimsWebController {
+
+    private final CarRimsService carRimsService;
+
+
+        @GetMapping(path = "/all", produces = "application/json")
+        public List<CarRimDto> getAllCarRims() {
+            log.debug("Getting all car rim information");
+            return carRimsService.getAllCarRimsWeb();
+        }
+
+}

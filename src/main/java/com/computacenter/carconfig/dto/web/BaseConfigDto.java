@@ -1,4 +1,4 @@
-package com.computacenter.carconfig.dto.base;
+package com.computacenter.carconfig.dto.web;
 
 
 import lombok.AllArgsConstructor;

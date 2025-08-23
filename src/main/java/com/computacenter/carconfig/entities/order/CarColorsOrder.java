@@ -1,6 +1,6 @@
 package com.computacenter.carconfig.entities.order;
 
-import com.computacenter.carconfig.entities.pool.CarColors;
+import com.computacenter.carconfig.entities.base.CarColor;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -20,7 +20,7 @@ public class CarColorsOrder {
     private Integer id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private CarColors carColors;
+    private CarColor carColor;
 
     @OneToOne(fetch = FetchType.LAZY)
     private OrderStatus orderStatus;

@@ -1,15 +1,16 @@
-package com.computacenter.carconfig.mapper;
+package com.computacenter.carconfig.mapper.load;
 
+import com.computacenter.carconfig.dto.load.CarEngineLoadDto;
 import com.computacenter.carconfig.dto.web.CarEngineDto;
 import com.computacenter.carconfig.entities.base.CarEngine;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
-public interface CarEngineMapper {
-    CarEngine toEntity(CarEngineDto carEngineDto);
+public interface CarEngineLoadMapper {
+    CarEngine toEntity(CarEngineLoadDto carEngineDto);
 
-    CarEngineDto toDto(CarEngine carEngine);
+    CarEngineLoadDto toDto(CarEngine carEngine);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    CarEngine partialUpdate(CarEngineDto carEngineDto, @MappingTarget CarEngine carEngine);
+    CarEngine partialUpdate(CarEngineLoadDto carEngineDto, @MappingTarget CarEngine carEngine);
 }

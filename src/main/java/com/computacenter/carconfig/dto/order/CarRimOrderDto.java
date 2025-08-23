@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CarRimOrderDto {
-    private CarRimOrderDto carRimOrderDto;
+    private CarRimOrderDto carRimOrder;
     private OrderStatusDto orderStatusDto;
 }

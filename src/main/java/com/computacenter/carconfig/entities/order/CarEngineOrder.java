@@ -1,6 +1,6 @@
 package com.computacenter.carconfig.entities.order;
 
-import com.computacenter.carconfig.entities.pool.CarEngine;
+import com.computacenter.carconfig.entities.base.CarEngine;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;

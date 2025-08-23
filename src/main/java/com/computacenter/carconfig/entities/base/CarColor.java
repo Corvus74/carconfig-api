@@ -1,6 +1,6 @@
-package com.computacenter.carconfig.entities.pool;
+package com.computacenter.carconfig.entities.base;
 
-import com.computacenter.carconfig.enums.SpecialEquipmentType;
+import com.computacenter.carconfig.enums.MaterialType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -11,24 +11,20 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "special_equipment")
-public class SpecialEquipment {
-
+@Table(name = "car_color")
+public class CarColor {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @Size(max = 20)
-    @Column(name = "order_number", length = 20)
+    @Column(name = "order_number", length = 10)
     private String orderNumber;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "special_equipment_type", length = 20)
-    private SpecialEquipmentType specialEquipmentType;
-
     @Size(max = 20)
-    @Column(name = "name", length = 10)
-    private String name;
+    @Column(name = "color_name", length = 20)
+    private String colorName;
 
     @Size(max = 400)
     @Column(name = "description", length = 400)
@@ -37,6 +33,14 @@ public class SpecialEquipment {
     @Size(max = 20)
     @Column(name = "product_id", length = 20)
     private String productId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "material_type")
+    private MaterialType materialType;
+
+    @Size(max = 10)
+    @Column(name = "color_code_hex", length = 10)
+    private String colorCodeHex;
 
     @Column(name = "price")
     private Integer price;

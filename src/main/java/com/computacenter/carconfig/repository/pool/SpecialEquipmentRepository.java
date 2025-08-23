@@ -1,12 +1,18 @@
 package com.computacenter.carconfig.repository.pool;
 
-import com.computacenter.carconfig.entities.pool.SpecialEquipment;
+import com.computacenter.carconfig.entities.base.SpecialEquipment;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface SpecialEquipmentRepository extends JpaRepository<SpecialEquipment,Integer>{
-    Optional<SpecialEquipment> findByName(String name);
+    @Query("select s from SpecialEquipment s where s.orderNumber = ?1 and upper(s.deleteFlag) != 'Y'")
+    Optional<SpecialEquipment> findByOrderNumberAndNotDeleted(String name);
+
+    @Query("select s from SpecialEquipment s where s.productId = ?1 and upper(s.deleteFlag) != 'Y'")
+    List<SpecialEquipment> findBySpecialEquipmentByProductIdAndNotDeleted(String productId);
 }

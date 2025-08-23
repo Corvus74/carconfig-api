@@ -2,6 +2,7 @@ package com.computacenter.carconfig.dto.order;
 
 import com.computacenter.carconfig.dto.OrderStatusDto;
 
+import com.computacenter.carconfig.dto.web.CarColorDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CarColorOrderDto {
-    private CarColorOrderDto carColorOrderDto;
+    private CarColorDto carColorDto;
     private OrderStatusDto orderStatusDto;
 }

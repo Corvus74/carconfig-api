@@ -1,12 +1,11 @@
 package com.computacenter.carconfig.entities.order;
 
-import com.computacenter.carconfig.entities.pool.CarRim;
+import com.computacenter.carconfig.entities.base.CarRim;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 
 @Getter

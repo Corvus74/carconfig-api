@@ -1,5 +1,6 @@
-package com.computacenter.carconfig.entities.pool;
+package com.computacenter.carconfig.entities.base;
 
+import com.computacenter.carconfig.enums.SpecialEquipmentType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -10,24 +11,24 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "car_rims")
-public class CarRim {
+@Table(name = "special_equipment")
+public class SpecialEquipment {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @Size(max = 20)
-    @Column(name = "order_number", length = 10)
+    @Column(name = "order_number", length = 20)
     private String orderNumber;
 
-    @Size(max = 20)
-    @Column(name = "name", length = 20)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "special_equipment_type", length = 20)
+    private SpecialEquipmentType specialEquipmentType;
 
     @Size(max = 20)
-    @Column(name = "model", length = 20)
-    private String model;
+    @Column(name = "equipment_name", length = 10)
+    private String equipmentName;
 
     @Size(max = 400)
     @Column(name = "description", length = 400)

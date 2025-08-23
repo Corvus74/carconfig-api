@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -12,7 +14,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "orderstatus")
+@Table(name = "order_status")
 public class OrderStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,7 +22,7 @@ public class OrderStatus {
     private Integer id;
 
     @Column(name = "order_status")
-    private OrderStatusEnum status;
+    private OrderStatusEnum orderStatus;
 
     @Column(name = "shipping_date")
     private LocalDate shippingDate;
@@ -36,6 +38,7 @@ public class OrderStatus {
     @Column(name = "created_by", length = 20)
     private String createdBy;
 
+    @CreatedDate
     @Column(name = "created_at")
     private Instant createdAt;
 
@@ -43,6 +46,7 @@ public class OrderStatus {
     @Column(name = "modified_by", length = 20)
     private String modifiedBy;
 
+    @UpdateTimestamp
     @Column(name = "modified_at")
     private Instant modifiedAt;
 

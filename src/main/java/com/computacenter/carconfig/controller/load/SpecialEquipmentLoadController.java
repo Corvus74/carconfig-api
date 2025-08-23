@@ -1,37 +1,37 @@
-package com.computacenter.carconfig.controller;
+package com.computacenter.carconfig.controller.load;
 
 import com.computacenter.carconfig.dto.ResponseDto;
-import com.computacenter.carconfig.dto.base.SpecialEquipmentDto;
+import com.computacenter.carconfig.dto.load.SpecialEquipmentLoadDto;
 import com.computacenter.carconfig.enums.TransferStatus;
 import com.computacenter.carconfig.exceptions.ItemAddException;
-import com.computacenter.carconfig.mapper.SpecialEquipmentMapper;
 import com.computacenter.carconfig.services.SpecialEquipmentService;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Hidden
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/specialEquipment")
-public class SpecialEquipmentController {
+@RequestMapping("/load/specialEquipment")
+public class SpecialEquipmentLoadController {
 
     private final SpecialEquipmentService specialEquipmentService;
-    private final SpecialEquipmentMapper specialEquipmentMapper;
 
     @GetMapping(path = "/all", produces = "application/json")
-    public List<SpecialEquipmentDto> getAllSpecialEquipment() {
+    public List<SpecialEquipmentLoadDto> getAllSpecialEquipment() {
         log.debug("Getting all special equipment information");
-        return specialEquipmentService.getAllSpecialEquipments().stream().map(specialEquipmentMapper::toDto).toList();
+        return specialEquipmentService.getAllSpecialEquipmentsLoad();
     }
 
     @PostMapping(path = "/add", produces = "application/json", consumes = "application/json")
-    public ResponseDto addSpecialEquipment(@RequestBody SpecialEquipmentDto specialEquipmentDto) {
-        log.debug("Adding new special equipment: {}", specialEquipmentDto.getName());
+    public ResponseDto addSpecialEquipment(@RequestBody SpecialEquipmentLoadDto specialEquipmentLoadDto) {
+        log.debug("Adding new special equipment: {}", specialEquipmentLoadDto.getEquipmentName());
         try {
-            specialEquipmentService.addSpecialEquipment(specialEquipmentMapper.toEntity(specialEquipmentDto));
+            specialEquipmentService.addSpecialEquipment(specialEquipmentLoadDto);
             return new ResponseDto("Special equipment added successfully", TransferStatus.SUCCESS);
         } catch (ItemAddException e) {
             log.error("Failed to add special equipment: {}", e.getMessage());
@@ -40,10 +40,10 @@ public class SpecialEquipmentController {
     }
 
     @PostMapping(path = "/add/all", produces = "application/json", consumes = "application/json")
-    public ResponseDto addAllSpecialEquipment(@RequestBody List<SpecialEquipmentDto> specialEquipmentDtoList) {
+    public ResponseDto addAllSpecialEquipment(@RequestBody List<SpecialEquipmentLoadDto> specialEquipmentDtoList) {
         log.debug("Adding {} special equipment items", specialEquipmentDtoList.size());
         try {
-            specialEquipmentService.addAllSpecialEquipment(specialEquipmentDtoList.stream().map(specialEquipmentMapper::toEntity).toList());
+            specialEquipmentService.addAllSpecialEquipment(specialEquipmentDtoList);
             return new ResponseDto("All special equipment added successfully", TransferStatus.SUCCESS);
         } catch (ItemAddException e) {
             log.error("Failed to add all special equipment: {}", e.getMessage());

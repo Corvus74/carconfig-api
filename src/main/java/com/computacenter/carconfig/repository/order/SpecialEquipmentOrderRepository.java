@@ -1,6 +1,6 @@
 package com.computacenter.carconfig.repository.order;
 
-import com.computacenter.carconfig.entities.pool.SpecialEquipment;
+import com.computacenter.carconfig.entities.base.SpecialEquipment;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 

@@ -11,11 +11,15 @@ import java.time.Instant;
 @Setter
 @Entity
 @Table(name = "orders_user")
-public class OrdersUser {
+public class OrderUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Integer id;
+
+    @Size(max=40)
+    @Column(name = "user_id", nullable = false)
+    private String userId;
 
     @Size(max = 20)
     @Column(name = "user_name", length = 20)

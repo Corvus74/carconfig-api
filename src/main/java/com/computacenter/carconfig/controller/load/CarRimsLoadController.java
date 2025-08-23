@@ -1,40 +1,37 @@
-package com.computacenter.carconfig.controller;
+package com.computacenter.carconfig.controller.load;
 
-import com.computacenter.carconfig.dto.*;
-import com.computacenter.carconfig.dto.base.CarRimDto;
+import com.computacenter.carconfig.dto.ResponseDto;
+import com.computacenter.carconfig.dto.load.CarRimLoadDto;
 import com.computacenter.carconfig.enums.TransferStatus;
 import com.computacenter.carconfig.exceptions.ItemAddException;
-import com.computacenter.carconfig.mapper.CarColorsMapper;
-import com.computacenter.carconfig.mapper.CarRimMapper;
 import com.computacenter.carconfig.services.CarRimsService;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Hidden
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/pool/car-rims")
-public class CarRimsController {
+@RequestMapping("/load/car-rims")
+public class CarRimsLoadController {
 
     private final CarRimsService carRimsService;
-    private final CarRimMapper carRimMapper;
-    private final CarColorsMapper carColorMapper;
-
 
         @GetMapping(path = "/all", produces = "application/json")
-        public List<CarRimDto> getAllCarRims() {
+        public List<CarRimLoadDto> getAllCarRims() {
             log.debug("Getting all car rim information");
-            return carRimsService.getAllCarRims().stream().map(carRimMapper::toDto).toList();
+            return carRimsService.getAllCarRimLoad();
         }
 
         @PostMapping(path = "/add", produces = "application/json", consumes = "application/json")
-        public ResponseDto addCarRim(@RequestBody CarRimDto carRimsDto) {
-            log.debug("Adding new car rim: {}", carRimsDto.getModel());
+        public ResponseDto addCarRim(@RequestBody CarRimLoadDto carRimLoadDto) {
+            log.debug("Adding new car rim: {}", carRimLoadDto.getModel());
             try {
-                carRimsService.addCarRim(carRimMapper.toEntity(carRimsDto));
+                carRimsService.addCarRimLoad(carRimLoadDto);
                 return new ResponseDto("Car rim added successfully", TransferStatus.SUCCESS);
             } catch (ItemAddException e) {
                 log.error("Failed to add car rim: {}", e.getMessage());
@@ -43,10 +40,10 @@ public class CarRimsController {
         }
 
         @PostMapping(path = "/add/all", produces = "application/json", consumes = "application/json")
-        public ResponseDto addAllCarRims(@RequestBody List<CarRimDto> carRimsDtoList) {
-            log.debug("Adding {} car rims", carRimsDtoList.size());
+        public ResponseDto addAllCarRims(@RequestBody List<CarRimLoadDto> carRimLoadDtos) {
+            log.debug("Adding {} car rims", carRimLoadDtos.size());
             try {
-                carRimsService.addAllCarRims(carRimsDtoList.stream().map(carRimMapper::toEntity).toList());
+                carRimsService.addAllCarRims(carRimLoadDtos);
                 return new ResponseDto("All car rims added successfully", TransferStatus.SUCCESS);
             } catch (ItemAddException e) {
                 log.error("Failed to add all car rims: {}", e.getMessage());

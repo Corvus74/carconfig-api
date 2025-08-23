@@ -1,0 +1,24 @@
+package com.computacenter.carconfig.controller.web;
+
+import com.computacenter.carconfig.dto.web.CarColorDto;
+import com.computacenter.carconfig.services.CarColorService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Slf4j
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/web/car-color")
+public class CarColorWebController {
+
+    private final CarColorService carColorService;
+
+    @GetMapping(path = "/all", produces = "application/json")
+    public List<CarColorDto> getAllCarColors() {
+        log.debug("Getting all car color information");
+        return carColorService.getAllCarColorsWeb();
+    }
+}

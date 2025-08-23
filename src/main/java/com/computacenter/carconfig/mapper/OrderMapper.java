@@ -4,7 +4,7 @@ import com.computacenter.carconfig.dto.OrderDto;
 import com.computacenter.carconfig.entities.order.Order;
 import org.mapstruct.*;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {OrdersUserMapper.class})
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface OrderMapper {
     Order toEntity(OrderDto orderDto);
 

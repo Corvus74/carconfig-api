@@ -3,7 +3,6 @@ package com.computacenter.carconfig.controller;
 import com.computacenter.carconfig.dto.OrderUserDto;
 import com.computacenter.carconfig.dto.ResponseDto;
 import com.computacenter.carconfig.enums.TransferStatus;
-import com.computacenter.carconfig.mapper.OrdersUserMapper;
 import com.computacenter.carconfig.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,10 +13,11 @@ import org.springframework.web.server.ResponseStatusException;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping("/user/")
 public class UserController {
     private final UserService userService;
-    private final OrdersUserMapper userMapper;
+
 
     /**
      * Retrieves a user by their ID.
@@ -27,21 +27,20 @@ public class UserController {
     @GetMapping(path = "/get/{email}", produces = "application/json")
     public OrderUserDto getUser(@PathVariable String email) {
         log.info("Attempting to retrieve user with email: {}", email);
-        return userService.getUserByEmail(email)
-                .map(userMapper::toDto)
+        return userService.getOrderUserDtoByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with ID: " + email));
     }
 
     /**
      * Creates or updates a user.
-     * @param userDto The UserDto containing the user's data.
+     * @param orderUserDto The UserDto containing the user's data.
      * @return A ResponseDto indicating the result of the operation.
      */
     @PostMapping(path = "/add", produces = "application/json", consumes = "application/json")
-    public ResponseDto setUser(@RequestBody OrderUserDto userDto) {
-        log.info("Attempting to save user with email: {}", userDto.getEmail());
+    public ResponseDto setUser(@RequestBody OrderUserDto orderUserDto) {
+        log.info("Attempting to save user with email: {}", orderUserDto.getEmail());
         try {
-            userService.addUser(userMapper.toEntity(userDto));
+            userService.addUser(orderUserDto);
             return new ResponseDto("User saved successfully", TransferStatus.SUCCESS);
         } catch (Exception e) {
             log.error("Failed to save user: {}", e.getMessage());

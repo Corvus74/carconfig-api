@@ -1,7 +1,7 @@
 package com.computacenter.carconfig.mapper;
 
-import com.computacenter.carconfig.entities.pool.CarRim;
-import com.computacenter.carconfig.dto.base.CarRimDto;
+import com.computacenter.carconfig.entities.base.CarRim;
+import com.computacenter.carconfig.dto.web.CarRimDto;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)

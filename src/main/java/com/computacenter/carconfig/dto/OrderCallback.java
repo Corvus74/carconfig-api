@@ -1,7 +1,7 @@
 package com.computacenter.carconfig.dto;
 
 
-import com.computacenter.carconfig.dto.base.SpecialEquipmentDto;
+import com.computacenter.carconfig.dto.web.SpecialEquipmentDto;
 import com.computacenter.carconfig.dto.order.CarColorOrderDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;

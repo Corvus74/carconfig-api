@@ -1,15 +1,15 @@
 package com.computacenter.carconfig.mapper;
 
 import com.computacenter.carconfig.dto.OrderUserDto;
-import com.computacenter.carconfig.entities.OrdersUser;
+import com.computacenter.carconfig.entities.OrderUser;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface OrdersUserMapper {
-    OrdersUser toEntity(OrderUserDto orderUserDto);
+    OrderUser toEntity(OrderUserDto orderUserDto);
 
-    OrderUserDto toDto(OrdersUser ordersUser);
+    OrderUserDto toDto(OrderUser orderUser);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    OrdersUser partialUpdate(OrderUserDto orderUserDto, @MappingTarget OrdersUser ordersUser);
+    OrderUser partialUpdate(OrderUserDto orderUserDto, @MappingTarget OrderUser orderUser);
 }

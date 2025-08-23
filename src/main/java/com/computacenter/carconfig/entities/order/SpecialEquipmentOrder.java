@@ -1,6 +1,6 @@
 package com.computacenter.carconfig.entities.order;
 
-import com.computacenter.carconfig.entities.pool.SpecialEquipment;
+import com.computacenter.carconfig.entities.base.SpecialEquipment;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -18,9 +18,6 @@ public class SpecialEquipmentOrder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Integer id;
-
-    @Column(name = "order_group", length = 20)
-    private String orderGroup;
 
     @OneToOne(cascade = CascadeType.ALL)
     private SpecialEquipment specialEquipment;

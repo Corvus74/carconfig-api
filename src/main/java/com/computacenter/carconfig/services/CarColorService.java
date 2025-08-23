@@ -1,7 +1,12 @@
 package com.computacenter.carconfig.services;
 
-import com.computacenter.carconfig.entities.pool.CarColors;
+import com.computacenter.carconfig.dto.load.CarColorLoadDto;
+import com.computacenter.carconfig.dto.web.CarColorDto;
+import com.computacenter.carconfig.entities.base.CarColor;
 import com.computacenter.carconfig.exceptions.ItemAddException;
+import com.computacenter.carconfig.exceptions.OrderException;
+import com.computacenter.carconfig.mapper.CarColorMapper;
+import com.computacenter.carconfig.mapper.load.CarColorLoadMapper;
 import com.computacenter.carconfig.repository.pool.CarColorRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,40 +21,84 @@ import java.util.Optional;
 public class CarColorService {
 
     private final CarColorRepository carColorRepository;
+    private final CarColorMapper carColorMapper;
+    private final CarColorLoadMapper carColorLoadMapper;
 
     /**
      * Retrieves all car colors from the database.
-     * @return A list of all CarColors entities.
+     *
+     * @return A list of all CarColor entities.
      */
-    public List<CarColors> getAllCarColors() {
+    public List<CarColorLoadDto> getAllCarColorLoad() {
+        log.debug("Fetching all full car colors from the database.");
+        List<CarColor> carColors = carColorRepository.findAll();
+        return carColors.stream().map(carColorLoadMapper::toDto).toList();
+    }
+
+    /**
+     * Retrieves all car colors from the database.
+     *
+     * @return A list of all CarColor entities.
+     */
+    public List<CarColorDto> getAllCarColorsWeb() {
         log.debug("Fetching all car colors from the database.");
-        return carColorRepository.findAll();
+        return carColorRepository.findAll().stream().map(carColorMapper::toDto).toList();
     }
 
     /**
      * Adds a single car color to the database, ensuring no duplicates.
-     * @param carColors The CarColors entity to be added.
+     *
+     * @param carColorLoadDto The CarColor entity to be added.
      * @throws ItemAddException if a car color with the same name already exists.
      */
-    public void addCarColor(CarColors carColors) {
-        Optional<CarColors> existingColor = carColorRepository.findByName(carColors.getName());
+    public void addCarColor(CarColorLoadDto carColorLoadDto) {
+
+        Optional<CarColor> existingColor = carColorRepository.findByOrderNumberAndNotDeleted(carColorLoadDto.getOrderNumber());
         if (existingColor.isPresent()) {
-            String errorMessage = "Car color '" + carColors.getName() + "' already exists.";
+            String errorMessage = "Car color with orderNumber'" + carColorLoadDto.getOrderNumber() + "' already exists.";
             log.warn(errorMessage);
             throw new ItemAddException(errorMessage);
         }
-
-        log.info("Adding new car color: {}", carColors.getName());
-        carColorRepository.save(carColors);
+        CarColor carColor = carColorLoadMapper.toEntity(carColorLoadDto);
+        log.info("Adding new car color: {}", carColor.getColorName());
+        carColorRepository.save(carColor);
     }
 
     /**
      * Adds a list of car colors to the database in a single batch.
-     * @param carPaintings The list of CarColors entities to be added.
+     *
+     * @param carColorDtos The list of CarColor entities to be added.
      * @throws ItemAddException if any of the colors cannot be added.
      */
-    public void addAllCarColors(List<CarColors> carPaintings) {
-        log.info("Adding a batch of {} car colors.", carPaintings.size());
-        carPaintings.forEach(this::addCarColor);
+    public void addAllCarColors(List<CarColorLoadDto> carColorDtos) {
+        log.info("Adding a batch of {} car colors.", carColorDtos.size());
+        carColorDtos.forEach(carColorDto -> {
+            try {
+                addCarColor(carColorDto);
+            } catch (ItemAddException e) {
+                log.warn("{}--> skip color", e.getMessage());
+            }
+        });
     }
+    /**
+     * Get the color by the product id
+     *
+     * @param productId The productId of the color.
+     */
+    public CarColor getColorByProductId(String productId) {
+        log.debug("Fetching a car color by the product id: {}", productId);
+        List<CarColor> existingColors = carColorRepository.findByCarColorByProductIdAndNotDeleted(productId);
+        if (existingColors.isEmpty()) {
+            String errorMessage = "Car color with productNumber'" + productId + "' does not exists.";
+            log.warn(errorMessage);
+            throw new OrderException(errorMessage);
+        }
+        if (existingColors.size() > 1) {
+            String errorMessage = "Multiple car colors with the same product id: '" + productId + "' please check the color productid ";
+            log.warn(errorMessage);
+            throw new OrderException(errorMessage);
+        }
+        return existingColors.getFirst();
+    }
+
 }

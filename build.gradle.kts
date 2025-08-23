@@ -24,12 +24,14 @@ repositories {
 }
 var mapstuctVersion ="1.6.3"
 var swaggerOpaenapiVersion="2.8.9"
+var apacheCommons="3.18.0"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.mapstruct:mapstruct:$mapstuctVersion")
+    implementation("org.apache.commons:commons-lang3:$apacheCommons")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$swaggerOpaenapiVersion")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")

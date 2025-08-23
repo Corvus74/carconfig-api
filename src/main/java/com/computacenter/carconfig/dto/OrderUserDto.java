@@ -1,13 +1,13 @@
 package com.computacenter.carconfig.dto;
 
-import com.computacenter.carconfig.entities.OrdersUser;
+import com.computacenter.carconfig.entities.OrderUser;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * DTO for {@link OrdersUser}
+ * DTO for {@link OrderUser}
  */
 @Data
 @AllArgsConstructor
