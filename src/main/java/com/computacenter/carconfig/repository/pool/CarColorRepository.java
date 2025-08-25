@@ -10,9 +10,14 @@ import java.util.Optional;
 
 @Repository
 public interface CarColorRepository extends JpaRepository<CarColor, Integer> {
-    @Query("select c from CarColor c where c.orderNumber = ?1 and c.deleteFlag != 'Y' ")
-    Optional<CarColor> findByOrderNumberAndNotDeleted(String name);
+    /**
+     * Retrieve a color by its orderNumber when it is not marked as deleted.
+     * The data model uses deleteFlag = 'N' (or null) to indicate active rows.
+     */
+    @Query("select c from CarColor c where c.orderNumber = ?1 and (upper(c.deleteFlag) = 'N' or c.deleteFlag is null)")
+    Optional<CarColor> findByOrderNumberAndNotDeleted(String orderNumber);
 
-    @Query("select c from CarColor c where c.productId = ?1 and c.deleteFlag != 'Y' ")
+    /** Returns active colors by a productId. Should return either 0 or 1 row; multiple rows are considered invalid. */
+    @Query("select c from CarColor c where c.productId = ?1 and(upper(c.deleteFlag) = 'N' or c.deleteFlag is null)")
     List<CarColor> findByCarColorByProductIdAndNotDeleted(String productId);
 }

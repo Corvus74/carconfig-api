@@ -10,9 +10,11 @@ import java.util.Optional;
 
 @Repository
 public interface SpecialEquipmentRepository extends JpaRepository<SpecialEquipment,Integer>{
-    @Query("select s from SpecialEquipment s where s.orderNumber = ?1 and upper(s.deleteFlag) != 'Y'")
-    Optional<SpecialEquipment> findByOrderNumberAndNotDeleted(String name);
+    /** Retrieve a special equipment item by its orderNumber when active (not deleted). */
+    @Query("select s from SpecialEquipment s where s.orderNumber = ?1 and (upper(s.deleteFlag) = 'N' or s.deleteFlag is null)")
+    Optional<SpecialEquipment> findByOrderNumberAndNotDeleted(String orderNumber);
 
-    @Query("select s from SpecialEquipment s where s.productId = ?1 and upper(s.deleteFlag) != 'Y'")
+    /** Returns active special equipment items matching the productId. */
+    @Query("select s from SpecialEquipment s where s.productId = ?1 and (upper(s.deleteFlag) = 'N' or s.deleteFlag is null)")
     List<SpecialEquipment> findBySpecialEquipmentByProductIdAndNotDeleted(String productId);
 }

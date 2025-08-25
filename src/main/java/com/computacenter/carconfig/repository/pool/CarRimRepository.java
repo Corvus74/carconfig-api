@@ -10,9 +10,11 @@ import java.util.Optional;
 
 @Repository
 public interface CarRimRepository  extends JpaRepository<CarRim,Integer> {
-    @Query("select c from CarRim c where c.orderNumber = ?1 and upper(c.deleteFlag) != 'Y'")
-    Optional<CarRim> findByOrderNumberAndNotDeleted(String model);
+    /** Retrieve a rim by its orderNumber when active (not deleted). */
+    @Query("select c from CarRim c where c.orderNumber = ?1 and (upper(c.deleteFlag) = 'N' or c.deleteFlag is null)")
+    Optional<CarRim> findByOrderNumberAndNotDeleted(String orderNumber);
 
-    @Query("select c from CarRim c where c.productId = ?1 and upper(c.deleteFlag) != 'Y'")
+    /** Returns active rims matching the productId. */
+    @Query("select c from CarRim c where c.productId = ?1 and (upper(c.deleteFlag) = 'N' or c.deleteFlag is null)")
     List<CarRim> findByCarRimsByProductIdAndNotDeleted(String productId);
 }

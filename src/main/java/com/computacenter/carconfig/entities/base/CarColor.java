@@ -1,7 +1,15 @@
 package com.computacenter.carconfig.entities.base;
 
 import com.computacenter.carconfig.enums.MaterialType;
-import jakarta.persistence.*;
+import com.computacenter.carconfig.enums.PaintingType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +45,10 @@ public class CarColor {
     @Enumerated(EnumType.STRING)
     @Column(name = "material_type")
     private MaterialType materialType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "painting_type")
+    private PaintingType paintingType;
 
     @Size(max = 10)
     @Column(name = "color_code_hex", length = 10)

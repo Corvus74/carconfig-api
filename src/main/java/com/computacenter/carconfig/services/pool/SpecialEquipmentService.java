@@ -1,9 +1,7 @@
-package com.computacenter.carconfig.services;
+package com.computacenter.carconfig.services.pool;
 
-import com.computacenter.carconfig.dto.load.CarRimLoadDto;
 import com.computacenter.carconfig.dto.load.SpecialEquipmentLoadDto;
 import com.computacenter.carconfig.dto.web.SpecialEquipmentDto;
-import com.computacenter.carconfig.entities.base.CarRim;
 import com.computacenter.carconfig.entities.base.SpecialEquipment;
 import com.computacenter.carconfig.exceptions.ItemAddException;
 import com.computacenter.carconfig.exceptions.OrderException;

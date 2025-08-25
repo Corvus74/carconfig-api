@@ -5,7 +5,7 @@ import com.computacenter.carconfig.dto.load.CarColorLoadDto;
 import com.computacenter.carconfig.enums.TransferStatus;
 import com.computacenter.carconfig.exceptions.ItemAddException;
 
-import com.computacenter.carconfig.services.CarColorService;
+import com.computacenter.carconfig.services.pool.CarColorService;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/load/car-color")
-public class CarColorsLoadController {
+public class CarColorLoadController {
 
     private final CarColorService carColorService;
 

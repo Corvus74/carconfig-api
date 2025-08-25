@@ -1,4 +1,4 @@
-package com.computacenter.carconfig.services;
+package com.computacenter.carconfig.services.pool;
 
 import com.computacenter.carconfig.dto.load.CarRimLoadDto;
 import com.computacenter.carconfig.dto.web.CarRimDto;
@@ -18,7 +18,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CarRimsService {
+public class CarRimService {
 
     private final CarRimRepository carRimRepository;
     private final CarRimMapper carRimMapper;

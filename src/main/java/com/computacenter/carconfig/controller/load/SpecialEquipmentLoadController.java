@@ -4,7 +4,7 @@ import com.computacenter.carconfig.dto.ResponseDto;
 import com.computacenter.carconfig.dto.load.SpecialEquipmentLoadDto;
 import com.computacenter.carconfig.enums.TransferStatus;
 import com.computacenter.carconfig.exceptions.ItemAddException;
-import com.computacenter.carconfig.services.SpecialEquipmentService;
+import com.computacenter.carconfig.services.pool.SpecialEquipmentService;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

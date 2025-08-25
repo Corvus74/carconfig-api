@@ -3,7 +3,7 @@ package com.computacenter.carconfig.controller;
 import com.computacenter.carconfig.dto.OrderUserDto;
 import com.computacenter.carconfig.dto.ResponseDto;
 import com.computacenter.carconfig.enums.TransferStatus;
-import com.computacenter.carconfig.services.UserService;
+import com.computacenter.carconfig.services.OrderUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,8 +15,8 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping("/user/")
-public class UserController {
-    private final UserService userService;
+public class OrderUserController {
+    private final OrderUserService orderUserService;
 
 
     /**
@@ -27,7 +27,7 @@ public class UserController {
     @GetMapping(path = "/get/{email}", produces = "application/json")
     public OrderUserDto getUser(@PathVariable String email) {
         log.info("Attempting to retrieve user with email: {}", email);
-        return userService.getOrderUserDtoByEmail(email)
+        return orderUserService.getOrderUserDtoByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with ID: " + email));
     }
 
@@ -40,7 +40,7 @@ public class UserController {
     public ResponseDto setUser(@RequestBody OrderUserDto orderUserDto) {
         log.info("Attempting to save user with email: {}", orderUserDto.getEmail());
         try {
-            userService.addUser(orderUserDto);
+            orderUserService.addUser(orderUserDto);
             return new ResponseDto("User saved successfully", TransferStatus.SUCCESS);
         } catch (Exception e) {
             log.error("Failed to save user: {}", e.getMessage());

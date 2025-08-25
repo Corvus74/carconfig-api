@@ -3,10 +3,11 @@ package com.computacenter.carconfig.services;
 import com.computacenter.carconfig.dto.OrderUserDto;
 import com.computacenter.carconfig.entities.OrderUser;
 import com.computacenter.carconfig.exceptions.ItemAddException;
-import com.computacenter.carconfig.mapper.OrdersUserMapper;
+import com.computacenter.carconfig.mapper.OrderUserMapper;
 import com.computacenter.carconfig.repository.OrderUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,9 +16,9 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserService {
-    private final OrderUserRepository userRepository;
-    private final OrdersUserMapper ordersUserMapper;
+public class OrderUserService {
+    private final OrderUserRepository orderUserRepository;
+    private final OrderUserMapper orderUserMapper;
 
 
     /**
@@ -28,16 +29,16 @@ public class UserService {
      */
     public void addUser(OrderUserDto user) {
         // Check if a user with the same email already exists before saving.
-        Optional<OrderUser> existingUser = userRepository.findByEmail(user.getEmail());
+        Optional<OrderUser> existingUser = orderUserRepository.findByEmail(user.getEmail());
         if (existingUser.isPresent()) {
             String errorMessage = "User with email '" + user.getEmail() + "' already exists.";
             log.warn(errorMessage);
             throw new ItemAddException(errorMessage);
         }
         log.info("Adding new user: {}", user.getEmail());
-        var entitytoSave = ordersUserMapper.toEntity(user);
-        entitytoSave.setValid(true);
-        userRepository.save(entitytoSave);
+        var entityToSave = orderUserMapper.toEntity(user);
+        entityToSave.setValid(true);
+        orderUserRepository.save(entityToSave);
     }
 
 
@@ -52,7 +53,7 @@ public class UserService {
         log.debug("Get the user Back if user with email {} is valid.", email);
         var userOptional = getOrderUserByMail(email);
         if(userOptional.isPresent()){
-            var userDto = ordersUserMapper.toDto(userOptional.get());
+            var userDto = orderUserMapper.toDto(userOptional.get());
             return Optional.of(userDto);
         }else {
             return Optional.empty();
@@ -61,13 +62,22 @@ public class UserService {
 
     public Optional<OrderUser> getOrderUserByMail(String email) {
         log.debug("Get the user Back if user with email {} is valid.", email);
-        return userRepository.findByEmailAndIsValid(email, true);
+        return orderUserRepository.findByEmailAndIsValid(email, true);
     }
 
-    public static OrderUser getAnonymousUser() {
+    private OrderUser createAnonymousUser() {
         var orderUser = new OrderUser();
         orderUser.setUserId(LocalDateTime.now().toString());
         orderUser.setUserName("annonymous");
-        return orderUser;
+        orderUser.setValid(true);
+        return orderUserRepository.save(orderUser);
+    }
+
+    public OrderUser getUserIfExists(String userMail) {
+        if (StringUtils.isBlank(userMail)) {
+            return createAnonymousUser();
+        }
+        var orderUser = getOrderUserByMail(userMail);
+        return orderUser.orElseGet(this::createAnonymousUser);
     }
 }

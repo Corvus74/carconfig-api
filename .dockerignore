@@ -1,0 +1,17 @@
+# Ignore Gradle and build output
+.gradle/
+build/
+!build/libs/*.jar
+
+# Git
+.git/
+.gitignore
+
+# IDE files
+*.iml
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

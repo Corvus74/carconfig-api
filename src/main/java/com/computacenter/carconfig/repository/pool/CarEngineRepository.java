@@ -10,9 +10,11 @@ import java.util.Optional;
 
 @Repository
 public interface CarEngineRepository extends JpaRepository<CarEngine,Integer> {
-    @Query("select c from CarEngine c where c.orderNumber = ?1 and upper(c.deleteFlag) != 'Y'")
+    /** Retrieve an engine by its orderNumber when active (not deleted). */
+    @Query("select c from CarEngine c where c.orderNumber = ?1 and (upper(c.deleteFlag) = 'N' or c.deleteFlag is null)")
     Optional<CarEngine> findByOrderNumberAndNotDeleted(String orderNumber);
 
-    @Query("select c from CarEngine c where c.productId = ?1 and upper(c.deleteFlag) != 'Y'")
+    /** Returns active engines matching the productId. */
+    @Query("select c from CarEngine c where c.productId = ?1 and (upper(c.deleteFlag) = 'N' or c.deleteFlag is null)")
     List<CarEngine> findByCarEnginesByProductIdAndNotDeleted(String productId);
 }

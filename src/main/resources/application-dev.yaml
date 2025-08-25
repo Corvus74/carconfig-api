@@ -6,8 +6,8 @@ spring:
     username: "myuserHidden123"
     password: "secret123"
   #jpa:
-   # hibernate:
-    #  ddl-auto: create
+    #hibernate:
+     # ddl-auto: create
     #database-platform: "org.hibernate.dialect.PostgreSQLDialect"
   #sql:
     #init:

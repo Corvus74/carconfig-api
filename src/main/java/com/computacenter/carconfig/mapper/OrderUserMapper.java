@@ -5,7 +5,7 @@ import com.computacenter.carconfig.entities.OrderUser;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
-public interface OrdersUserMapper {
+public interface OrderUserMapper {
     OrderUser toEntity(OrderUserDto orderUserDto);
 
     OrderUserDto toDto(OrderUser orderUser);

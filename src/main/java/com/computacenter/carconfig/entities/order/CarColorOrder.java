@@ -12,17 +12,21 @@ import java.time.Instant;
 @Setter
 @Entity
 @Table(name = "car_colors_order")
-public class CarColorsOrder {
+public class CarColorOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @Size(max = 40)
+    @Column(name = "order_id")
+    private String orderId;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private CarColor carColor;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private OrderStatus orderStatus;
 
     @Size(max = 1)

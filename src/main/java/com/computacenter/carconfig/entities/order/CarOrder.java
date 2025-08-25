@@ -12,8 +12,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "order")
-public class Order {
+@Table(name = "car_order")
+public class CarOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,19 +24,19 @@ public class Order {
     @Column(name = "order_id")
     private String orderId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private OrderUser orderUser;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private CarEngineOrder carEngineOrder;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private CarRimOrder carRimOrder;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private CarColorsOrder carColorOrder;
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private CarColorOrder carColorOrder;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private OrderStatus orderStatus;
 
     @Size(max = 400)
@@ -46,7 +46,7 @@ public class Order {
     @Column(name = "price")
     private Integer price;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
     private List<SpecialEquipmentOrder> specialEquipmentOrders;
 
     @Size(max = 1)

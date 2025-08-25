@@ -1,6 +1,6 @@
 package com.computacenter.carconfig.dto.order;
 
-import com.computacenter.carconfig.dto.OrderStatusDto;
+import com.computacenter.carconfig.dto.web.CarRimDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CarRimOrderDto {
-    private CarRimOrderDto carRimOrder;
-    private OrderStatusDto orderStatusDto;
+    private String orderId;
+    private CarRimDto carRim;
+    private CarOrderStatusDto orderStatus;
 }

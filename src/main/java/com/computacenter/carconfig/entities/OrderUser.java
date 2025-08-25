@@ -29,8 +29,7 @@ public class OrderUser {
     @Column(name = "email", length = 20)
     private String email;
 
-    @Size(max = 1)
-    @Column(name = "is_valid", length = 1)
+    @Column(name = "is_valid")
     private boolean isValid;
 
     @Size(max = 1)

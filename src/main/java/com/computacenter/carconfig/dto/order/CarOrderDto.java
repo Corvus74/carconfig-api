@@ -1,9 +1,6 @@
-package com.computacenter.carconfig.dto;
+package com.computacenter.carconfig.dto.order;
 
-import com.computacenter.carconfig.dto.order.CarColorOrderDto;
-import com.computacenter.carconfig.dto.order.CarEngineOrderDto;
-import com.computacenter.carconfig.dto.order.CarRimOrderDto;
-import com.computacenter.carconfig.dto.order.SpecialEquipmentOrderDto;
+import com.computacenter.carconfig.dto.OrderUserDto;
 import com.computacenter.carconfig.entities.order.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Size;
@@ -14,19 +11,19 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * DTO for {@link Order}
+ * DTO for {@link CarOrder}
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OrderDto {
+public class CarOrderDto {
     private String orderId;
     private OrderUserDto orderUser;
     private CarEngineOrderDto carEngineOrder;
     private CarRimOrderDto carRimOrder;
     private CarColorOrderDto carColorOrder;
-    private OrderStatusDto orderStatus;
+    private CarOrderStatusDto orderStatus;
     private @Size(max = 400) String description;
     private Integer price;
     private List<SpecialEquipmentOrderDto> specialEquipmentOrders;

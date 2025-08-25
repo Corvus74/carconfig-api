@@ -2,6 +2,7 @@ package com.computacenter.carconfig.dto.web;
 
 import com.computacenter.carconfig.entities.base.CarColor;
 import com.computacenter.carconfig.enums.MaterialType;
+import com.computacenter.carconfig.enums.PaintingType;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +24,7 @@ public class CarColorDto {
     private String productId;
     private Integer price;
     private MaterialType materialType;
+    private PaintingType paintingType;
     private String colorCodeHex;
 
 }

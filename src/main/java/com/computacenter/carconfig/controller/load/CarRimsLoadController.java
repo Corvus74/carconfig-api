@@ -4,7 +4,7 @@ import com.computacenter.carconfig.dto.ResponseDto;
 import com.computacenter.carconfig.dto.load.CarRimLoadDto;
 import com.computacenter.carconfig.enums.TransferStatus;
 import com.computacenter.carconfig.exceptions.ItemAddException;
-import com.computacenter.carconfig.services.CarRimsService;
+import com.computacenter.carconfig.services.pool.CarRimService;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,19 +19,19 @@ import java.util.List;
 @RequestMapping("/load/car-rims")
 public class CarRimsLoadController {
 
-    private final CarRimsService carRimsService;
+    private final CarRimService carRimService;
 
         @GetMapping(path = "/all", produces = "application/json")
         public List<CarRimLoadDto> getAllCarRims() {
             log.debug("Getting all car rim information");
-            return carRimsService.getAllCarRimLoad();
+            return carRimService.getAllCarRimLoad();
         }
 
         @PostMapping(path = "/add", produces = "application/json", consumes = "application/json")
         public ResponseDto addCarRim(@RequestBody CarRimLoadDto carRimLoadDto) {
             log.debug("Adding new car rim: {}", carRimLoadDto.getModel());
             try {
-                carRimsService.addCarRimLoad(carRimLoadDto);
+                carRimService.addCarRimLoad(carRimLoadDto);
                 return new ResponseDto("Car rim added successfully", TransferStatus.SUCCESS);
             } catch (ItemAddException e) {
                 log.error("Failed to add car rim: {}", e.getMessage());
@@ -43,7 +43,7 @@ public class CarRimsLoadController {
         public ResponseDto addAllCarRims(@RequestBody List<CarRimLoadDto> carRimLoadDtos) {
             log.debug("Adding {} car rims", carRimLoadDtos.size());
             try {
-                carRimsService.addAllCarRims(carRimLoadDtos);
+                carRimService.addAllCarRims(carRimLoadDtos);
                 return new ResponseDto("All car rims added successfully", TransferStatus.SUCCESS);
             } catch (ItemAddException e) {
                 log.error("Failed to add all car rims: {}", e.getMessage());

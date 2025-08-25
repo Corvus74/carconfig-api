@@ -1,4 +1,4 @@
-package com.computacenter.carconfig.dto;
+package com.computacenter.carconfig.dto.order;
 
 import com.computacenter.carconfig.entities.order.OrderStatus;
 import com.computacenter.carconfig.enums.OrderStatusEnum;
@@ -14,8 +14,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderStatusDto {
-    private Integer id;
+public class CarOrderStatusDto {
     private OrderStatusEnum orderStatus;
     private LocalDate shippingDate;
     private LocalDate deliveryDate;

@@ -18,10 +18,14 @@ public class CarEngineOrder {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @Size(max = 40)
+    @Column(name = "order_id")
+    private String orderId;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private CarEngine carEngine;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private OrderStatus orderStatus;
 
     @Size(max = 1)
