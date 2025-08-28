@@ -61,7 +61,6 @@ public class OrderUserService {
     }
 
     public Optional<OrderUser> getOrderUserByMail(String email) {
-        log.debug("Get the user Back if user with email {} is valid.", email);
         return orderUserRepository.findByEmailAndIsValid(email, true);
     }
 

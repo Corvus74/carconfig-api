@@ -5,10 +5,10 @@ spring:
     url: "jdbc:postgresql://localhost:5432/car_config_db"
     username: "myuserHidden123"
     password: "secret123"
-  #jpa:
-    #hibernate:
-     # ddl-auto: create
-    #database-platform: "org.hibernate.dialect.PostgreSQLDialect"
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database-platform: "org.hibernate.dialect.PostgreSQLDialect"
   #sql:
     #init:
      # data-locations: classpath:init/car_color.sql, classpath:init/car_rims.sql, classpath:init/car_engines.sql, classpath:init/special_equipment.sql

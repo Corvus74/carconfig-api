@@ -21,5 +21,6 @@ public class CarRimDto{
     private  String description;
     @Size(max = 20)
     private  String productId;
+    private Integer innerDiameter;
     private Integer price;
 }

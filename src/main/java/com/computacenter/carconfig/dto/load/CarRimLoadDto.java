@@ -19,5 +19,6 @@ public class CarRimLoadDto {
     private @Size(max = 20) String model;
     private @Size(max = 400) String description;
     private @Size(max = 20) String productId;
+    private Integer innerDiameter;
     private Integer price;
 }

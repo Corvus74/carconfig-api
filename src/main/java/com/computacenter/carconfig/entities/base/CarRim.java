@@ -26,6 +26,10 @@ public class CarRim {
     private String rimName;
 
     @Size(max = 20)
+    @Column(name = "inner_diameter", length = 20)
+    private Integer innerDiameter;
+
+    @Size(max = 20)
     @Column(name = "model", length = 20)
     private String model;
 

@@ -22,23 +22,23 @@ configurations {
 repositories {
     mavenCentral()
 }
-var mapstuctVersion ="1.6.3"
-var swaggerOpaenapiVersion="2.8.9"
+var mapstructVersion ="1.6.3"
+var swaggerOpenapiVersion="2.8.9"
 var apacheCommons="3.18.0"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.mapstruct:mapstruct:$mapstuctVersion")
+    implementation("org.mapstruct:mapstruct:$mapstructVersion")
     implementation("org.apache.commons:commons-lang3:$apacheCommons")
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$swaggerOpaenapiVersion")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$swaggerOpenapiVersion")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.projectlombok:lombok")
-    annotationProcessor("org.mapstruct:mapstruct-processor:$mapstuctVersion")
+    annotationProcessor("org.mapstruct:mapstruct-processor:$mapstructVersion")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
