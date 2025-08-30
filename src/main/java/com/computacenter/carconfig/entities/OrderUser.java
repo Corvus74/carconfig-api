@@ -5,19 +5,19 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
+import java.util.Objects;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "orders_user")
-public class OrderUser {
+public class OrderUser extends SimpleAuditClasses {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
-    @Size(max=40)
+    @Size(max = 40)
     @Column(name = "user_id", nullable = false)
     private String userId;
 
@@ -36,18 +36,17 @@ public class OrderUser {
     @Column(name = "delete_flag", length = 1)
     private String deleteFlag;
 
-    @Size(max = 20)
-    @Column(name = "created_by", length = 20)
-    private String createdBy;
 
-    @Column(name = "created_at")
-    private Instant createdAt;
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        OrderUser orderUser = (OrderUser) o;
+        return isValid == orderUser.isValid && Objects.equals(id, orderUser.id) && Objects.equals(userId, orderUser.userId) && Objects.equals(userName, orderUser.userName) && Objects.equals(email, orderUser.email) && Objects.equals(deleteFlag, orderUser.deleteFlag);
+    }
 
-    @Size(max = 20)
-    @Column(name = "modified_by", length = 20)
-    private String modifiedBy;
-
-    @Column(name = "modified_at")
-    private Instant modifiedAt;
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, userId, userName, email, isValid, deleteFlag);
+    }
 }

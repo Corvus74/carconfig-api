@@ -4,11 +4,13 @@ import com.computacenter.carconfig.entities.OrderUser;
 import com.computacenter.carconfig.entities.base.CarColor;
 import com.computacenter.carconfig.entities.order.CarColorOrder;
 import com.computacenter.carconfig.repository.order.CarColorOrderRepository;
-import com.computacenter.carconfig.services.pool.CarColorService;
+import com.computacenter.carconfig.services.base.CarColorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -29,8 +31,9 @@ public class CarColorOrderService {
     private CarColorOrder createAndSaveCarColorOrderByOrderUser(CarColor carColor, OrderUser orderUser) {
         var carColorsOrder = new CarColorOrder();
         carColorsOrder.setCarColor(carColor);
+        carColorsOrder.setCarColorOrderId(UUID.randomUUID().toString());
         carColorsOrder.setCreatedBy(orderUser.getUserName());
-        carColorsOrder.setModifiedBy(orderUser.getUserName());
+        carColorsOrder.setUpdatedBy(orderUser.getUserName());
         carColorsOrder.setOrderStatus(orderStatusService.createNewOrderStatusWithUser(orderUser));
         return carColorOrderRepository.save(carColorsOrder);
     }

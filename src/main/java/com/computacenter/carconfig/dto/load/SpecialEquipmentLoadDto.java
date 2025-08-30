@@ -1,7 +1,8 @@
 package com.computacenter.carconfig.dto.load;
 
 import com.computacenter.carconfig.entities.base.SpecialEquipment;
-import com.computacenter.carconfig.enums.SpecialEquipmentType;
+import com.computacenter.carconfig.enums.CategoryType;
+import com.computacenter.carconfig.enums.EquipmentLocation;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,10 +19,10 @@ public class SpecialEquipmentLoadDto {
     private String orderNumber;
     @Size(max = 10)
     private String equipmentName;
-    private @Size(max = 10) String model;
     private @Size(max = 400) String description;
     private @Size(max = 20) String productId;
-    private SpecialEquipmentType specialEquipmentType;
+    private CategoryType categoryType;
+    private EquipmentLocation equipmentLocation;
     private Integer price;
 
 }

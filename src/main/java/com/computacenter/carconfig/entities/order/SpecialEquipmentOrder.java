@@ -1,29 +1,31 @@
 package com.computacenter.carconfig.entities.order;
 
+import com.computacenter.carconfig.entities.SimpleAuditClasses;
 import com.computacenter.carconfig.entities.base.SpecialEquipment;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
+import java.util.Objects;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "special_equipment_order")
-public class SpecialEquipmentOrder {
+public class SpecialEquipmentOrder extends SimpleAuditClasses {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Size(max = 40)
-    @Column(name = "order_id")
-    private String orderId;
+    @Column(name = "special_equipment_order_id")
+    private String specialEquipmentOrderId;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "special_equipment_id")
     private SpecialEquipment specialEquipment;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -33,18 +35,16 @@ public class SpecialEquipmentOrder {
     @Column(name = "delete_flag", length = 1)
     private String deleteFlag;
 
-    @Size(max = 20)
-    @Column(name = "created_by", length = 20)
-    private String createdBy;
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        SpecialEquipmentOrder that = (SpecialEquipmentOrder) o;
+        return Objects.equals(id, that.id) && Objects.equals(specialEquipmentOrderId, that.specialEquipmentOrderId) && Objects.equals(specialEquipment, that.specialEquipment) && Objects.equals(orderStatus, that.orderStatus) && Objects.equals(deleteFlag, that.deleteFlag);
+    }
 
-    @Column(name = "created_at")
-    private Instant createdAt;
-
-    @Size(max = 20)
-    @Column(name = "modified_by", length = 20)
-    private String modifiedBy;
-
-    @Column(name = "modified_at")
-    private Instant modifiedAt;
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, specialEquipmentOrderId, specialEquipment, orderStatus, deleteFlag);
+    }
 }

@@ -1,4 +1,4 @@
-package com.computacenter.carconfig.mapper;
+package com.computacenter.carconfig.mapper.web;
 
 import com.computacenter.carconfig.entities.base.CarRim;
 import com.computacenter.carconfig.dto.web.CarRimDto;

@@ -1,11 +1,11 @@
-package com.computacenter.carconfig.mapper.load;
+package com.computacenter.carconfig.mapper.base;
 
 import com.computacenter.carconfig.dto.load.CarRimLoadDto;
 import com.computacenter.carconfig.entities.base.CarRim;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
-public interface CarRimLoadMapper {
+public interface CarRimBaseMapper {
     CarRim toEntity(CarRimLoadDto carRimDto);
 
     CarRimLoadDto toDto(CarRim carRim);

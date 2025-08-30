@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CarRimRepository  extends JpaRepository<CarRim,Integer> {
+public interface CarRimRepository  extends JpaRepository<CarRim, Long> {
     /** Retrieve a rim by its orderNumber when active (not deleted). */
     @Query("select c from CarRim c where c.orderNumber = ?1 and (upper(c.deleteFlag) = 'N' or c.deleteFlag is null)")
     Optional<CarRim> findByOrderNumberAndNotDeleted(String orderNumber);

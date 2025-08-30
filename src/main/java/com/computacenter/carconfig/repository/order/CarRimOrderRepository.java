@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CarRimOrderRepository extends JpaRepository<CarRimOrder,Integer> {
+public interface CarRimOrderRepository extends JpaRepository<CarRimOrder, Long> {
 }

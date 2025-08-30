@@ -1,33 +1,35 @@
 package com.computacenter.carconfig.entities.base;
 
-import com.computacenter.carconfig.enums.SpecialEquipmentType;
+import com.computacenter.carconfig.entities.SimpleAuditClasses;
+import com.computacenter.carconfig.enums.EquipmentLocation;
+import com.computacenter.carconfig.enums.CategoryType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
+import java.util.Objects;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "special_equipment")
-public class SpecialEquipment {
+public class SpecialEquipment extends SimpleAuditClasses {
 
     @Id
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Size(max = 20)
     @Column(name = "order_number", length = 20)
     private String orderNumber;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "special_equipment_type", length = 20)
-    private SpecialEquipmentType specialEquipmentType;
+    @Column(name = "category_type", length = 20)
+    private CategoryType categoryType;
 
-    @Size(max = 20)
-    @Column(name = "equipment_name", length = 10)
+    @Size(max = 30)
+    @Column(name = "equipment_name", length = 30)
     private String equipmentName;
 
     @Size(max = 400)
@@ -38,6 +40,10 @@ public class SpecialEquipment {
     @Column(name = "product_id", length = 20)
     private String productId;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "equipment_location")
+    private EquipmentLocation equipmentLocation;
+
     @Column(name = "price")
     private Integer price;
 
@@ -45,18 +51,16 @@ public class SpecialEquipment {
     @Column(name = "delete_flag", length = 1)
     private String deleteFlag;
 
-    @Size(max = 20)
-    @Column(name = "created_by", length = 20)
-    private String createdBy;
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        SpecialEquipment that = (SpecialEquipment) o;
+        return Objects.equals(id, that.id) && Objects.equals(orderNumber, that.orderNumber) && categoryType == that.categoryType && Objects.equals(equipmentName, that.equipmentName) && Objects.equals(description, that.description) && Objects.equals(productId, that.productId) && Objects.equals(price, that.price) && Objects.equals(deleteFlag, that.deleteFlag);
+    }
 
-    @Column(name = "created_at")
-    private Instant createdAt;
-
-    @Size(max = 20)
-    @Column(name = "modified_by", length = 20)
-    private String modifiedBy;
-
-    @Column(name = "modified_at")
-    private Instant modifiedAt;
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, orderNumber, categoryType, equipmentName, description, productId, price, deleteFlag);
+    }
 }

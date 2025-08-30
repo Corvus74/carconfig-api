@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CarColorOrderDto {
-    private String orderId;
+    private String carColorOrderId;
     private CarColorDto carColor;
     private CarOrderStatusDto orderStatus;
 }

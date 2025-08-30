@@ -1,4 +1,4 @@
-package com.computacenter.carconfig.services.pool;
+package com.computacenter.carconfig.services.base;
 
 import com.computacenter.carconfig.dto.ResponseDto;
 import com.computacenter.carconfig.dto.load.BaseConfigLoadDto;

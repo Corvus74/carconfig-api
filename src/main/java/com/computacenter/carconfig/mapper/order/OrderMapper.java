@@ -1,8 +1,8 @@
-package com.computacenter.carconfig.mapper;
+package com.computacenter.carconfig.mapper.order;
 
 import com.computacenter.carconfig.dto.order.CarOrderDto;
 import com.computacenter.carconfig.entities.order.CarOrder;
-import com.computacenter.carconfig.mapper.order.*;
+import com.computacenter.carconfig.mapper.OrderUserMapper;
 import org.mapstruct.*;
 
 /**

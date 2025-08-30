@@ -1,28 +1,27 @@
 package com.computacenter.carconfig.entities.order;
 
+import com.computacenter.carconfig.entities.SimpleAuditClasses;
 import com.computacenter.carconfig.enums.OrderStatusEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
-import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "order_status")
-public class OrderStatus {
+public class OrderStatus extends SimpleAuditClasses {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
-    @Column(name = "order_status")
-    private OrderStatusEnum orderStatus;
+    @Column(name = "current_status")
+    private OrderStatusEnum currentStatus;
 
     @Column(name = "shipping_date")
     private LocalDate shippingDate;
@@ -34,20 +33,16 @@ public class OrderStatus {
     @Column(name = "delete_flag", length = 1)
     private String deleteFlag;
 
-    @Size(max = 20)
-    @Column(name = "created_by", length = 20)
-    private String createdBy;
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        OrderStatus that = (OrderStatus) o;
+        return Objects.equals(id, that.id) && currentStatus == that.currentStatus && Objects.equals(shippingDate, that.shippingDate) && Objects.equals(deliveryDate, that.deliveryDate) && Objects.equals(deleteFlag, that.deleteFlag);
+    }
 
-    @CreatedDate
-    @Column(name = "created_at")
-    private Instant createdAt;
-
-    @Size(max = 20)
-    @Column(name = "modified_by", length = 20)
-    private String modifiedBy;
-
-    @UpdateTimestamp
-    @Column(name = "modified_at")
-    private Instant modifiedAt;
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, currentStatus, shippingDate, deliveryDate, deleteFlag);
+    }
 }

@@ -1,5 +1,6 @@
 package com.computacenter.carconfig.controller;
 
+import com.computacenter.carconfig.dto.OrderUpdateResponseDto;
 import com.computacenter.carconfig.dto.order.CarOrderDto;
 import com.computacenter.carconfig.dto.order.CarOrderUpdateDto;
 import com.computacenter.carconfig.dto.ResponseDto;
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping("/order")
 public class OrderController {
 
@@ -26,12 +27,12 @@ public class OrderController {
      * @return A ResponseEntity containing a ResponseDto indicating success or failure.
      */
     @PostMapping(path = "/create", produces = "application/json", consumes = "application/json")
-    public ResponseDto createOrder(@RequestBody CarOrderUpdateDto carOrderUpdateDto) {
+    public OrderUpdateResponseDto createOrder(@RequestBody CarOrderUpdateDto carOrderUpdateDto) {
         try {
-            orderService.createOrderByIds(carOrderUpdateDto);
-            return new ResponseDto("CarOrder created successfully!", TransferStatus.SUCCESS);
+            String orderId = orderService.createOrderByIds(carOrderUpdateDto);
+            return new OrderUpdateResponseDto("CarOrder created successfully!", orderId, TransferStatus.SUCCESS);
         } catch (OrderException e) {
-            return new ResponseDto("Failed to create order: " + e.getMessage(), TransferStatus.CANCELED);
+            return new OrderUpdateResponseDto("Failed to create order", TransferStatus.CANCELED, e.getMessage());
         }
     }
 
@@ -41,8 +42,8 @@ public class OrderController {
      * @param orderId The ID of the order to retrieve, passed as a path variable.
      * @return A ResponseEntity containing the CarOrderDto if found, or a NOT_FOUND status.
      */
-    @GetMapping(path = "/{orderId}", produces = "application/json")
-    public CarOrderDto getOrder(@PathVariable String orderId) {
+    @GetMapping(path = "/byId/{orderId}", produces = "application/json")
+    public CarOrderDto getOrderByOrderId(@PathVariable String orderId) {
         Optional<CarOrderDto> order = orderService.getOrderById(orderId);
         return order.orElseGet(CarOrderDto::new);
     }
@@ -54,12 +55,12 @@ public class OrderController {
      * @return A ResponseEntity containing a ResponseDto indicating success or failure.
      */
     @PutMapping(path = "/update", produces = "application/json", consumes = "application/json")
-    public ResponseDto updateOrder(@RequestBody CarOrderUpdateDto orderDto) {
+    public OrderUpdateResponseDto updateOrder(@RequestBody CarOrderUpdateDto orderDto) {
         try {
-            orderService.updateOrder(orderDto);
-            return new ResponseDto("CarOrder updated successfully!", TransferStatus.SUCCESS);
+            String orderId = orderService.updateOrder(orderDto);
+            return new OrderUpdateResponseDto("CarOrder updated successfully!", orderId, TransferStatus.SUCCESS);
         } catch (Exception e) {
-            return new ResponseDto("Failed to update order: " + e.getMessage(), TransferStatus.CANCELED);
+            return new OrderUpdateResponseDto("Failed to update order", TransferStatus.CANCELED, e.getMessage());
         }
     }
 
@@ -75,7 +76,7 @@ public class OrderController {
             orderService.deleteOrder(orderId);
             return new ResponseDto("CarOrder deleted successfully!", TransferStatus.SUCCESS);
         } catch (Exception e) {
-            return new ResponseDto("Failed to delete order: " + e.getMessage(), TransferStatus.CANCELED);
+            return new ResponseDto("Failed to delete order", TransferStatus.CANCELED, e.getMessage());
         }
     }
 }

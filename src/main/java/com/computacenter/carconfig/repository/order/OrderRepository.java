@@ -8,15 +8,15 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface OrderRepository extends JpaRepository<CarOrder,Integer> {
+public interface OrderRepository extends JpaRepository<CarOrder, Long> {
 
     /**
      * Finds an order by the public carOrderId field.
      * Read-only to ensure participation in transactions without accidental flush.
      */
     @Transactional(Transactional.TxType.SUPPORTS)
-    Optional<CarOrder> findByOrderId(String orderId);
+    Optional<CarOrder> findByCarOrderId(String orderId);
 
     /** Checks if an order exists for the given public carOrderId. */
-    boolean existsByOrderId(String orderId);
+    boolean existsByCarOrderId(String orderId);
 }

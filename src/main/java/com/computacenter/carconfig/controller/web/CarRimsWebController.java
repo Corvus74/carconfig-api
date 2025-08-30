@@ -1,7 +1,7 @@
 package com.computacenter.carconfig.controller.web;
 
 import com.computacenter.carconfig.dto.web.CarRimDto;
-import com.computacenter.carconfig.services.pool.CarRimService;
+import com.computacenter.carconfig.services.base.CarRimService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CarEngineRepository extends JpaRepository<CarEngine,Integer> {
+public interface CarEngineRepository extends JpaRepository<CarEngine, Long> {
     /** Retrieve an engine by its orderNumber when active (not deleted). */
     @Query("select c from CarEngine c where c.orderNumber = ?1 and (upper(c.deleteFlag) = 'N' or c.deleteFlag is null)")
     Optional<CarEngine> findByOrderNumberAndNotDeleted(String orderNumber);

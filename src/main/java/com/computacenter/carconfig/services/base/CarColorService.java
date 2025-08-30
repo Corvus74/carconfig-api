@@ -1,12 +1,12 @@
-package com.computacenter.carconfig.services.pool;
+package com.computacenter.carconfig.services.base;
 
 import com.computacenter.carconfig.dto.load.CarColorLoadDto;
 import com.computacenter.carconfig.dto.web.CarColorDto;
 import com.computacenter.carconfig.entities.base.CarColor;
 import com.computacenter.carconfig.exceptions.ItemAddException;
 import com.computacenter.carconfig.exceptions.OrderException;
-import com.computacenter.carconfig.mapper.CarColorMapper;
-import com.computacenter.carconfig.mapper.load.CarColorLoadMapper;
+import com.computacenter.carconfig.mapper.web.CarColorMapper;
+import com.computacenter.carconfig.mapper.base.CarColorBaseMapper;
 import com.computacenter.carconfig.repository.pool.CarColorRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ public class CarColorService {
 
     private final CarColorRepository carColorRepository;
     private final CarColorMapper carColorMapper;
-    private final CarColorLoadMapper carColorLoadMapper;
+    private final CarColorBaseMapper carColorBaseMapper;
 
     /**
      * Retrieves all car colors from the database.
@@ -30,9 +30,9 @@ public class CarColorService {
      * @return A list of all CarColor entities.
      */
     public List<CarColorLoadDto> getAllCarColorLoad() {
-        log.debug("Fetching all full car colors from the database.");
+        log.debug("Fetching all full car colors for web from the database.");
         List<CarColor> carColors = carColorRepository.findAll();
-        return carColors.stream().map(carColorLoadMapper::toDto).toList();
+        return carColors.stream().map(carColorBaseMapper::toDto).toList();
     }
 
     /**
@@ -59,7 +59,7 @@ public class CarColorService {
             log.warn(errorMessage);
             throw new ItemAddException(errorMessage);
         }
-        CarColor carColor = carColorLoadMapper.toEntity(carColorLoadDto);
+        CarColor carColor = carColorBaseMapper.toEntity(carColorLoadDto);
         log.info("Adding new car color: {}", carColor.getColorName());
         carColorRepository.save(carColor);
     }

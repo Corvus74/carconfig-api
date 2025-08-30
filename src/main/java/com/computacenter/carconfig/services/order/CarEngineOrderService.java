@@ -4,11 +4,13 @@ import com.computacenter.carconfig.entities.OrderUser;
 import com.computacenter.carconfig.entities.base.CarEngine;
 import com.computacenter.carconfig.entities.order.CarEngineOrder;
 import com.computacenter.carconfig.repository.order.CarEngineOrderRepository;
-import com.computacenter.carconfig.services.pool.CarEngineService;
+import com.computacenter.carconfig.services.base.CarEngineService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -27,8 +29,9 @@ public class CarEngineOrderService {
     private CarEngineOrder createCarEngineOrderByEngineOrderAndUser(CarEngine carEngine, OrderUser orderUser) {
         var carEngineOrder = new CarEngineOrder();
         carEngineOrder.setCarEngine(carEngine);
+        carEngineOrder.setCarEngineOrderId(UUID.randomUUID().toString());
         carEngineOrder.setCreatedBy(orderUser.getUserName());
-        carEngineOrder.setModifiedBy(orderUser.getUserName());
+        carEngineOrder.setUpdatedBy(orderUser.getUserName());
         carEngineOrder.setOrderStatus(orderStatusService.createNewOrderStatusWithUser(orderUser));
         return carEngineOrderRepository.save(carEngineOrder);
     }

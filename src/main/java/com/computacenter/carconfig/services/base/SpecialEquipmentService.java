@@ -1,12 +1,12 @@
-package com.computacenter.carconfig.services.pool;
+package com.computacenter.carconfig.services.base;
 
 import com.computacenter.carconfig.dto.load.SpecialEquipmentLoadDto;
 import com.computacenter.carconfig.dto.web.SpecialEquipmentDto;
 import com.computacenter.carconfig.entities.base.SpecialEquipment;
 import com.computacenter.carconfig.exceptions.ItemAddException;
 import com.computacenter.carconfig.exceptions.OrderException;
-import com.computacenter.carconfig.mapper.SpecialEquipmentMapper;
-import com.computacenter.carconfig.mapper.load.SpecialEquipmentLoadMapper;
+import com.computacenter.carconfig.mapper.web.SpecialEquipmentMapper;
+import com.computacenter.carconfig.mapper.base.SpecialEquipmentBaseMapper;
 import com.computacenter.carconfig.repository.pool.SpecialEquipmentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,14 +23,14 @@ public class SpecialEquipmentService {
 
     private final SpecialEquipmentRepository specialEquipmentRepository;
     private final SpecialEquipmentMapper specialEquipmentMapper;
-    private final SpecialEquipmentLoadMapper specialEquipmentLoadMapper;
+    private final SpecialEquipmentBaseMapper specialEquipmentBaseMapper;
 
     /**
      * Retrieves all car colors from the database.
      * @return A list of all CarColor entities.
      */
     public List<SpecialEquipmentDto> getAllSpecialEquipmentsWeb() {
-        log.debug("Fetching all special equipment from the database.");
+        log.debug("Fetching all special equipment for web from the database.");
         return specialEquipmentRepository.findAll().stream().map(specialEquipmentMapper::toDto).toList();
     }
     /**
@@ -39,7 +39,7 @@ public class SpecialEquipmentService {
      */
     public List<SpecialEquipmentLoadDto> getAllSpecialEquipmentsLoad() {
         log.debug("Fetching all special equipment from the database.");
-        return specialEquipmentRepository.findAll().stream().map(specialEquipmentLoadMapper::toDto).toList();
+        return specialEquipmentRepository.findAll().stream().map(specialEquipmentBaseMapper::toDto).toList();
     }
     /**
      * Adds a single car engine to the database, ensuring no duplicates.
@@ -56,7 +56,7 @@ public class SpecialEquipmentService {
             throw new ItemAddException(errorMessage);
         }
         log.info("Adding new special equipment: {}", specialEquipmentLoadDto.getEquipmentName());
-        var specialEquipment = specialEquipmentLoadMapper.toEntity(specialEquipmentLoadDto);
+        var specialEquipment = specialEquipmentBaseMapper.toEntity(specialEquipmentLoadDto);
         specialEquipmentRepository.save(specialEquipment);
     }
 

@@ -1,5 +1,6 @@
 package com.computacenter.carconfig.entities.base;
 
+import com.computacenter.carconfig.entities.SimpleAuditClasses;
 import com.computacenter.carconfig.enums.FuelType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -7,17 +8,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.util.Objects;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "car_engine")
-public class CarEngine {
+public class CarEngine extends SimpleAuditClasses {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Size(max = 20)
     @Column(name = "order_number", length = 10)
@@ -72,18 +73,16 @@ public class CarEngine {
     @Column(name = "delete_flag", length = 1)
     private String deleteFlag;
 
-    @Size(max = 20)
-    @Column(name = "created_by", length = 20)
-    private String createdBy;
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        CarEngine carEngine = (CarEngine) o;
+        return Objects.equals(id, carEngine.id) && Objects.equals(orderNumber, carEngine.orderNumber) && Objects.equals(description, carEngine.description) && fuelType == carEngine.fuelType && Objects.equals(engineType, carEngine.engineType) && Objects.equals(productId, carEngine.productId) && Objects.equals(model, carEngine.model) && Objects.equals(price, carEngine.price) && Objects.equals(carName, carEngine.carName) && Objects.equals(displacementL, carEngine.displacementL) && Objects.equals(cylinders, carEngine.cylinders) && Objects.equals(horsepowerKw, carEngine.horsepowerKw) && Objects.equals(torqueNm, carEngine.torqueNm) && Objects.equals(drivetrain, carEngine.drivetrain) && Objects.equals(co2, carEngine.co2) && Objects.equals(deleteFlag, carEngine.deleteFlag);
+    }
 
-    @Column(name = "created_at")
-    private Instant createdAt;
-
-    @Size(max = 20)
-    @Column(name = "modified_by", length = 20)
-    private String modifiedBy;
-
-    @Column(name = "modified_at")
-    private Instant modifiedAt;
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, orderNumber, description, fuelType, engineType, productId, model, price, carName, displacementL, cylinders, horsepowerKw, torqueNm, drivetrain, co2, deleteFlag);
+    }
 }

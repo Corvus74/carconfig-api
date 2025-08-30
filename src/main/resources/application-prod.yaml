@@ -9,7 +9,13 @@ spring:
     hibernate:
       ddl-auto: create
     database-platform: "org.hibernate.dialect.PostgreSQLDialect"
-
+  #sql:
+    #init:
+     # data-locations: classpath:init/car_color.sql, classpath:init/car_rims.sql, classpath:init/car_engines.sql, classpath:init/special_equipment.sql
+      #mode: always
+  batch:
+    jdbc:
+      initialize-schema: "always"
 server:
   port: 8090
   servlet:

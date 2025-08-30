@@ -1,12 +1,12 @@
-package com.computacenter.carconfig.services.pool;
+package com.computacenter.carconfig.services.base;
 
 import com.computacenter.carconfig.dto.load.CarEngineLoadDto;
 import com.computacenter.carconfig.dto.web.CarEngineDto;
 import com.computacenter.carconfig.entities.base.CarEngine;
 import com.computacenter.carconfig.exceptions.ItemAddException;
 import com.computacenter.carconfig.exceptions.OrderException;
-import com.computacenter.carconfig.mapper.CarEngineMapper;
-import com.computacenter.carconfig.mapper.load.CarEngineLoadMapper;
+import com.computacenter.carconfig.mapper.web.CarEngineMapper;
+import com.computacenter.carconfig.mapper.base.CarEngineBaseMapper;
 import com.computacenter.carconfig.repository.pool.CarEngineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ public class CarEngineService {
 
     private final CarEngineRepository carEngineRepository;
     private final CarEngineMapper carEngineMapper;
-    private final CarEngineLoadMapper carEngineLoadMapper;
+    private final CarEngineBaseMapper carEngineBaseMapper;
 
     /**
      * Retrieves all car engines from the database.
@@ -30,7 +30,7 @@ public class CarEngineService {
      * @return A list of all CarEngine entities.
      */
     public List<CarEngineDto> getAllCarEnginesWeb() {
-        log.debug("Fetching all car engines from the database.");
+        log.debug("Fetching all car engines for web from the database.");
         return carEngineRepository.findAll().stream().map(carEngineMapper::toDto).toList();
     }
 
@@ -41,7 +41,7 @@ public class CarEngineService {
      */
     public List<CarEngineLoadDto> getAllCarEngineLoad() {
         log.debug("Fetching all car engines from the database.");
-        return carEngineRepository.findAll().stream().map(carEngineLoadMapper::toDto).toList();
+        return carEngineRepository.findAll().stream().map(carEngineBaseMapper::toDto).toList();
     }
 
     /**
@@ -59,7 +59,7 @@ public class CarEngineService {
             throw new ItemAddException(errorMessage);
         }
         log.info("Adding new car engine: {}", carEngineLoadDto.getOrderNumber());
-        var carEngine = carEngineLoadMapper.toEntity(carEngineLoadDto);
+        var carEngine = carEngineBaseMapper.toEntity(carEngineLoadDto);
         carEngineRepository.save(carEngine);
     }
 

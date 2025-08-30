@@ -1,21 +1,21 @@
 package com.computacenter.carconfig.entities.base;
 
+import com.computacenter.carconfig.entities.SimpleAuditClasses;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.Instant;
+import java.util.Objects;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "car_rims")
-public class CarRim {
+@Table(name = "car_rim")
+public class CarRim extends SimpleAuditClasses {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Size(max = 20)
     @Column(name = "order_number", length = 10)
@@ -48,18 +48,16 @@ public class CarRim {
     @Column(name = "delete_flag", length = 1)
     private String deleteFlag;
 
-    @Size(max = 20)
-    @Column(name = "created_by", length = 20)
-    private String createdBy;
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        CarRim carRim = (CarRim) o;
+        return Objects.equals(id, carRim.id) && Objects.equals(orderNumber, carRim.orderNumber) && Objects.equals(rimName, carRim.rimName) && Objects.equals(innerDiameter, carRim.innerDiameter) && Objects.equals(model, carRim.model) && Objects.equals(description, carRim.description) && Objects.equals(productId, carRim.productId) && Objects.equals(price, carRim.price) && Objects.equals(deleteFlag, carRim.deleteFlag);
+    }
 
-    @Column(name = "created_at")
-    private Instant createdAt;
-
-    @Size(max = 20)
-    @Column(name = "modified_by", length = 20)
-    private String modifiedBy;
-
-    @Column(name = "modified_at")
-    private Instant modifiedAt;
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, orderNumber, rimName, innerDiameter, model, description, productId, price, deleteFlag);
+    }
 }

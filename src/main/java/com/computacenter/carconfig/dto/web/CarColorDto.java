@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CarColorDto {
-    private Integer id;
     @Size(max = 20)
     private String colorName;
     @Size(max = 400)

@@ -15,10 +15,14 @@ import lombok.NoArgsConstructor;
 public class CarRimLoadDto {
     @Size(max = 20)
     private String orderNumber;
-    private @Size(max = 20) String name;
-    private @Size(max = 20) String model;
-    private @Size(max = 400) String description;
-    private @Size(max = 20) String productId;
+    @Size(max = 20)
+    private String rimName;
+    @Size(max = 20)
+    private String model;
+    @Size(max = 400)
+    private String description;
+    @Size(max = 20)
+    private String productId;
     private Integer innerDiameter;
     private Integer price;
 }

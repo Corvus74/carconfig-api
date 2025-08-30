@@ -1,12 +1,12 @@
-package com.computacenter.carconfig.services.pool;
+package com.computacenter.carconfig.services.base;
 
 import com.computacenter.carconfig.dto.load.CarRimLoadDto;
 import com.computacenter.carconfig.dto.web.CarRimDto;
 import com.computacenter.carconfig.entities.base.CarRim;
 import com.computacenter.carconfig.exceptions.ItemAddException;
 import com.computacenter.carconfig.exceptions.OrderException;
-import com.computacenter.carconfig.mapper.CarRimMapper;
-import com.computacenter.carconfig.mapper.load.CarRimLoadMapper;
+import com.computacenter.carconfig.mapper.web.CarRimMapper;
+import com.computacenter.carconfig.mapper.base.CarRimBaseMapper;
 import com.computacenter.carconfig.repository.pool.CarRimRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ public class CarRimService {
 
     private final CarRimRepository carRimRepository;
     private final CarRimMapper carRimMapper;
-    private final CarRimLoadMapper carRimLoadMapper;
+    private final CarRimBaseMapper carRimBaseMapper;
 
 
     /**
@@ -31,7 +31,7 @@ public class CarRimService {
      * @return A list of all CarRims entities.
      */
     public List<CarRimDto> getAllCarRimsWeb() {
-        log.debug("Fetching all car rims from the database.");
+        log.debug("Fetching all car rims for web from the database.");
         return carRimRepository.findAll().stream().map(carRimMapper::toDto).toList();
     }
 
@@ -42,7 +42,7 @@ public class CarRimService {
      */
     public List<CarRimLoadDto> getAllCarRimLoad() {
         log.debug("Fetching all car rims from the database.");
-        return carRimRepository.findAll().stream().map(carRimLoadMapper::toDto).toList();
+        return carRimRepository.findAll().stream().map(carRimBaseMapper::toDto).toList();
     }
 
     /**
@@ -60,7 +60,7 @@ public class CarRimService {
             throw new ItemAddException(errorMessage);
         }
         log.info("Adding new car rim: {}", carRimLoadDto.getModel());
-        var carRim = carRimLoadMapper.toEntity(carRimLoadDto);
+        var carRim = carRimBaseMapper.toEntity(carRimLoadDto);
         carRimRepository.save(carRim);
     }
 

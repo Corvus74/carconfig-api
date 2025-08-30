@@ -1,6 +1,6 @@
 package com.computacenter.carconfig.enums;
 
-public enum SpecialEquipmentType {
+public enum CategoryType {
     MULTIMEDIA,
     SEATS,
     HEATING,

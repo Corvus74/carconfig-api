@@ -3,11 +3,11 @@ package com.computacenter.carconfig.dto.order;
 import com.computacenter.carconfig.dto.OrderUserDto;
 import com.computacenter.carconfig.entities.order.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.List;
 
 /**
@@ -18,14 +18,16 @@ import java.util.List;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CarOrderDto {
-    private String orderId;
+    private String carOrderId;
     private OrderUserDto orderUser;
     private CarEngineOrderDto carEngineOrder;
     private CarRimOrderDto carRimOrder;
     private CarColorOrderDto carColorOrder;
     private CarOrderStatusDto orderStatus;
-    private @Size(max = 400) String description;
-    private Integer price;
+    private String description;
+    private Integer totalPrice;
     private List<SpecialEquipmentOrderDto> specialEquipmentOrders;
+    private Instant createdAt;
+    private Instant updatedAt;
 
 }

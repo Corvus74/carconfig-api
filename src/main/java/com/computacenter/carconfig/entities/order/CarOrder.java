@@ -1,70 +1,79 @@
 package com.computacenter.carconfig.entities.order;
 
 import com.computacenter.carconfig.entities.OrderUser;
+import com.computacenter.carconfig.entities.SimpleAuditClasses;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "car_order")
-public class CarOrder {
+public class CarOrder extends SimpleAuditClasses {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Size(max = 40)
-    @Column(name = "order_id")
-    private String orderId;
+    @Column(name = "car_order_id")
+    private String carOrderId;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_user_id")
     private OrderUser orderUser;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "car_engine_order_id")
     private CarEngineOrder carEngineOrder;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "car_rim_order_id")
     private CarRimOrder carRimOrder;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "car_color_order_id")
     private CarColorOrder carColorOrder;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_status_id")
     private OrderStatus orderStatus;
 
     @Size(max = 400)
     @Column(name = "description", length = 400)
     private String description;
 
-    @Column(name = "price")
-    private Integer price;
+    @Column(name = "total_price")
+    private Integer totalPrice;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
+    @ManyToMany(fetch =  FetchType.LAZY)
+    @JoinTable(
+            name = "car_config_special_equipments_group",
+            joinColumns = @JoinColumn(name = "car_order_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "special_equipment_order_id", referencedColumnName = "id")
+    )
     private List<SpecialEquipmentOrder> specialEquipmentOrders;
 
     @Size(max = 1)
     @Column(name = "delete_flag", length = 1)
     private String deleteFlag;
 
-    @Size(max = 20)
-    @Column(name = "created_by", length = 20)
-    private String createdBy;
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        CarOrder carOrder = (CarOrder) o;
+        return Objects.equals(id, carOrder.id) && Objects.equals(carOrderId, carOrder.carOrderId) && Objects.equals(orderUser, carOrder.orderUser) && Objects.equals(carEngineOrder, carOrder.carEngineOrder) && Objects.equals(carRimOrder, carOrder.carRimOrder) && Objects.equals(carColorOrder, carOrder.carColorOrder) && Objects.equals(orderStatus, carOrder.orderStatus) && Objects.equals(description, carOrder.description) && Objects.equals(totalPrice, carOrder.totalPrice) && Objects.equals(specialEquipmentOrders, carOrder.specialEquipmentOrders) && Objects.equals(deleteFlag, carOrder.deleteFlag);
+    }
 
-    @Column(name = "created_at")
-    private Instant createdAt;
-
-    @Size(max = 20)
-    @Column(name = "modified_by", length = 20)
-    private String modifiedBy;
-
-    @Column(name = "modified_at")
-    private Instant modifiedAt;
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, carOrderId, orderUser, carEngineOrder, carRimOrder, carColorOrder, orderStatus, description, totalPrice, specialEquipmentOrders, deleteFlag);
+    }
 }

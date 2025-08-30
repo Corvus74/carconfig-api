@@ -12,14 +12,21 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseDto implements Serializable {
+public class OrderUpdateResponseDto implements Serializable {
     private String text;
+    private String orderId;
     private TransferStatus status;
     private String errorMessage;
 
-    public ResponseDto(String text,TransferStatus status){
+    public OrderUpdateResponseDto(String text, String orderId, TransferStatus status){
         this.text=text;
+        this.orderId = orderId;
         this.status=status;
     }
 
+    public OrderUpdateResponseDto(String text, TransferStatus status, String errorMessage){
+        this.text=text;
+        this.status=status;
+        this.errorMessage=errorMessage;
+    }
 }

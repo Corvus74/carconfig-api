@@ -1,10 +1,10 @@
-package com.computacenter.carconfig.controller.load;
+package com.computacenter.carconfig.controller.base;
 
 import com.computacenter.carconfig.dto.ResponseDto;
 import com.computacenter.carconfig.dto.load.SpecialEquipmentLoadDto;
 import com.computacenter.carconfig.enums.TransferStatus;
 import com.computacenter.carconfig.exceptions.ItemAddException;
-import com.computacenter.carconfig.services.pool.SpecialEquipmentService;
+import com.computacenter.carconfig.services.base.SpecialEquipmentService;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/load/specialEquipment")
-public class SpecialEquipmentLoadController {
+public class SpecialEquipmentBaseController {
 
     private final SpecialEquipmentService specialEquipmentService;
 

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CarColorRepository extends JpaRepository<CarColor, Integer> {
+public interface CarColorRepository extends JpaRepository<CarColor, Long> {
     /**
      * Retrieve a color by its orderNumber when it is not marked as deleted.
      * The data model uses deleteFlag = 'N' (or null) to indicate active rows.

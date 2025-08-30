@@ -8,11 +8,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+    defer-datasource-initialization: true
     database-platform: "org.hibernate.dialect.PostgreSQLDialect"
-  #sql:
-    #init:
-     # data-locations: classpath:init/car_color.sql, classpath:init/car_rims.sql, classpath:init/car_engines.sql, classpath:init/special_equipment.sql
-      #mode: always
+  sql:
+    init:
+      data-locations: classpath:init/car_color.sql, classpath:init/car_rims.sql, classpath:init/car_engines.sql, classpath:init/special_equipment.sql
+      mode: always
   batch:
     jdbc:
       initialize-schema: "always"

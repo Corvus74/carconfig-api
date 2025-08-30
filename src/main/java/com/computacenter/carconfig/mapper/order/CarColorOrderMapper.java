@@ -2,7 +2,7 @@ package com.computacenter.carconfig.mapper.order;
 
 import com.computacenter.carconfig.dto.order.CarColorOrderDto;
 import com.computacenter.carconfig.entities.order.CarColorOrder;
-import com.computacenter.carconfig.mapper.CarColorMapper;
+import com.computacenter.carconfig.mapper.web.CarColorMapper;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = CarColorMapper.class)

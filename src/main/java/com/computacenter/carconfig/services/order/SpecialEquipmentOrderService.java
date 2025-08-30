@@ -4,13 +4,14 @@ import com.computacenter.carconfig.entities.OrderUser;
 import com.computacenter.carconfig.entities.base.SpecialEquipment;
 import com.computacenter.carconfig.entities.order.SpecialEquipmentOrder;
 import com.computacenter.carconfig.repository.order.SpecialEquipmentOrderRepository;
-import com.computacenter.carconfig.services.pool.SpecialEquipmentService;
+import com.computacenter.carconfig.services.base.SpecialEquipmentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -33,8 +34,9 @@ public class SpecialEquipmentOrderService {
     private SpecialEquipmentOrder createNewSpecialEquipmentOrderBySpecialEquipmentAndUser(SpecialEquipment specialEquipment, OrderUser orderUser) {
         var specialEquipmentOrder = new SpecialEquipmentOrder();
         specialEquipmentOrder.setSpecialEquipment(specialEquipment);
+        specialEquipmentOrder.setSpecialEquipmentOrderId(UUID.randomUUID().toString());
         specialEquipmentOrder.setCreatedBy(orderUser.getUserName());
-        specialEquipmentOrder.setModifiedBy(orderUser.getUserName());
+        specialEquipmentOrder.setUpdatedBy(orderUser.getUserName());
         specialEquipmentOrder.setOrderStatus(orderStatusService.createNewOrderStatusWithUser(orderUser));
         return specialEquipmentOrderRepository.save(specialEquipmentOrder);
     }

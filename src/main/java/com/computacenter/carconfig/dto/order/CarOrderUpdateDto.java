@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CarOrderUpdateDto {
-    private String orderId;
+    private String carOrderId;
     private String userMail;
     private String carEngineProductId;
     private String carRimsProductId;
