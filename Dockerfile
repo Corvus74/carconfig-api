@@ -11,7 +11,7 @@ COPY build.gradle.kts .
 
 # Ensure gradlew is executable
 RUN chmod +x ./gradlew
-
+RUN yum install -y findutils
 # Download dependencies (will cache unless build files change)
 RUN ./gradlew --no-daemon dependencies > /dev/null 2>&1 || true
 
