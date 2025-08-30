@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CarOrderStatusDto {
-    private OrderStatusEnum orderStatus;
+    private OrderStatusEnum currentStatus;
     private LocalDate shippingDate;
     private LocalDate deliveryDate;
 
