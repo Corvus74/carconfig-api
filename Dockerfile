@@ -1,6 +1,6 @@
 # Multi-stage Dockerfile for Spring Boot (Java 24)
 # Build stage
-FROM eclipse-temurin:24-jdk AS build
+FROM amazoncorretto:24-jdk AS build
 WORKDIR /workspace
 
 # Pre-copy build files for better caching
