@@ -1,88 +1,91 @@
-# GitLab CI/CD pipeline for building, testing, and pushing Docker image to AWS ECR
-# Requirements (set these CI/CD variables in your GitLab project/group):
-# - AWS_ACCESS_KEY_ID:      AWS access key id with permissions for ECR (ecr:*), STS, etc.
-# - AWS_SECRET_ACCESS_KEY:  AWS secret access key
-# - AWS_DEFAULT_REGION:     e.g. eu-central-1
-# - ECR_ACCOUNT_ID:         e.g. 123456789012 (used to build ECR_REGISTRY if not given)
-# - ECR_REPOSITORY:         e.g. carconfig-api (ECR repo name)
-# Optional overrides:
-# - ECR_REGISTRY:           e.g. 123456789012.dkr.ecr.eu-central-1.amazonaws.com
-# - DOCKER_BUILD_ARGS:      additional build args, e.g. "--build-arg SKIP_TESTS=true"
-#
-# The pipeline:
-# 1) test: run Gradle tests
-# 2) build_push: build Docker image (Java 24 runtime), login to ECR, and push tags
+# GitLab CI/CD pipeline for building, testing, and pushing a Docker image to AWS ECR.
+# This pipeline uses OIDC for secure authentication with AWS.
+
+# --- CI/CD Variable Requirements ---
+# Set these in your GitLab Project/Group settings under "CI/CD" -> "Variables":
+# - AWS_REGION:         The AWS region of your ECR repository (e.g., us-east-1).
+# - AWS_ROLE_ARN:       The ARN of the IAM Role that GitLab will assume.
+# - ECR_REGISTRY_URL:   The full URL of your ECR registry (e.g., 123456789012.dkr.ecr.us-east-1.amazonaws.com).
 
 stages:
   - test
-  - build_push
+  - build-and-push
 
 variables:
-  GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs=-Xmx2g"
-  GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
-  # Docker in Docker settings
-  DOCKER_DRIVER: overlay2
-  DOCKER_TLS_CERTDIR: "/certs"
+  # Define variables for consistency
+  ECR_REPOSITORY: "carconfig-api"
+  DOCKER_CONTEXT_PATH: "carconfig-api" # Path to the backend application
 
 # Cache Gradle directories between pipeline runs to speed up builds
 cache:
-  key: "$CI_PROJECT_NAME-gradle"
+  key:
+    files:
+      - $DOCKER_CONTEXT_PATH/build.gradle.kts
+      - $DOCKER_CONTEXT_PATH/settings.gradle.kts
   paths:
-    - .gradle/wrapper
-    - .gradle/caches
+    - $DOCKER_CONTEXT_PATH/.gradle/wrapper
+    - $DOCKER_CONTEXT_PATH/.gradle/caches
 
-# 1) Run unit tests with Gradle
-unit_test:
+# ========================================
+# Job 1: Run Unit and Integration Tests
+# ========================================
+test:
   stage: test
-  image: gradle:8.7.0-jdk17
+  # Use a JDK 24 image to match the Dockerfile build environment
+  image: gradle:8.8-jdk24
+  # Execute scripts from within the application's directory
+  working_dir: $DOCKER_CONTEXT_PATH
   script:
-    - gradle --version
+    - echo "Running tests with Gradle..."
     - ./gradlew --no-daemon clean test
   artifacts:
     when: always
     paths:
-      - build/reports/tests/
+      - $DOCKER_CONTEXT_PATH/build/reports/tests/
     expire_in: 1 week
 
-# 2) Build Docker image and push to AWS ECR
-build_and_push_image:
-  stage: build_push
-  image: docker:25.0.3-cli
+# =====================================================
+# Job 2: Build and Push Docker image (if tests pass)
+# =====================================================
+build-and-push:
+  stage: build-and-push
+  # Use an image that includes both Docker and AWS CLI tools
+  image:
+    name: amazon/aws-cli:2.15.26
+    entrypoint: [""]
   services:
-    - name: docker:25.0.3-dind
-      alias: docker
-  variables:
-    # Docker client will talk to the DinD service
-    DOCKER_HOST: tcp://docker:2376
+    # Enable Docker-in-Docker to build images
+    - docker:26.1-dind
   needs:
-    - job: unit_test
-      artifacts: false
+    # This job depends on the 'test' job completing successfully
+    - job: test
+  # Request a JWT from GitLab for OIDC authentication
+  id_tokens:
+    GITLAB_OIDC_TOKEN:
+      aud: https://gitlab.com
   before_script:
-    - apk add --no-cache aws-cli bash git
-    # Resolve ECR registry if not provided
+    - echo "Authenticating with AWS using OIDC..."
+    # Exchange the GitLab OIDC token for temporary AWS credentials
     - |
-      if [ -z "${ECR_REGISTRY}" ] && [ -n "${ECR_ACCOUNT_ID}" ] && [ -n "${AWS_DEFAULT_REGION}" ]; then
-        export ECR_REGISTRY="${ECR_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
-      fi
-      echo "Using ECR_REGISTRY=${ECR_REGISTRY}"
-      echo "Using ECR_REPOSITORY=${ECR_REPOSITORY}"
-    # Authenticate Docker to AWS ECR
-    - aws --version
-    - |
-      aws ecr get-login-password --region "$AWS_DEFAULT_REGION" \
-        | docker login --username AWS --password-stdin "$ECR_REGISTRY"
-    # Ensure repository exists
-    - |
-      aws ecr describe-repositories --repository-names "$ECR_REPOSITORY" --region "$AWS_DEFAULT_REGION" \
-        || aws ecr create-repository --repository-name "$ECR_REPOSITORY" --region "$AWS_DEFAULT_REGION"
+      export $(printf "AWS_ACCESS_KEY_ID=%s AWS_SECRET_ACCESS_KEY=%s AWS_SESSION_TOKEN=%s" \
+      $(aws sts assume-role-with-web-identity \
+      --role-arn "${AWS_ROLE_ARN}" \
+      --role-session-name "GitLabRunner-${CI_PIPELINE_ID}" \
+      --web-identity-token "${GITLAB_OIDC_TOKEN}" \
+      --duration-seconds 3600 \
+      --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' \
+      --output text))
+    - echo "Logging in to Amazon ECR..."
+    - aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY_URL}
   script:
-    - export IMAGE_NAME="${ECR_REGISTRY}/${ECR_REPOSITORY}"
-    - echo "Building image ${IMAGE_NAME}:${CI_COMMIT_SHORT_SHA}"
-    - docker build ${DOCKER_BUILD_ARGS} -t "${IMAGE_NAME}:${CI_COMMIT_SHORT_SHA}" -t "${IMAGE_NAME}:latest" .
-    - docker push "${IMAGE_NAME}:${CI_COMMIT_SHORT_SHA}"
-    - docker push "${IMAGE_NAME}:latest"
+    - echo "Building and tagging the Docker image..."
+    - IMAGE_TAG_SHA="${ECR_REGISTRY_URL}/${ECR_REPOSITORY}:${CI_COMMIT_SHORT_SHA}"
+    - IMAGE_TAG_LATEST="${ECR_REGISTRY_URL}/${ECR_REPOSITORY}:latest"
+    - docker build -t "${IMAGE_TAG_SHA}" -t "${IMAGE_TAG_LATEST}" "${DOCKER_CONTEXT_PATH}"
+    - echo "Pushing image to ECR..."
+    - docker push --all-tags "${ECR_REGISTRY_URL}/${ECR_REPOSITORY}"
+    - echo "Push complete."
+  # This job will only run on pushes to the 'main' branch
   rules:
-    - if: $CI_COMMIT_BRANCH
-      when: on_success
-    - if: $CI_COMMIT_TAG
-      when: on_success
+    - if: $CI_COMMIT_BRANCH == "main"
+    - |
