@@ -2,9 +2,15 @@ name: CI - Validate API
 
 # Dieser Workflow wird automatisch bei Pull Requests auf den main-Branch ausgeführt.
 on:
+  schedule:
+    - cron: '30 8 * * *'
+  push:
+    branches: [ "master" ]
+    # Publish semver tags as releases.
+    tags: [ 'v*.*.*' ]
   pull_request:
-    branches: [ main, master ]
-  workflow_dispatch: # Erlaubt auch manuelles Starten für Testzwecke
+    branches: [ "master" ]
+  workflow_dispatch:
 
 jobs:
   # =====================================================
@@ -26,8 +32,6 @@ jobs:
 
       - name: Build with Gradle (create JAR, skip tests)
         run: ./gradlew --no-daemon bootJar -x test
-        working-directory: ./carconfig-api
-
   # =====================================================
   # Schritt 2: Tests ausführen (abhängig von Schritt 1)
   # =====================================================
@@ -48,7 +52,6 @@ jobs:
 
       - name: Run tests with Gradle
         run: ./gradlew --no-daemon test
-        working-directory: ./carconfig-api
 
   # =====================================================
   # Schritt 3: Docker-Build validieren (abhängig von Schritt 2)
@@ -67,6 +70,6 @@ jobs:
       - name: Build Docker image (without pushing)
         uses: docker/build-push-action@v5
         with:
-          context: ./carconfig-api
+          context: .
           push: false # Wichtig: Nur bauen, nicht veröffentlichen
           tags: local-validation/carconfig-api:latest
