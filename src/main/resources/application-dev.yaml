@@ -21,3 +21,6 @@ server:
   port: 8090
   servlet:
     context-path: "/api"
+
+cors:
+  allowed-origins: "http://localhost:3000,http://localhost:4200"

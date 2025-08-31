@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-//@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping("/load/config")
 public class ConfigBaseExternalController {
 

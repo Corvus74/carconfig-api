@@ -14,7 +14,6 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-//@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping("/order")
 public class OrderController {
 
