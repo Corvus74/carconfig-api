@@ -1,0 +1,72 @@
+name: CI - Validate API
+
+# Dieser Workflow wird automatisch bei Pull Requests auf den main-Branch ausgeführt.
+on:
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch: # Erlaubt auch manuelles Starten für Testzwecke
+
+jobs:
+  # =====================================================
+  # Schritt 1: Anwendung bauen (kompilieren & JAR erstellen)
+  # =====================================================
+  build:
+    name: 1. Build API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 24
+        uses: actions/setup-java@v4
+        with:
+          java-version: '24'
+          distribution: 'corretto'
+          cache: 'gradle'
+
+      - name: Build with Gradle (create JAR, skip tests)
+        run: ./gradlew --no-daemon bootJar -x test
+        working-directory: ./carconfig-api
+
+  # =====================================================
+  # Schritt 2: Tests ausführen (abhängig von Schritt 1)
+  # =====================================================
+  test:
+    name: 2. Test API
+    needs: build # Läuft nur, wenn Job 'build' erfolgreich war
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 24
+        uses: actions/setup-java@v4
+        with:
+          java-version: '24'
+          distribution: 'corretto'
+          cache: 'gradle'
+
+      - name: Run tests with Gradle
+        run: ./gradlew --no-daemon test
+        working-directory: ./carconfig-api
+
+  # =====================================================
+  # Schritt 3: Docker-Build validieren (abhängig von Schritt 2)
+  # =====================================================
+  validate_docker_build:
+    name: 3. Validate API Docker Build
+    needs: test # Läuft nur, wenn Job 'test' erfolgreich war
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image (without pushing)
+        uses: docker/build-push-action@v5
+        with:
+          context: ./carconfig-api
+          push: false # Wichtig: Nur bauen, nicht veröffentlichen
+          tags: local-validation/carconfig-api:latest

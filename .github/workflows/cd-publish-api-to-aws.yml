@@ -1,0 +1,49 @@
+name: CD - Publish API to AWS ECR
+
+# Dieser Workflow wird NUR manuell über die Actions-UI ausgelöst.
+on:
+  workflow_dispatch:
+    inputs:
+      git_ref:
+        description: 'Git Branch oder Commit-SHA, der veröffentlicht werden soll'
+        required: true
+        default: 'master'
+
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  ECR_REPOSITORY: carconfig-api
+  DOCKER_CONTEXT: ./carconfig-api
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+
+jobs:
+  publish:
+    name: Build and Push API to AWS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout specific commit/branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.git_ref }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN }}
+          role-session-name: GitHubActionsECRPublish
+
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest $DOCKER_CONTEXT
+          docker push --all-tags $ECR_REGISTRY/$ECR_REPOSITORY
