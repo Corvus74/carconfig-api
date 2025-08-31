@@ -1,0 +1,52 @@
+name: CD - Publish API to GHCR
+
+# Dieser Workflow wird NUR manuell über die Actions-UI ausgelöst.
+on:
+  workflow_dispatch:
+    inputs:
+      git_ref:
+        description: 'Git Branch oder Commit-SHA, der veröffentlicht werden soll'
+        required: true
+        default: 'master'
+
+# Erforderliche Berechtigungen für das Pushen nach GHCR
+permissions:
+  contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+  # Der Image-Name wird aus dem Repository-Namen abgeleitet, z.B. mein-owner/mein-repo
+  IMAGE_NAME: ${{ github.repository }}
+  DOCKER_CONTEXT: .
+
+jobs:
+  publish:
+    name: Build and Push API to GHCR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout specific commit/branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.git_ref }}
+
+      - name: Log in to the GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ env.DOCKER_CONTEXT }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

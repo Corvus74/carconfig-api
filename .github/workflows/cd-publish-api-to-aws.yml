@@ -16,7 +16,7 @@ permissions:
 
 env:
   ECR_REPOSITORY: carconfig-api
-  DOCKER_CONTEXT: ./carconfig-api
+  DOCKER_CONTEXT: .
   AWS_REGION: ${{ secrets.AWS_REGION }}
 
 jobs:
