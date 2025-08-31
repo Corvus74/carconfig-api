@@ -30,6 +30,9 @@ jobs:
           distribution: 'corretto'
           cache: 'gradle'
 
+      - name: Make Gradle Executeable
+        run: chmod +x ./gradlew
+
       - name: Build with Gradle (create JAR, skip tests)
         run: ./gradlew --no-daemon bootJar -x test
   # =====================================================
@@ -49,6 +52,9 @@ jobs:
           java-version: '24'
           distribution: 'corretto'
           cache: 'gradle'
+
+      - name: Make Gradle Executeable
+        run: chmod +x ./gradlew
 
       - name: Run tests with Gradle
         run: ./gradlew --no-daemon test

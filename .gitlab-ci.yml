@@ -1,91 +1,68 @@
-# GitLab CI/CD pipeline for building, testing, and pushing a Docker image to AWS ECR.
-# This pipeline uses OIDC for secure authentication with AWS.
+# GitLab CI/CD pipeline for validating the carconfig-api application.
+# This pipeline mirrors the 3-step logic from the GitHub Actions CI workflow.
 
-# --- CI/CD Variable Requirements ---
-# Set these in your GitLab Project/Group settings under "CI/CD" -> "Variables":
-# - AWS_REGION:         The AWS region of your ECR repository (e.g., us-east-1).
-# - AWS_ROLE_ARN:       The ARN of the IAM Role that GitLab will assume.
-# - ECR_REGISTRY_URL:   The full URL of your ECR registry (e.g., 123456789012.dkr.ecr.us-east-1.amazonaws.com).
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 stages:
+  - build
   - test
-  - build-and-push
-
-variables:
-  # Define variables for consistency
-  ECR_REPOSITORY: "carconfig-api"
-  DOCKER_CONTEXT_PATH: "carconfig-api" # Path to the backend application
+  - validate_docker
 
 # Cache Gradle directories between pipeline runs to speed up builds
 cache:
   key:
     files:
-      - $DOCKER_CONTEXT_PATH/build.gradle.kts
-      - $DOCKER_CONTEXT_PATH/settings.gradle.kts
+      - build.gradle.kts
+      - settings.gradle.kts
   paths:
-    - $DOCKER_CONTEXT_PATH/.gradle/wrapper
-    - $DOCKER_CONTEXT_PATH/.gradle/caches
+    - .gradle/wrapper
+    - .gradle/caches
 
-# ========================================
-# Job 1: Run Unit and Integration Tests
-# ========================================
-test:
-  stage: test
+# =====================================================
+# Step 1: Build the application JAR
+# =====================================================
+build_app:
+  stage: build
   # Use a JDK 24 image to match the Dockerfile build environment
   image: gradle:8.8-jdk24
-  # Execute scripts from within the application's directory
-  working_dir: $DOCKER_CONTEXT_PATH
   script:
-    - echo "Running tests with Gradle..."
-    - ./gradlew --no-daemon clean test
-  artifacts:
+    - echo "Making gradlew executable..."
+    - chmod +x ./gradlew
+    - echo "Building the application JAR, skipping tests..."
+    - ./gradlew --no-daemon bootJar -x test
+
+# =====================================================
+# Step 2: Run tests
+# =====================================================
+test_app:
+  stage: test
+  image: gradle:8.8-jdk24
+  needs:
+    - build_app # Ensure this runs only after a successful build
+  script:
+    - echo "Making gradlew executable..."
+    - chmod +x ./gradlew
+    - echo "Running tests..."
+    - ./gradlew --no-daemon test
+  artifacts: # Save test reports for review
     when: always
     paths:
-      - $DOCKER_CONTEXT_PATH/build/reports/tests/
+      - build/reports/tests/
     expire_in: 1 week
 
 # =====================================================
-# Job 2: Build and Push Docker image (if tests pass)
+# Step 3: Validate the Docker build
 # =====================================================
-build-and-push:
-  stage: build-and-push
-  # Use an image that includes both Docker and AWS CLI tools
-  image:
-    name: amazon/aws-cli:2.15.26
-    entrypoint: [""]
+validate_docker_build:
+  stage: validate_docker
+  image: docker:26.1-cli # Use a Docker CLI image
   services:
-    # Enable Docker-in-Docker to build images
-    - docker:26.1-dind
+    - docker:26.1-dind # Enable Docker-in-Docker
   needs:
-    # This job depends on the 'test' job completing successfully
-    - job: test
-  # Request a JWT from GitLab for OIDC authentication
-  id_tokens:
-    GITLAB_OIDC_TOKEN:
-      aud: https://gitlab.com
-  before_script:
-    - echo "Authenticating with AWS using OIDC..."
-    # Exchange the GitLab OIDC token for temporary AWS credentials
-    - |
-      export $(printf "AWS_ACCESS_KEY_ID=%s AWS_SECRET_ACCESS_KEY=%s AWS_SESSION_TOKEN=%s" \
-      $(aws sts assume-role-with-web-identity \
-      --role-arn "${AWS_ROLE_ARN}" \
-      --role-session-name "GitLabRunner-${CI_PIPELINE_ID}" \
-      --web-identity-token "${GITLAB_OIDC_TOKEN}" \
-      --duration-seconds 3600 \
-      --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' \
-      --output text))
-    - echo "Logging in to Amazon ECR..."
-    - aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY_URL}
+    - test_app # Ensure this runs only after successful tests
   script:
-    - echo "Building and tagging the Docker image..."
-    - IMAGE_TAG_SHA="${ECR_REGISTRY_URL}/${ECR_REPOSITORY}:${CI_COMMIT_SHORT_SHA}"
-    - IMAGE_TAG_LATEST="${ECR_REGISTRY_URL}/${ECR_REPOSITORY}:latest"
-    - docker build -t "${IMAGE_TAG_SHA}" -t "${IMAGE_TAG_LATEST}" "${DOCKER_CONTEXT_PATH}"
-    - echo "Pushing image to ECR..."
-    - docker push --all-tags "${ECR_REGISTRY_URL}/${ECR_REPOSITORY}"
-    - echo "Push complete."
-  # This job will only run on pushes to the 'main' branch
-  rules:
-    - if: $CI_COMMIT_BRANCH == "main"
-    - |
+    - echo "Validating the Docker build process..."
+    - docker build -t local-validation/carconfig-api:latest .
