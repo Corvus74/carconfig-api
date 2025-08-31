@@ -9,16 +9,18 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "order_status")
 public class OrderStatus extends SimpleAuditClasses {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @Column(name = "order_status_id")
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID orderStatusId;
 
     @Column(name = "current_status")
     private OrderStatusEnum currentStatus;
@@ -38,11 +40,11 @@ public class OrderStatus extends SimpleAuditClasses {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         OrderStatus that = (OrderStatus) o;
-        return Objects.equals(id, that.id) && currentStatus == that.currentStatus && Objects.equals(shippingDate, that.shippingDate) && Objects.equals(deliveryDate, that.deliveryDate) && Objects.equals(deleteFlag, that.deleteFlag);
+        return Objects.equals(orderStatusId, that.orderStatusId) && currentStatus == that.currentStatus && Objects.equals(shippingDate, that.shippingDate) && Objects.equals(deliveryDate, that.deliveryDate) && Objects.equals(deleteFlag, that.deleteFlag);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), id, currentStatus, shippingDate, deliveryDate, deleteFlag);
+        return Objects.hash(super.hashCode(), orderStatusId, currentStatus, shippingDate, deliveryDate, deleteFlag);
     }
 }
