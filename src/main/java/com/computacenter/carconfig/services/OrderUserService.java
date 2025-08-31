@@ -67,7 +67,7 @@ public class OrderUserService {
     private OrderUser createAnonymousUser() {
         var orderUser = new OrderUser();
         orderUser.setUserId(LocalDateTime.now().toString());
-        orderUser.setUserName("annonymous");
+        orderUser.setUserName("unknown");
         orderUser.setValid(true);
         return orderUserRepository.save(orderUser);
     }
