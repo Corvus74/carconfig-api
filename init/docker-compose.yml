@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database Service
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=car_config_db'
+      - 'POSTGRES_PASSWORD=secret123'
+      - 'POSTGRES_USER=myuserHidden123'
+    ports:
+      - "5432:5432" 
+    volumes:
+      - postgres_data:/var/lib/postgresql/data 
+
+
+  backend:
+    build:
+      context: ./carconfig-api 
+    ports:
+      - "8090:8090" 
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/car_config_db
+      - SPRING_DATASOURCE_USERNAME=myuserHidden123
+      - SPRING_DATASOURCE_PASSWORD=secret123
+
+  frontend:
+    build:
+      context: ./carconfig-app
+    environment:
+      API_URL: http://localhost:8090/api
+      ORDER_API_URL: http://localhost:4200/order
+    ports:
+      - "4200:8080"
+
+volumes:
+  postgres_data:
+    driver: local
