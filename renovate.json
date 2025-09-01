@@ -5,6 +5,11 @@
   ],
   "packageRules": [
     {
+      "description": "Automatically merge minor and patch updates for non-major dependencies",
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    },
+    {
       "description": "Group all GitHub Actions updates together",
       "matchManagers": ["github-actions"],
       "groupName": "github-actions"
