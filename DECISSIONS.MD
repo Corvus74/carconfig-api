@@ -18,4 +18,5 @@
 - Github Actions is a good option for this.
 
 ## Testing
-- JUnit5 is a good option for this.
+- JUnit5 is a good option for this
+.

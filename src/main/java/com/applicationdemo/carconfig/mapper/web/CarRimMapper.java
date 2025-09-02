@@ -1,0 +1,15 @@
+package com.applicationdemo.carconfig.mapper.web;
+
+import com.applicationdemo.carconfig.entities.base.CarRim;
+import com.applicationdemo.carconfig.dto.web.CarRimDto;
+import org.mapstruct.*;
+
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
+public interface CarRimMapper {
+    CarRim toEntity(CarRimDto carRimDto);
+
+    CarRimDto toDto(CarRim carRim);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    CarRim partialUpdate(CarRimDto carRimDto, @MappingTarget CarRim carRim);
+}
