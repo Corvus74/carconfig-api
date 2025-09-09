@@ -27,7 +27,7 @@ cache:
 build_app:
   stage: build
   # Use a JDK 24 image to match the Dockerfile build environment
-  image: gradle:8.8-jdk24
+  image: gradle:8.14-jdk24
   script:
     - echo "Making gradlew executable..."
     - chmod +x ./gradlew
@@ -39,7 +39,7 @@ build_app:
 # =====================================================
 test_app:
   stage: test
-  image: gradle:8.8-jdk24
+  image: gradle:8.14-jdk24
   needs:
     - build_app # Ensure this runs only after a successful build
   script:
