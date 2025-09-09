@@ -23,7 +23,7 @@ repositories {
     mavenCentral()
 }
 var mapstructVersion ="1.6.3"
-var swaggerOpenapiVersion="2.8.9"
+var swaggerOpenapiVersion="2.8.13"
 var apacheCommons="3.18.0"
 
 dependencies {
