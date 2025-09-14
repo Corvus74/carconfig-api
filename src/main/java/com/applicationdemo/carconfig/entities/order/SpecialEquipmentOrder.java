@@ -29,6 +29,7 @@ public class SpecialEquipmentOrder extends SimpleAuditClasses {
     private SpecialEquipment specialEquipment;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_status_id")
     private OrderStatus orderStatus;
 
     @Size(max = 1)

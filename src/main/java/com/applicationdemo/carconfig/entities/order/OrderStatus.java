@@ -22,6 +22,7 @@ public class OrderStatus extends SimpleAuditClasses {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID orderStatusId;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "current_status")
     private OrderStatusEnum currentStatus;
 

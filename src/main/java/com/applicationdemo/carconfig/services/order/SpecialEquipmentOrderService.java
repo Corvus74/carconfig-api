@@ -43,14 +43,11 @@ public class SpecialEquipmentOrderService {
     @Transactional
     public boolean invalidateSpecialEquipmentIfProductIdDiffers(List<SpecialEquipmentOrder> existingOrders, List<String> newProductIds) {
         var oldIsEmpty= Objects.isNull(existingOrders) || existingOrders.isEmpty();
-        var newIsEmpty= Objects.isNull(newProductIds) || newProductIds.isEmpty();
-        // case old empty and new not empty nothing to invalidate
-        if(oldIsEmpty && !newIsEmpty){
-            invalidateAllOldOrders(existingOrders);
+        if(oldIsEmpty){
             return true;
         }
         var oldProductIds = existingOrders.stream().map(SpecialEquipmentOrder::getSpecialEquipment).map(SpecialEquipment::getProductId).toList();
-        if(new HashSet<>(oldProductIds).containsAll(newProductIds)){
+        if(oldProductIds.equals(newProductIds)){
             return false;
         }
         return invalidateSingleEquipmentIdsDiffer(existingOrders,newProductIds);

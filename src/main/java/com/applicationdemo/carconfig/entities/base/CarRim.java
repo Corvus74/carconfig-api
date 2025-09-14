@@ -18,15 +18,14 @@ public class CarRim extends SimpleAuditClasses {
     private Long id;
 
     @Size(max = 20)
-    @Column(name = "order_number", length = 10)
+    @Column(name = "order_number", length = 20)
     private String orderNumber;
 
     @Size(max = 20)
     @Column(name = "rim_name", length = 20)
     private String rimName;
 
-    @Size(max = 20)
-    @Column(name = "inner_diameter", length = 20)
+    @Column(name = "inner_diameter")
     private Integer innerDiameter;
 
     @Size(max = 20)

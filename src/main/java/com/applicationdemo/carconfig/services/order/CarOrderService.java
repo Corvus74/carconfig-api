@@ -6,7 +6,7 @@ import com.applicationdemo.carconfig.entities.OrderUser;
 import com.applicationdemo.carconfig.entities.order.CarOrder;
 import com.applicationdemo.carconfig.entities.order.SpecialEquipmentOrder;
 import com.applicationdemo.carconfig.exceptions.OrderException;
-import com.applicationdemo.carconfig.mapper.order.OrderMapper;
+import com.applicationdemo.carconfig.mapper.order.CarOrderMapper;
 import com.applicationdemo.carconfig.repository.order.OrderRepository;
 import com.applicationdemo.carconfig.services.OrderUserService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class CarOrderService {
     private final OrderRepository orderRepository;
     private final OrderUserService orderUserService;
 
-    private final OrderMapper orderMapper;
+    private final CarOrderMapper orderMapper;
 
     private final CarColorOrderService carColorOrderService;
     private final CarEngineOrderService carEngineOrderService;
