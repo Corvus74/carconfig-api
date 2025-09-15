@@ -2,7 +2,7 @@ plugins {
     java
     id("org.springframework.boot") version "3.5.5"
     id("io.spring.dependency-management") version "1.1.7"
-    id("jacoco")
+    id("org.sonarqube") version "6.3.1.5724"
 }
 
 group = "com.carconfig"
@@ -58,6 +58,17 @@ dependencies {
     "mockitoAgent"("org.mockito:mockito-core:$mockitoVersion")
 }
 
+sonarqube {
+    properties {
+        property("sonar.projectKey", "carconfig-api")
+        property("sonar.organization", "corvus74") // <-- CHANGE THIS
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.projectKey", "Corvus74_carconfig-api")
+        property("sonar.java.coveragePlugin", "jacoco")
+        property("sonar.coverage.jacoco.xmlReportPaths", "${layout.buildDirectory}/reports/jacoco/test/jacocoTestReport.xml")
+    }
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
     // Configure the JVM arguments for the test task to use the Mockito agent
@@ -65,29 +76,16 @@ tasks.withType<Test> {
     // This tells Spring Boot to load application-test.yml for tests.
     systemProperties.put("spring.config.name", "application-test")
 }
-jacoco {
-    toolVersion = "0.8.13"
+
+// Ensure JaCoCo XML report is generated for SonarQube
+tasks.withType<org.gradle.api.tasks.testing.Test> {
+    finalizedBy(tasks.withType<org.gradle.testing.jacoco.tasks.JacocoReport>()) // report is always generated after tests run
 }
-tasks.jacocoTestReport {
-    dependsOn(tasks.test) // Run after tests
+
+tasks.withType<org.gradle.testing.jacoco.tasks.JacocoReport> {
     reports {
         xml.required.set(true)
         csv.required.set(false)
-        html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco"))
+        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
     }
-}
-tasks.jacocoTestCoverageVerification {
-    dependsOn(tasks.jacocoTestReport) // Run after the report is generated
-    violationRules {
-        rule {
-            limit {
-                minimum = "0.80".toBigDecimal() // Set minimum line coverage to 80%
-            }
-        }
-    }
-}
-
-// Make the standard 'check' task depend on the coverage verification
-tasks.check {
-    dependsOn(tasks.jacocoTestCoverageVerification)
 }
