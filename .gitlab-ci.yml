@@ -58,9 +58,9 @@ test_app:
 # =====================================================
 validate_docker_build:
   stage: validate_docker
-  image: docker:26.1-cli # Use a Docker CLI image
+  image: docker:28.4-cli # Use a Docker CLI image
   services:
-    - docker:26.1-dind # Enable Docker-in-Docker
+    - docker:28.4-dind # Enable Docker-in-Docker
   needs:
     - test_app # Ensure this runs only after successful tests
   script:
