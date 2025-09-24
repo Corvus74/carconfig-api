@@ -1,6 +1,5 @@
 name: CD - Publish API to AWS ECR
 
-# Dieser Workflow wird NUR manuell über die Actions-UI ausgelöst.
 on:
   workflow_dispatch:
     inputs:

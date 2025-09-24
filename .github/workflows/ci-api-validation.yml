@@ -1,6 +1,5 @@
 name: CI - Validate API
 
-# Dieser Workflow wird automatisch bei Pull Requests auf den main-Branch ausgeführt.
 on:
   schedule:
     - cron: '30 8 * * *'
@@ -40,7 +39,7 @@ jobs:
   # =====================================================
   test:
     name: 2. Test API
-    needs: build # Läuft nur, wenn Job 'build' erfolgreich war
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -64,7 +63,7 @@ jobs:
   # =====================================================
   validate_docker_build:
     name: 3. Validate API Docker Build
-    needs: test # Läuft nur, wenn Job 'test' erfolgreich war
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -77,5 +76,5 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          push: false # Wichtig: Nur bauen, nicht veröffentlichen
+          push: false
           tags: local-validation/carconfig-api:latest
