@@ -1,4 +1,35 @@
 -- This script creates the initial database schema for the carconfig application.
+-- It includes DROP statements to ensure a clean slate on first run.
+
+-- Drop join table first due to foreign key constraints
+DROP TABLE IF EXISTS car_config_special_equipments_group CASCADE;
+
+-- Drop tables with foreign keys
+DROP TABLE IF EXISTS car_order CASCADE;
+DROP TABLE IF EXISTS car_colors_order CASCADE;
+DROP TABLE IF EXISTS car_engine_order CASCADE;
+DROP TABLE IF EXISTS car_rims_order CASCADE;
+DROP TABLE IF EXISTS special_equipment_order CASCADE;
+
+-- Drop base and user tables
+DROP TABLE IF EXISTS car_color CASCADE;
+DROP TABLE IF EXISTS car_engine CASCADE;
+DROP TABLE IF EXISTS car_rim CASCADE;
+DROP TABLE IF EXISTS special_equipment CASCADE;
+DROP TABLE IF EXISTS orders_user CASCADE;
+DROP TABLE IF EXISTS order_status CASCADE;
+
+-- Drop sequences
+DROP SEQUENCE IF EXISTS car_color_seq;
+DROP SEQUENCE IF EXISTS car_engine_seq;
+DROP SEQUENCE IF EXISTS car_rim_seq;
+DROP SEQUENCE IF EXISTS car_rims_order_seq;
+DROP SEQUENCE IF EXISTS special_equipment_seq;
+DROP SEQUENCE IF EXISTS car_colors_order_seq;
+DROP SEQUENCE IF EXISTS car_engine_order_seq;
+DROP SEQUENCE IF EXISTS car_order_seq;
+DROP SEQUENCE IF EXISTS orders_user_seq;
+DROP SEQUENCE IF EXISTS special_equipment_order_seq;
 
 -- Create sequence for entities if not using AUTO
 CREATE SEQUENCE IF NOT EXISTS car_color_seq START WITH 1 INCREMENT BY 50;

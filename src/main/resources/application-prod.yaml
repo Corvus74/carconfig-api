@@ -4,6 +4,8 @@ spring:
   datasource:
     url: ${DATABASE_URL}
     driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true
   jpa:
     hibernate:
       ddl-auto: validate
