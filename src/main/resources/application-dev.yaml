@@ -7,7 +7,7 @@ spring:
     password: "secret123"
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     defer-datasource-initialization: true
     database-platform: "org.hibernate.dialect.PostgreSQLDialect"
   sql:
@@ -24,3 +24,13 @@ server:
 
 cors:
   allowed-origins: "http://localhost:3000,http://localhost:4200"
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE

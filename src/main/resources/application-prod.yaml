@@ -2,24 +2,22 @@ spring:
   application:
     name: carconfig
   datasource:
-    url: "jdbc:postgresql://localhost:5432/car_config_db"
-    username: "myuserHidden123"
-    password: "secret123"
+    url: ${DATABASE_URL}
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create
-    defer-datasource-initialization: true
-    database-platform: "org.hibernate.dialect.PostgreSQLDialect"
-  sql:
-    init:
-      data-locations: classpath:init/car_color.sql, classpath:init/car_rims.sql, classpath:init/car_engines.sql, classpath:init/special_equipment.sql
-      mode: always
-  batch:
-    jdbc:
-      initialize-schema: "always"
+      ddl-auto: validate
 server:
   port: 8090
   servlet:
     context-path: "/api"
-cors:
-  allowed-origins: "http://localhost:3000,http://localhost:4200"
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE

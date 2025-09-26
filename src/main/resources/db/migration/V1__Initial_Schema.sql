@@ -1,0 +1,186 @@
+-- This script creates the initial database schema for the carconfig application.
+
+-- Create sequence for entities if not using AUTO
+CREATE SEQUENCE IF NOT EXISTS car_color_seq START WITH 1 INCREMENT BY 50;
+CREATE SEQUENCE IF NOT EXISTS car_engine_seq START WITH 1 INCREMENT BY 50;
+CREATE SEQUENCE IF NOT EXISTS car_rim_seq START WITH 1 INCREMENT BY 50;
+CREATE SEQUENCE IF NOT EXISTS car_rims_order_seq START WITH 1 INCREMENT BY 50;
+CREATE SEQUENCE IF NOT EXISTS special_equipment_seq START WITH 1 INCREMENT BY 50;
+CREATE SEQUENCE IF NOT EXISTS car_colors_order_seq START WITH 1 INCREMENT BY 50;
+CREATE SEQUENCE IF NOT EXISTS car_engine_order_seq START WITH 1 INCREMENT BY 50;
+CREATE SEQUENCE IF NOT EXISTS car_order_seq START WITH 1 INCREMENT BY 50;
+CREATE SEQUENCE IF NOT EXISTS orders_user_seq START WITH 1 INCREMENT BY 50;
+CREATE SEQUENCE IF NOT EXISTS special_equipment_order_seq START WITH 1 INCREMENT BY 50;
+
+-- Base configuration tables
+CREATE TABLE car_color (
+    id BIGINT NOT NULL PRIMARY KEY,
+    created_at TIMESTAMP WITHOUT TIME ZONE,
+    updated_at TIMESTAMP WITHOUT TIME ZONE,
+    created_by VARCHAR(255),
+    updated_by VARCHAR(255),
+    order_number VARCHAR(10),
+    color_name VARCHAR(20),
+    description VARCHAR(400),
+    product_id VARCHAR(20),
+    material_type VARCHAR(255),
+    painting_type VARCHAR(255),
+    color_code_hex VARCHAR(10),
+    price INTEGER,
+    delete_flag VARCHAR(1)
+);
+
+CREATE TABLE car_engine (
+    id BIGINT NOT NULL PRIMARY KEY,
+    created_at TIMESTAMP WITHOUT TIME ZONE,
+    updated_at TIMESTAMP WITHOUT TIME ZONE,
+    created_by VARCHAR(255),
+    updated_by VARCHAR(255),
+    order_number VARCHAR(10),
+    description VARCHAR(400),
+    fuel_type VARCHAR(20),
+    engine_type VARCHAR(255),
+    product_id VARCHAR(20),
+    model VARCHAR(20),
+    price INTEGER,
+    car_name VARCHAR(255),
+    displacement_l NUMERIC(4, 2),
+    cylinders INTEGER,
+    horsepower_kw NUMERIC(6, 2),
+    torque_nm NUMERIC(6, 2),
+    drivetrain VARCHAR(50),
+    co2 NUMERIC(19, 2),
+    delete_flag VARCHAR(1)
+);
+
+CREATE TABLE car_rim (
+    id BIGINT NOT NULL PRIMARY KEY,
+    created_at TIMESTAMP WITHOUT TIME ZONE,
+    updated_at TIMESTAMP WITHOUT TIME ZONE,
+    created_by VARCHAR(255),
+    updated_by VARCHAR(255),
+    order_number VARCHAR(10),
+    rim_name VARCHAR(20),
+    inner_diameter INTEGER,
+    model VARCHAR(20),
+    description VARCHAR(400),
+    product_id VARCHAR(20),
+    price INTEGER,
+    delete_flag VARCHAR(1)
+);
+
+CREATE TABLE special_equipment (
+    id BIGINT NOT NULL PRIMARY KEY,
+    created_at TIMESTAMP WITHOUT TIME ZONE,
+    updated_at TIMESTAMP WITHOUT TIME ZONE,
+    created_by VARCHAR(255),
+    updated_by VARCHAR(255),
+    order_number VARCHAR(20),
+    category_type VARCHAR(20),
+    equipment_name VARCHAR(30),
+    description VARCHAR(400),
+    product_id VARCHAR(20),
+    equipment_location VARCHAR(255),
+    price INTEGER,
+    delete_flag VARCHAR(1)
+);
+
+-- User and Order Status tables
+CREATE TABLE orders_user (
+    id BIGINT NOT NULL PRIMARY KEY,
+    created_at TIMESTAMP WITHOUT TIME ZONE,
+    updated_at TIMESTAMP WITHOUT TIME ZONE,
+    created_by VARCHAR(255),
+    updated_by VARCHAR(255),
+    user_id VARCHAR(40) NOT NULL,
+    user_name VARCHAR(20),
+    email VARCHAR(20),
+    is_valid BOOLEAN,
+    delete_flag VARCHAR(1)
+);
+
+CREATE TABLE order_status (
+    order_status_id UUID NOT NULL PRIMARY KEY,
+    created_at TIMESTAMP WITHOUT TIME ZONE,
+    updated_at TIMESTAMP WITHOUT TIME ZONE,
+    created_by VARCHAR(255),
+    updated_by VARCHAR(255),
+    current_status VARCHAR(255),
+    shipping_date DATE,
+    delivery_date DATE,
+    delete_flag VARCHAR(1)
+);
+
+-- Sub-order tables with foreign keys
+CREATE TABLE car_colors_order (
+    id BIGINT NOT NULL PRIMARY KEY,
+    created_at TIMESTAMP WITHOUT TIME ZONE,
+    updated_at TIMESTAMP WITHOUT TIME ZONE,
+    created_by VARCHAR(255),
+    updated_by VARCHAR(255),
+    car_color_order_id VARCHAR(40),
+    car_color_id BIGINT REFERENCES car_color(id),
+    order_status_id UUID REFERENCES order_status(order_status_id),
+    delete_flag VARCHAR(1)
+);
+
+CREATE TABLE car_engine_order (
+    id BIGINT NOT NULL PRIMARY KEY,
+    created_at TIMESTAMP WITHOUT TIME ZONE,
+    updated_at TIMESTAMP WITHOUT TIME ZONE,
+    created_by VARCHAR(255),
+    updated_by VARCHAR(255),
+    car_engine_order_id VARCHAR(40),
+    car_engine_id BIGINT REFERENCES car_engine(id),
+    order_status_id UUID REFERENCES order_status(order_status_id),
+    delete_flag VARCHAR(1)
+);
+
+CREATE TABLE car_rims_order (
+    id BIGINT NOT NULL PRIMARY KEY,
+    created_at TIMESTAMP WITHOUT TIME ZONE,
+    updated_at TIMESTAMP WITHOUT TIME ZONE,
+    created_by VARCHAR(255),
+    updated_by VARCHAR(255),
+    car_rim_order_id VARCHAR(40),
+    car_rim_id BIGINT REFERENCES car_rim(id),
+    order_status_id UUID REFERENCES order_status(order_status_id),
+    delete_flag VARCHAR(1)
+);
+
+CREATE TABLE special_equipment_order (
+    id BIGINT NOT NULL PRIMARY KEY,
+    created_at TIMESTAMP WITHOUT TIME ZONE,
+    updated_at TIMESTAMP WITHOUT TIME ZONE,
+    created_by VARCHAR(255),
+    updated_by VARCHAR(255),
+    special_equipment_order_id VARCHAR(40),
+    special_equipment_id BIGINT REFERENCES special_equipment(id),
+    order_status_id UUID REFERENCES order_status(order_status_id),
+    delete_flag VARCHAR(1)
+);
+
+-- Main order table
+CREATE TABLE car_order (
+    id BIGINT NOT NULL PRIMARY KEY,
+    created_at TIMESTAMP WITHOUT TIME ZONE,
+    updated_at TIMESTAMP WITHOUT TIME ZONE,
+    created_by VARCHAR(255),
+    updated_by VARCHAR(255),
+    car_order_id VARCHAR(40),
+    order_user_id BIGINT REFERENCES orders_user(id),
+    car_engine_order_id BIGINT REFERENCES car_engine_order(id),
+    car_rim_order_id BIGINT REFERENCES car_rims_order(id),
+    car_color_order_id BIGINT REFERENCES car_colors_order(id),
+    order_status_id UUID REFERENCES order_status(order_status_id),
+    description VARCHAR(400),
+    total_price INTEGER,
+    delete_flag VARCHAR(1)
+);
+
+-- Join table for many-to-many relationship
+CREATE TABLE car_config_special_equipments_group (
+    car_order_id BIGINT NOT NULL REFERENCES car_order(id),
+    special_equipment_order_id BIGINT NOT NULL REFERENCES special_equipment_order(id),
+    PRIMARY KEY (car_order_id, special_equipment_order_id)
+);
