@@ -22,18 +22,18 @@ public class OrderUser extends SimpleAuditClasses {
     private String userId;
 
     @Size(max = 20)
-    @Column(name = "user_name", length = 20)
+    @Column(name = "user_name")
     private String userName;
 
     @Size(max = 20)
-    @Column(name = "email", length = 20)
+    @Column(name = "email")
     private String email;
 
     @Column(name = "is_valid")
     private boolean isValid;
 
     @Size(max = 1)
-    @Column(name = "delete_flag", length = 1)
+    @Column(name = "delete_flag")
     private String deleteFlag;
 
 

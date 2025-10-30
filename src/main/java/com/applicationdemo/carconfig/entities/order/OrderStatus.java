@@ -33,7 +33,7 @@ public class OrderStatus extends SimpleAuditClasses {
     private LocalDate deliveryDate;
 
     @Size(max = 1)
-    @Column(name = "delete_flag", length = 1)
+    @Column(name = "delete_flag")
     private String deleteFlag;
 
     @Override

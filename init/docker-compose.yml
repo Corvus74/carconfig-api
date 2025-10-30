@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   # PostgreSQL Database Service
@@ -22,17 +21,19 @@ services:
     depends_on:
       - postgres
     environment:
-      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_PROFILES_ACTIVE=prod
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/car_config_db
       - SPRING_DATASOURCE_USERNAME=myuserHidden123
       - SPRING_DATASOURCE_PASSWORD=secret123
+      - CORS_ALLOWED-ORIGINS=http://localhost:4200
 
   frontend:
     build:
       context: ./carconfig-app
     environment:
-      API_URL: http://localhost:8090/api
-      ORDER_API_URL: http://localhost:4200/order
+      API_URL: http://backend:8090/api
+      ORDER_API_URL: http://frontend:4200/order
+      PRODUCT_VIEW_API_URL: http://frontend:4200/product
     ports:
       - "4200:8080"
 

@@ -1,6 +1,6 @@
 # Multi-stage Dockerfile for Spring Boot (Java 24)
 # Build stage
-FROM amazoncorretto:24-jdk AS build
+FROM amazoncorretto:25-jdk AS build
 WORKDIR /workspace
 
 # Pre-copy build files for better caching
@@ -20,7 +20,7 @@ COPY src src
 RUN ./gradlew --no-daemon clean bootJar -x test
 
 # Runtime stage
-FROM eclipse-temurin:24-jre
+FROM amazoncorretto:25
 WORKDIR /app
 
 # Copy the jar built in the previous stage

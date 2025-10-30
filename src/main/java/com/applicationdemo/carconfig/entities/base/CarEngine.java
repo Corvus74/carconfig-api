@@ -21,26 +21,26 @@ public class CarEngine extends SimpleAuditClasses {
     private Long id;
 
     @Size(max = 20)
-    @Column(name = "order_number", length = 10)
+    @Column(name = "order_number")
     private String orderNumber;
 
     @Size(max = 400)
-    @Column(name = "description", length = 400)
+    @Column(name = "description")
     private String description;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "fuel_type", length = 20)
+    @Column(name = "fuel_type")
     private FuelType fuelType;
 
     @Column(name = "engine_type")
     private String engineType;
 
     @Size(max = 20)
-    @Column(name = "product_id", length = 20)
+    @Column(name = "product_id")
     private String productId;
 
     @Size(max = 20)
-    @Column(name = "model", length = 20)
+    @Column(name = "model")
     private String model;
 
     @Column(name = "price")
@@ -70,7 +70,7 @@ public class CarEngine extends SimpleAuditClasses {
     private BigDecimal co2;
 
     @Size(max = 1)
-    @Column(name = "delete_flag", length = 1)
+    @Column(name = "delete_flag")
     private String deleteFlag;
 
     @Override

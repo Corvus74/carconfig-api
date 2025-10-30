@@ -33,7 +33,7 @@ public class CarColorOrder extends SimpleAuditClasses {
     private OrderStatus orderStatus;
 
     @Size(max = 1)
-    @Column(name = "delete_flag", length = 1)
+    @Column(name = "delete_flag")
     private String deleteFlag;
 
     @Override

@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class SpecialEquipmentLoadDto {
     @Size(max = 20)
     private String orderNumber;
-    @Size(max = 10)
+    @Size(max = 30)
     private String equipmentName;
     private @Size(max = 400) String description;
     private @Size(max = 20) String productId;

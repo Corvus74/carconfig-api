@@ -18,33 +18,33 @@ public class CarRim extends SimpleAuditClasses {
     private Long id;
 
     @Size(max = 20)
-    @Column(name = "order_number", length = 20)
+    @Column(name = "order_number")
     private String orderNumber;
 
     @Size(max = 20)
-    @Column(name = "rim_name", length = 20)
+    @Column(name = "rim_name")
     private String rimName;
 
     @Column(name = "inner_diameter")
     private Integer innerDiameter;
 
     @Size(max = 20)
-    @Column(name = "model", length = 20)
+    @Column(name = "model")
     private String model;
 
     @Size(max = 400)
-    @Column(name = "description", length = 400)
+    @Column(name = "description")
     private String description;
 
     @Size(max = 20)
-    @Column(name = "product_id", length = 20)
+    @Column(name = "product_id")
     private String productId;
 
     @Column(name = "price")
     private Integer price;
 
     @Size(max = 1)
-    @Column(name = "delete_flag", length = 1)
+    @Column(name = "delete_flag")
     private String deleteFlag;
 
     @Override

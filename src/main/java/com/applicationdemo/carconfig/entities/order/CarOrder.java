@@ -61,7 +61,7 @@ public class CarOrder extends SimpleAuditClasses {
     private List<SpecialEquipmentOrder> specialEquipmentOrders;
 
     @Size(max = 1)
-    @Column(name = "delete_flag", length = 1)
+    @Column(name = "delete_flag")
     private String deleteFlag;
 
     @Override

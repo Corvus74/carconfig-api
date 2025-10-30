@@ -21,23 +21,23 @@ public class SpecialEquipment extends SimpleAuditClasses {
     private Long id;
 
     @Size(max = 20)
-    @Column(name = "order_number", length = 20)
+    @Column(name = "order_number")
     private String orderNumber;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "category_type", length = 20)
+    @Column(name = "category_type")
     private CategoryType categoryType;
 
     @Size(max = 30)
-    @Column(name = "equipment_name", length = 30)
+    @Column(name = "equipment_name")
     private String equipmentName;
 
     @Size(max = 400)
-    @Column(name = "description", length = 400)
+    @Column(name = "description")
     private String description;
 
     @Size(max = 20)
-    @Column(name = "product_id", length = 20)
+    @Column(name = "product_id")
     private String productId;
 
     @Enumerated(EnumType.STRING)
@@ -48,7 +48,7 @@ public class SpecialEquipment extends SimpleAuditClasses {
     private Integer price;
 
     @Size(max = 1)
-    @Column(name = "delete_flag", length = 1)
+    @Column(name = "delete_flag")
     private String deleteFlag;
 
     @Override

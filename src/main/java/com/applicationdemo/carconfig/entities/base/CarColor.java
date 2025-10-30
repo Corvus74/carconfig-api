@@ -27,19 +27,19 @@ public class CarColor extends SimpleAuditClasses {
     private Long id;
 
     @Size(max = 20)
-    @Column(name = "order_number", length = 10)
+    @Column(name = "order_number")
     private String orderNumber;
 
     @Size(max = 20)
-    @Column(name = "color_name", length = 20)
+    @Column(name = "color_name")
     private String colorName;
 
     @Size(max = 400)
-    @Column(name = "description", length = 400)
+    @Column(name = "description")
     private String description;
 
     @Size(max = 20)
-    @Column(name = "product_id", length = 20)
+    @Column(name = "product_id")
     private String productId;
 
     @Enumerated(EnumType.STRING)
