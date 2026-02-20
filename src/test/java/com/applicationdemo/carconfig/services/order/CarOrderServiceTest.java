@@ -1,12 +1,12 @@
 package com.applicationdemo.carconfig.services.order;
 
+import com.applicationdemo.carconfig.domain.order.*;
 import com.applicationdemo.carconfig.dto.order.CarOrderDto;
 import com.applicationdemo.carconfig.dto.order.CarOrderUpdateDto;
-import com.applicationdemo.carconfig.entities.OrderUser;
-import com.applicationdemo.carconfig.entities.order.*;
+import com.applicationdemo.carconfig.domain.OrderUser;
 import com.applicationdemo.carconfig.exceptions.OrderException;
 import com.applicationdemo.carconfig.mapper.order.CarOrderMapper;
-import com.applicationdemo.carconfig.repository.order.OrderRepository;
+import com.applicationdemo.carconfig.repositories.order.OrderRepository;
 import com.applicationdemo.carconfig.services.OrderUserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

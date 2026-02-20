@@ -1,10 +1,10 @@
 package com.applicationdemo.carconfig.services;
 
 import com.applicationdemo.carconfig.dto.OrderUserDto;
-import com.applicationdemo.carconfig.entities.OrderUser;
+import com.applicationdemo.carconfig.domain.OrderUser;
 import com.applicationdemo.carconfig.exceptions.ItemAddException;
 import com.applicationdemo.carconfig.mapper.OrderUserMapper;
-import com.applicationdemo.carconfig.repository.OrderUserRepository;
+import com.applicationdemo.carconfig.repositories.OrderUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

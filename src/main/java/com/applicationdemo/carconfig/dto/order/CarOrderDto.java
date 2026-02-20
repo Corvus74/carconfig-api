@@ -2,7 +2,7 @@ package com.applicationdemo.carconfig.dto.order;
 
 import com.applicationdemo.carconfig.dto.OrderUserDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.applicationdemo.carconfig.entities.order.CarOrder;
+import com.applicationdemo.carconfig.domain.order.CarOrder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

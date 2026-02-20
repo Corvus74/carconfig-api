@@ -1,9 +1,9 @@
 package com.applicationdemo.carconfig.services.order;
 
-import com.applicationdemo.carconfig.entities.OrderUser;
-import com.applicationdemo.carconfig.entities.base.CarRim;
-import com.applicationdemo.carconfig.entities.order.CarRimOrder;
-import com.applicationdemo.carconfig.repository.order.CarRimOrderRepository;
+import com.applicationdemo.carconfig.domain.OrderUser;
+import com.applicationdemo.carconfig.domain.base.CarRim;
+import com.applicationdemo.carconfig.domain.order.CarRimOrder;
+import com.applicationdemo.carconfig.repositories.order.CarRimOrderRepository;
 import com.applicationdemo.carconfig.services.base.CarRimService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

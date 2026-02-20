@@ -1,6 +1,6 @@
 package com.applicationdemo.carconfig.dto.load;
 
-import com.applicationdemo.carconfig.entities.base.CarColor;
+import com.applicationdemo.carconfig.domain.base.CarColor;
 import com.applicationdemo.carconfig.enums.MaterialType;
 import com.applicationdemo.carconfig.enums.PaintingType;
 import jakarta.validation.constraints.Size;

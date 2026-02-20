@@ -2,7 +2,6 @@ package com.applicationdemo.carconfig.services;
 
 import com.applicationdemo.carconfig.dto.web.ProductInfoDetailDto;
 import com.applicationdemo.carconfig.dto.web.ProductInfoDto;
-import com.applicationdemo.carconfig.entities.base.SpecialEquipment;
 import com.applicationdemo.carconfig.mapper.web.CarColorMapper;
 import com.applicationdemo.carconfig.mapper.web.CarEngineMapper;
 import com.applicationdemo.carconfig.mapper.web.CarRimMapper;

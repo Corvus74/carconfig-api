@@ -1,6 +1,6 @@
 package com.applicationdemo.carconfig.dto.order;
 
-import com.applicationdemo.carconfig.entities.order.OrderStatus;
+import com.applicationdemo.carconfig.domain.order.OrderStatus;
 import com.applicationdemo.carconfig.enums.OrderStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;

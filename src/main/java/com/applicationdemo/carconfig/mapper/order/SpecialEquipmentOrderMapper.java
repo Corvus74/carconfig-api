@@ -1,7 +1,7 @@
 package com.applicationdemo.carconfig.mapper.order;
 
 import com.applicationdemo.carconfig.dto.order.SpecialEquipmentOrderDto;
-import com.applicationdemo.carconfig.entities.order.SpecialEquipmentOrder;
+import com.applicationdemo.carconfig.domain.order.SpecialEquipmentOrder;
 import com.applicationdemo.carconfig.mapper.web.SpecialEquipmentMapper;
 import org.mapstruct.*;
 

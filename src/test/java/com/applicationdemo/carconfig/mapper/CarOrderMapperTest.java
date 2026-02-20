@@ -1,17 +1,17 @@
 package com.applicationdemo.carconfig.mapper;
 
+import com.applicationdemo.carconfig.domain.order.*;
 import com.applicationdemo.carconfig.dto.OrderUserDto;
 import com.applicationdemo.carconfig.dto.order.*;
 import com.applicationdemo.carconfig.dto.web.CarColorDto;
 import com.applicationdemo.carconfig.dto.web.CarEngineDto;
 import com.applicationdemo.carconfig.dto.web.CarRimDto;
 import com.applicationdemo.carconfig.dto.web.SpecialEquipmentDto;
-import com.applicationdemo.carconfig.entities.OrderUser;
-import com.applicationdemo.carconfig.entities.base.CarColor;
-import com.applicationdemo.carconfig.entities.base.CarEngine;
-import com.applicationdemo.carconfig.entities.base.CarRim;
-import com.applicationdemo.carconfig.entities.base.SpecialEquipment;
-import com.applicationdemo.carconfig.entities.order.*;
+import com.applicationdemo.carconfig.domain.OrderUser;
+import com.applicationdemo.carconfig.domain.base.CarColor;
+import com.applicationdemo.carconfig.domain.base.CarEngine;
+import com.applicationdemo.carconfig.domain.base.CarRim;
+import com.applicationdemo.carconfig.domain.base.SpecialEquipment;
 import com.applicationdemo.carconfig.enums.OrderStatusEnum;
 import com.applicationdemo.carconfig.mapper.order.CarOrderMapper;
 import org.junit.jupiter.api.Test;

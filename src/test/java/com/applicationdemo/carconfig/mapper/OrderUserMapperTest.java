@@ -1,7 +1,7 @@
 package com.applicationdemo.carconfig.mapper;
 
 import com.applicationdemo.carconfig.dto.OrderUserDto;
-import com.applicationdemo.carconfig.entities.OrderUser;
+import com.applicationdemo.carconfig.domain.OrderUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

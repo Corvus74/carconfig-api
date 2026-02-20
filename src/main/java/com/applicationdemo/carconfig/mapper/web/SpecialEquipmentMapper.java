@@ -1,7 +1,7 @@
 package com.applicationdemo.carconfig.mapper.web;
 
 import com.applicationdemo.carconfig.dto.web.SpecialEquipmentDto;
-import com.applicationdemo.carconfig.entities.base.SpecialEquipment;
+import com.applicationdemo.carconfig.domain.base.SpecialEquipment;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)

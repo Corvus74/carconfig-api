@@ -2,12 +2,12 @@ package com.applicationdemo.carconfig.services.base;
 
 import com.applicationdemo.carconfig.dto.load.SpecialEquipmentLoadDto;
 import com.applicationdemo.carconfig.dto.web.SpecialEquipmentDto;
-import com.applicationdemo.carconfig.entities.base.SpecialEquipment;
+import com.applicationdemo.carconfig.domain.base.SpecialEquipment;
 import com.applicationdemo.carconfig.exceptions.ItemAddException;
 import com.applicationdemo.carconfig.exceptions.OrderException;
 import com.applicationdemo.carconfig.mapper.base.SpecialEquipmentBaseMapper;
 import com.applicationdemo.carconfig.mapper.web.SpecialEquipmentMapper;
-import com.applicationdemo.carconfig.repository.pool.SpecialEquipmentRepository;
+import com.applicationdemo.carconfig.repositories.pool.SpecialEquipmentRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

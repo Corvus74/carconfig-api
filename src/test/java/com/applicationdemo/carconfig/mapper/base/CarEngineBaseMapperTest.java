@@ -1,7 +1,7 @@
 package com.applicationdemo.carconfig.mapper.base;
 
 import com.applicationdemo.carconfig.dto.load.CarEngineLoadDto;
-import com.applicationdemo.carconfig.entities.base.CarEngine;
+import com.applicationdemo.carconfig.domain.base.CarEngine;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

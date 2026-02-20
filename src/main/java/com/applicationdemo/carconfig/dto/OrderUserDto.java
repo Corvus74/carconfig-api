@@ -1,6 +1,6 @@
 package com.applicationdemo.carconfig.dto;
 
-import com.applicationdemo.carconfig.entities.OrderUser;
+import com.applicationdemo.carconfig.domain.OrderUser;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,10 +1,10 @@
 package com.applicationdemo.carconfig.services;
 
 import com.applicationdemo.carconfig.dto.OrderUserDto;
-import com.applicationdemo.carconfig.entities.OrderUser;
+import com.applicationdemo.carconfig.domain.OrderUser;
 import com.applicationdemo.carconfig.exceptions.ItemAddException;
 import com.applicationdemo.carconfig.mapper.OrderUserMapper;
-import com.applicationdemo.carconfig.repository.OrderUserRepository;
+import com.applicationdemo.carconfig.repositories.OrderUserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

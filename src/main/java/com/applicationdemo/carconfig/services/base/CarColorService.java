@@ -2,12 +2,12 @@ package com.applicationdemo.carconfig.services.base;
 
 import com.applicationdemo.carconfig.dto.load.CarColorLoadDto;
 import com.applicationdemo.carconfig.dto.web.CarColorDto;
-import com.applicationdemo.carconfig.entities.base.CarColor;
+import com.applicationdemo.carconfig.domain.base.CarColor;
 import com.applicationdemo.carconfig.exceptions.ItemAddException;
 import com.applicationdemo.carconfig.exceptions.OrderException;
 import com.applicationdemo.carconfig.mapper.web.CarColorMapper;
 import com.applicationdemo.carconfig.mapper.base.CarColorBaseMapper;
-import com.applicationdemo.carconfig.repository.pool.CarColorRepository;
+import com.applicationdemo.carconfig.repositories.pool.CarColorRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

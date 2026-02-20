@@ -2,8 +2,8 @@ package com.applicationdemo.carconfig.mapper.order;
 
 import com.applicationdemo.carconfig.dto.order.CarRimOrderDto;
 import com.applicationdemo.carconfig.dto.web.CarRimDto;
-import com.applicationdemo.carconfig.entities.base.CarRim;
-import com.applicationdemo.carconfig.entities.order.CarRimOrder;
+import com.applicationdemo.carconfig.domain.base.CarRim;
+import com.applicationdemo.carconfig.domain.order.CarRimOrder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,10 +1,10 @@
 package com.applicationdemo.carconfig.services.order;
 
-import com.applicationdemo.carconfig.entities.OrderUser;
-import com.applicationdemo.carconfig.entities.base.CarEngine;
-import com.applicationdemo.carconfig.entities.order.CarEngineOrder;
-import com.applicationdemo.carconfig.entities.order.OrderStatus;
-import com.applicationdemo.carconfig.repository.order.CarEngineOrderRepository;
+import com.applicationdemo.carconfig.domain.OrderUser;
+import com.applicationdemo.carconfig.domain.base.CarEngine;
+import com.applicationdemo.carconfig.domain.order.CarEngineOrder;
+import com.applicationdemo.carconfig.domain.order.OrderStatus;
+import com.applicationdemo.carconfig.repositories.order.CarEngineOrderRepository;
 import com.applicationdemo.carconfig.services.base.CarEngineService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

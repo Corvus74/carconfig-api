@@ -1,6 +1,6 @@
 package com.applicationdemo.carconfig.dto.load;
 
-import com.applicationdemo.carconfig.entities.base.CarRim;
+import com.applicationdemo.carconfig.domain.base.CarRim;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;

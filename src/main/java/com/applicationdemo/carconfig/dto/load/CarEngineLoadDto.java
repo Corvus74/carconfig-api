@@ -1,6 +1,6 @@
 package com.applicationdemo.carconfig.dto.load;
 
-import com.applicationdemo.carconfig.entities.base.CarEngine;
+import com.applicationdemo.carconfig.domain.base.CarEngine;
 import com.applicationdemo.carconfig.enums.FuelType;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;

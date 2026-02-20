@@ -1,6 +1,6 @@
 package com.applicationdemo.carconfig.mapper.web;
 
-import com.applicationdemo.carconfig.entities.base.CarRim;
+import com.applicationdemo.carconfig.domain.base.CarRim;
 import com.applicationdemo.carconfig.dto.web.CarRimDto;
 import org.mapstruct.*;
 

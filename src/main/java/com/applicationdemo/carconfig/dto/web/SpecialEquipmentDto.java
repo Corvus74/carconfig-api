@@ -1,6 +1,6 @@
 package com.applicationdemo.carconfig.dto.web;
 
-import com.applicationdemo.carconfig.entities.base.SpecialEquipment;
+import com.applicationdemo.carconfig.domain.base.SpecialEquipment;
 import com.applicationdemo.carconfig.enums.CategoryType;
 import com.applicationdemo.carconfig.enums.EquipmentLocation;
 import jakarta.validation.constraints.Size;

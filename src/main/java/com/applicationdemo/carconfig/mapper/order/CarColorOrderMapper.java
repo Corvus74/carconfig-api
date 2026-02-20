@@ -1,7 +1,7 @@
 package com.applicationdemo.carconfig.mapper.order;
 
 import com.applicationdemo.carconfig.dto.order.CarColorOrderDto;
-import com.applicationdemo.carconfig.entities.order.CarColorOrder;
+import com.applicationdemo.carconfig.domain.order.CarColorOrder;
 import com.applicationdemo.carconfig.mapper.web.CarColorMapper;
 import org.mapstruct.*;
 

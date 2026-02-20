@@ -1,7 +1,7 @@
 package com.applicationdemo.carconfig.mapper.base;
 
 import com.applicationdemo.carconfig.dto.load.CarColorLoadDto;
-import com.applicationdemo.carconfig.entities.base.CarColor;
+import com.applicationdemo.carconfig.domain.base.CarColor;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)

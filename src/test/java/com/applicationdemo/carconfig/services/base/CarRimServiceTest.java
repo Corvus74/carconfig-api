@@ -2,12 +2,12 @@ package com.applicationdemo.carconfig.services.base;
 
 import com.applicationdemo.carconfig.dto.load.CarRimLoadDto;
 import com.applicationdemo.carconfig.dto.web.CarRimDto;
-import com.applicationdemo.carconfig.entities.base.CarRim;
+import com.applicationdemo.carconfig.domain.base.CarRim;
 import com.applicationdemo.carconfig.exceptions.ItemAddException;
 import com.applicationdemo.carconfig.exceptions.OrderException;
 import com.applicationdemo.carconfig.mapper.base.CarRimBaseMapper;
 import com.applicationdemo.carconfig.mapper.web.CarRimMapper;
-import com.applicationdemo.carconfig.repository.pool.CarRimRepository;
+import com.applicationdemo.carconfig.repositories.pool.CarRimRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,7 +1,7 @@
 package com.applicationdemo.carconfig.mapper.web;
 
 import com.applicationdemo.carconfig.dto.web.CarColorDto;
-import com.applicationdemo.carconfig.entities.base.CarColor;
+import com.applicationdemo.carconfig.domain.base.CarColor;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;

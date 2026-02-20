@@ -1,7 +1,7 @@
 package com.applicationdemo.carconfig.mapper.order;
 
 import com.applicationdemo.carconfig.dto.order.CarOrderStatusDto;
-import com.applicationdemo.carconfig.entities.order.OrderStatus;
+import com.applicationdemo.carconfig.domain.order.OrderStatus;
 import com.applicationdemo.carconfig.enums.OrderStatusEnum;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

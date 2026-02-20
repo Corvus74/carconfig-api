@@ -1,7 +1,7 @@
 package com.applicationdemo.carconfig.mapper.web;
 
 import com.applicationdemo.carconfig.dto.web.SpecialEquipmentDto;
-import com.applicationdemo.carconfig.entities.base.SpecialEquipment;
+import com.applicationdemo.carconfig.domain.base.SpecialEquipment;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
