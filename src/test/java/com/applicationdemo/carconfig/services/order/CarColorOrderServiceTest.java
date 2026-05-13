@@ -1,9 +1,10 @@
 package com.applicationdemo.carconfig.services.order;
 
-import com.applicationdemo.carconfig.domain.OrderUser;
+import com.applicationdemo.carconfig.domain.user.OrderUser;
 import com.applicationdemo.carconfig.domain.base.CarColor;
 import com.applicationdemo.carconfig.domain.order.CarColorOrder;
 import com.applicationdemo.carconfig.domain.order.OrderStatus;
+import com.applicationdemo.carconfig.enums.OrderStatusEnum;
 import com.applicationdemo.carconfig.repositories.order.CarColorOrderRepository;
 import com.applicationdemo.carconfig.services.base.CarColorService;
 import org.junit.jupiter.api.Test;
@@ -53,11 +54,14 @@ class CarColorOrderServiceTest {
         carColor.setProductId("P1");
         CarColorOrder existingOrder = new CarColorOrder();
         existingOrder.setCarColor(carColor);
+        var existingOrderStatus = new OrderStatus();
+        existingOrderStatus.setCurrentStatus(OrderStatusEnum.PENDING);
+        existingOrder.setOrderStatus(existingOrderStatus);
 
         boolean result = carColorOrderService.invalidateCarColorIfProductIdDiffers(existingOrder, "P1");
 
         assertFalse(result);
-        assertNull(existingOrder.getDeleteFlag());
+        assertEquals(OrderStatusEnum.PENDING, existingOrder.getOrderStatus().getCurrentStatus());
         verify(carColorOrderRepository, never()).save(any(CarColorOrder.class));
     }
 
@@ -67,11 +71,12 @@ class CarColorOrderServiceTest {
         carColor.setProductId("P1");
         CarColorOrder existingOrder = new CarColorOrder();
         existingOrder.setCarColor(carColor);
+        existingOrder.setOrderStatus(new OrderStatus());
 
         boolean result = carColorOrderService.invalidateCarColorIfProductIdDiffers(existingOrder, "P2");
 
         assertTrue(result);
-        assertEquals("Y", existingOrder.getDeleteFlag());
+        assertEquals(OrderStatusEnum.CANCELLED, existingOrder.getOrderStatus().getCurrentStatus());
         verify(carColorOrderRepository).save(existingOrder);
     }
 }

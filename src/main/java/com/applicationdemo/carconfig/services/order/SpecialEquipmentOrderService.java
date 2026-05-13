@@ -1,8 +1,9 @@
 package com.applicationdemo.carconfig.services.order;
 
-import com.applicationdemo.carconfig.domain.OrderUser;
+import com.applicationdemo.carconfig.domain.user.OrderUser;
 import com.applicationdemo.carconfig.domain.base.SpecialEquipment;
 import com.applicationdemo.carconfig.domain.order.SpecialEquipmentOrder;
+import com.applicationdemo.carconfig.enums.OrderStatusEnum;
 import com.applicationdemo.carconfig.repositories.order.SpecialEquipmentOrderRepository;
 import com.applicationdemo.carconfig.services.base.SpecialEquipmentService;
 import lombok.RequiredArgsConstructor;
@@ -57,7 +58,7 @@ public class SpecialEquipmentOrderService {
     private boolean invalidateSingleEquipmentIdsDiffer(List<SpecialEquipmentOrder> existingOrders, List<String> newProductIds) {
         existingOrders.forEach(specialEquipmentOrder -> {
             if(!newProductIds.contains(specialEquipmentOrder.getSpecialEquipment().getProductId())){
-                specialEquipmentOrder.setDeleteFlag("Y");
+                specialEquipmentOrder.getOrderStatus().setCurrentStatus(OrderStatusEnum.CANCELLED);
                 specialEquipmentOrderRepository.save(specialEquipmentOrder);
             }
         });
@@ -65,13 +66,7 @@ public class SpecialEquipmentOrderService {
 
     }
 
-    private void invalidateAllOldOrders(List<SpecialEquipmentOrder> existingOrders) {
-        existingOrders.forEach(specialEquipmentOrder -> {
-            specialEquipmentOrder.setDeleteFlag("Y");
-            specialEquipmentOrderRepository.save(specialEquipmentOrder);
-        });
-    }
-
+    
     /**
      *  2nd part of the update process.
      * @param existingOrders

@@ -63,7 +63,7 @@ class CarEngineServiceTest {
     void addCarEngine_success() {
         CarEngineLoadDto dto = new CarEngineLoadDto();
         dto.setOrderNumber("123");
-        when(carEngineRepository.findByOrderNumberAndNotDeleted("123")).thenReturn(Optional.empty());
+        when(carEngineRepository.findByOrderNumber("123")).thenReturn(Optional.empty());
         when(carEngineBaseMapper.toEntity(dto)).thenReturn(new CarEngine());
 
         assertDoesNotThrow(() -> carEngineService.addCarEngine(dto));
@@ -74,7 +74,7 @@ class CarEngineServiceTest {
     void addCarEngine_alreadyExists() {
         CarEngineLoadDto dto = new CarEngineLoadDto();
         dto.setOrderNumber("123");
-        when(carEngineRepository.findByOrderNumberAndNotDeleted("123")).thenReturn(Optional.of(new CarEngine()));
+        when(carEngineRepository.findByOrderNumber("123")).thenReturn(Optional.of(new CarEngine()));
 
         assertThrows(ItemAddException.class, () -> carEngineService.addCarEngine(dto));
         verify(carEngineRepository, never()).save(any(CarEngine.class));
@@ -87,8 +87,8 @@ class CarEngineServiceTest {
         CarEngineLoadDto dto2 = new CarEngineLoadDto();
         dto2.setOrderNumber("456"); // existing
 
-        when(carEngineRepository.findByOrderNumberAndNotDeleted("123")).thenReturn(Optional.empty());
-        when(carEngineRepository.findByOrderNumberAndNotDeleted("456")).thenReturn(Optional.of(new CarEngine()));
+        when(carEngineRepository.findByOrderNumber("123")).thenReturn(Optional.empty());
+        when(carEngineRepository.findByOrderNumber("456")).thenReturn(Optional.of(new CarEngine()));
         when(carEngineBaseMapper.toEntity(dto1)).thenReturn(new CarEngine());
 
         carEngineService.addAllCarEngines(List.of(dto1, dto2));
@@ -99,7 +99,7 @@ class CarEngineServiceTest {
     @Test
     void getCarEngineByProductId_success() {
         CarEngine engine = new CarEngine();
-        when(carEngineRepository.findByCarEnginesByProductIdAndNotDeleted("P1")).thenReturn(List.of(engine));
+        when(carEngineRepository.findByProductId("P1")).thenReturn(List.of(engine));
 
         CarEngine result = carEngineService.getCarEngineByProductId("P1");
 
@@ -108,14 +108,14 @@ class CarEngineServiceTest {
 
     @Test
     void getCarEngineByProductId_notFound() {
-        when(carEngineRepository.findByCarEnginesByProductIdAndNotDeleted("P1")).thenReturn(Collections.emptyList());
+        when(carEngineRepository.findByProductId("P1")).thenReturn(Collections.emptyList());
 
         assertThrows(OrderException.class, () -> carEngineService.getCarEngineByProductId("P1"));
     }
 
     @Test
     void getCarEngineByProductId_multipleFound() {
-        when(carEngineRepository.findByCarEnginesByProductIdAndNotDeleted("P1")).thenReturn(List.of(new CarEngine(), new CarEngine()));
+        when(carEngineRepository.findByProductId("P1")).thenReturn(List.of(new CarEngine(), new CarEngine()));
 
         assertThrows(OrderException.class, () -> carEngineService.getCarEngineByProductId("P1"));
     }

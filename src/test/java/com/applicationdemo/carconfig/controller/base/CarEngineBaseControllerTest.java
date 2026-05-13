@@ -2,12 +2,16 @@ package com.applicationdemo.carconfig.controller.base;
 
 import com.applicationdemo.carconfig.dto.load.CarEngineLoadDto;
 import com.applicationdemo.carconfig.exceptions.ItemAddException;
+import com.applicationdemo.carconfig.security.JwtService;
 import com.applicationdemo.carconfig.services.base.CarEngineService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,7 +30,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ActiveProfiles("test")
 @WebMvcTest(CarEngineBaseController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class CarEngineBaseControllerTest {
+
+    @MockitoBean
+    private JwtService jwtService;
+
+    @MockitoBean
+    private UserDetailsService userDetailsService;
+
+    @MockitoBean
+    private AuthenticationProvider authenticationProvider;
 
     @Autowired
     private MockMvc mockMvc;

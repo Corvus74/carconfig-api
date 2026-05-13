@@ -15,13 +15,11 @@ class CarColorOrderTest {
         carColorOrder.setCarColorOrderId("cco-1");
         carColorOrder.setCarColor(new CarColor());
         carColorOrder.setOrderStatus(new OrderStatus());
-        carColorOrder.setDeleteFlag("N");
 
         assertEquals(1L, carColorOrder.getId());
         assertEquals("cco-1", carColorOrder.getCarColorOrderId());
         assertNotNull(carColorOrder.getCarColor());
         assertNotNull(carColorOrder.getOrderStatus());
-        assertEquals("N", carColorOrder.getDeleteFlag());
     }
 
     @Test

@@ -25,7 +25,7 @@ class SpecialEquipmentOrderValidationTest {
     void whenAllFieldsAreValid_thenNoViolations() {
         SpecialEquipmentOrder specialEquipmentOrder = new SpecialEquipmentOrder();
         specialEquipmentOrder.setSpecialEquipmentOrderId("a-valid-se-order-id");
-        specialEquipmentOrder.setDeleteFlag("N");
+
 
         Set<ConstraintViolation<SpecialEquipmentOrder>> violations = validator.validate(specialEquipmentOrder);
 
@@ -43,14 +43,4 @@ class SpecialEquipmentOrderValidationTest {
         assertThat(violations.iterator().next().getPropertyPath().toString()).isEqualTo("specialEquipmentOrderId");
     }
 
-    @Test
-    void whenDeleteFlagIsTooLong_thenViolation() {
-        SpecialEquipmentOrder specialEquipmentOrder = new SpecialEquipmentOrder();
-        specialEquipmentOrder.setDeleteFlag("NN"); // 2 chars
-
-        Set<ConstraintViolation<SpecialEquipmentOrder>> violations = validator.validate(specialEquipmentOrder);
-
-        assertThat(violations).hasSize(1);
-        assertThat(violations.iterator().next().getPropertyPath().toString()).isEqualTo("deleteFlag");
-    }
 }

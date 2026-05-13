@@ -15,13 +15,11 @@ class CarRimOrderTest {
         carRimOrder.setCarRimOrderId("cro-1");
         carRimOrder.setCarRim(new CarRim());
         carRimOrder.setOrderStatus(new OrderStatus());
-        carRimOrder.setDeleteFlag("N");
 
         assertEquals(1L, carRimOrder.getId());
         assertEquals("cro-1", carRimOrder.getCarRimOrderId());
         assertNotNull(carRimOrder.getCarRim());
         assertNotNull(carRimOrder.getOrderStatus());
-        assertEquals("N", carRimOrder.getDeleteFlag());
     }
 
     @Test

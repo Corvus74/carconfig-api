@@ -2,13 +2,13 @@ package com.applicationdemo.carconfig.services.order;
 
 import com.applicationdemo.carconfig.dto.order.CarOrderDto;
 import com.applicationdemo.carconfig.dto.order.CarOrderUpdateDto;
-import com.applicationdemo.carconfig.domain.OrderUser;
+import com.applicationdemo.carconfig.domain.user.OrderUser;
 import com.applicationdemo.carconfig.domain.order.CarOrder;
 import com.applicationdemo.carconfig.domain.order.SpecialEquipmentOrder;
 import com.applicationdemo.carconfig.exceptions.OrderException;
 import com.applicationdemo.carconfig.mapper.order.CarOrderMapper;
 import com.applicationdemo.carconfig.repositories.order.OrderRepository;
-import com.applicationdemo.carconfig.services.OrderUserService;
+import com.applicationdemo.carconfig.services.security.OrderUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -93,7 +93,7 @@ public class CarOrderService {
         updateHelperIfCarRimHasUpdated(orderDto, existingOrder, orderUpdateHelper);
         updateHelperIfSpecialEquipmentHasChanged(orderDto, existingOrder, orderUpdateHelper);
         if (orderUpdateHelper.hasChanged()) {
-            invalidateThisOrder(existingOrder);
+            orderRepository.delete(existingOrder);
             return createUpdatedOrderByIds(orderUpdateHelper,existingOrder);
         }
         return existingOrder.getCarOrderId();
@@ -112,11 +112,6 @@ public class CarOrderService {
 
         var savedOrder = orderRepository.save(order);
         return savedOrder.getCarOrderId();
-    }
-
-    private void invalidateThisOrder(CarOrder existingOrder) {
-        existingOrder.setDeleteFlag("Y");
-        orderRepository.save(existingOrder);
     }
 
     private void updateHelperIfUserHasChanged(CarOrderUpdateHelper orderUpdateHelper, CarOrderUpdateDto orderDto) {

@@ -21,7 +21,6 @@ class CarColorTest {
         carColor.setPaintingType(PaintingType.SPECIAL);
         carColor.setColorCodeHex("#FFFFFF");
         carColor.setPrice(500);
-        carColor.setDeleteFlag("N");
 
         assertEquals(1L, carColor.getId());
         assertEquals("C001", carColor.getOrderNumber());
@@ -32,7 +31,6 @@ class CarColorTest {
         assertEquals(PaintingType.SPECIAL, carColor.getPaintingType());
         assertEquals("#FFFFFF", carColor.getColorCodeHex());
         assertEquals(500, carColor.getPrice());
-        assertEquals("N", carColor.getDeleteFlag());
     }
 
     @Test

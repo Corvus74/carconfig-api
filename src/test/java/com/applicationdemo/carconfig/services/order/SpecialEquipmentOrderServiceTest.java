@@ -1,9 +1,10 @@
 package com.applicationdemo.carconfig.services.order;
 
-import com.applicationdemo.carconfig.domain.OrderUser;
+import com.applicationdemo.carconfig.domain.user.OrderUser;
 import com.applicationdemo.carconfig.domain.base.SpecialEquipment;
 import com.applicationdemo.carconfig.domain.order.OrderStatus;
 import com.applicationdemo.carconfig.domain.order.SpecialEquipmentOrder;
+import com.applicationdemo.carconfig.enums.OrderStatusEnum;
 import com.applicationdemo.carconfig.repositories.order.SpecialEquipmentOrderRepository;
 import com.applicationdemo.carconfig.services.base.SpecialEquipmentService;
 import org.junit.jupiter.api.Test;
@@ -69,18 +70,18 @@ class SpecialEquipmentOrderServiceTest {
         equipment1.setProductId("P1");
         SpecialEquipmentOrder existingOrder1 = new SpecialEquipmentOrder();
         existingOrder1.setSpecialEquipment(equipment1);
+        existingOrder1.setOrderStatus(new OrderStatus());
 
         SpecialEquipment equipment2 = new SpecialEquipment();
         equipment2.setProductId("P2");
         SpecialEquipmentOrder existingOrder2 = new SpecialEquipmentOrder();
         existingOrder2.setSpecialEquipment(equipment2);
+        existingOrder2.setOrderStatus(new OrderStatus());
 
         boolean result = specialEquipmentOrderService.invalidateSpecialEquipmentIfProductIdDiffers(List.of(existingOrder1, existingOrder2), List.of("P1"));
 
         assertTrue(result);
         verify(specialEquipmentOrderRepository, times(1)).save(existingOrder2);
-        assertEquals("Y", existingOrder2.getDeleteFlag());
-        assertNull(existingOrder1.getDeleteFlag());
     }
 
     @Test

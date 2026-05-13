@@ -1,6 +1,6 @@
 package com.applicationdemo.carconfig.services.order;
 
-import com.applicationdemo.carconfig.domain.OrderUser;
+import com.applicationdemo.carconfig.domain.user.OrderUser;
 import com.applicationdemo.carconfig.domain.order.OrderStatus;
 import com.applicationdemo.carconfig.enums.OrderStatusEnum;
 import com.applicationdemo.carconfig.repositories.order.OrderStatusRepository;

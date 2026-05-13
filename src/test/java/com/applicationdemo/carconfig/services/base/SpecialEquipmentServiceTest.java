@@ -63,7 +63,7 @@ class SpecialEquipmentServiceTest {
     void addSpecialEquipment_success() {
         SpecialEquipmentLoadDto dto = new SpecialEquipmentLoadDto();
         dto.setOrderNumber("123");
-        when(specialEquipmentRepository.findByOrderNumberAndNotDeleted("123")).thenReturn(Optional.empty());
+        when(specialEquipmentRepository.findByOrderNumber("123")).thenReturn(Optional.empty());
         when(specialEquipmentBaseMapper.toEntity(dto)).thenReturn(new SpecialEquipment());
 
         assertDoesNotThrow(() -> specialEquipmentService.addSpecialEquipment(dto));
@@ -74,7 +74,7 @@ class SpecialEquipmentServiceTest {
     void addSpecialEquipment_alreadyExists() {
         SpecialEquipmentLoadDto dto = new SpecialEquipmentLoadDto();
         dto.setOrderNumber("123");
-        when(specialEquipmentRepository.findByOrderNumberAndNotDeleted("123")).thenReturn(Optional.of(new SpecialEquipment()));
+        when(specialEquipmentRepository.findByOrderNumber("123")).thenReturn(Optional.of(new SpecialEquipment()));
 
         assertThrows(ItemAddException.class, () -> specialEquipmentService.addSpecialEquipment(dto));
         verify(specialEquipmentRepository, never()).save(any(SpecialEquipment.class));
@@ -87,8 +87,8 @@ class SpecialEquipmentServiceTest {
         SpecialEquipmentLoadDto dto2 = new SpecialEquipmentLoadDto();
         dto2.setOrderNumber("456"); // existing
 
-        when(specialEquipmentRepository.findByOrderNumberAndNotDeleted("123")).thenReturn(Optional.empty());
-        when(specialEquipmentRepository.findByOrderNumberAndNotDeleted("456")).thenReturn(Optional.of(new SpecialEquipment()));
+        when(specialEquipmentRepository.findByOrderNumber("123")).thenReturn(Optional.empty());
+        when(specialEquipmentRepository.findByOrderNumber("456")).thenReturn(Optional.of(new SpecialEquipment()));
         when(specialEquipmentBaseMapper.toEntity(dto1)).thenReturn(new SpecialEquipment());
 
         specialEquipmentService.addAllSpecialEquipment(List.of(dto1, dto2));
@@ -99,7 +99,7 @@ class SpecialEquipmentServiceTest {
     @Test
     void getSpecialEquipmentByProductId_success() {
         SpecialEquipment equipment = new SpecialEquipment();
-        when(specialEquipmentRepository.findBySpecialEquipmentByProductIdAndNotDeleted("P1")).thenReturn(List.of(equipment));
+        when(specialEquipmentRepository.findByProductId("P1")).thenReturn(List.of(equipment));
 
         SpecialEquipment result = specialEquipmentService.getSpecialEquipmentByProductId("P1");
 
@@ -108,14 +108,14 @@ class SpecialEquipmentServiceTest {
 
     @Test
     void getSpecialEquipmentByProductId_notFound() {
-        when(specialEquipmentRepository.findBySpecialEquipmentByProductIdAndNotDeleted("P1")).thenReturn(Collections.emptyList());
+        when(specialEquipmentRepository.findByProductId("P1")).thenReturn(Collections.emptyList());
 
         assertThrows(OrderException.class, () -> specialEquipmentService.getSpecialEquipmentByProductId("P1"));
     }
 
     @Test
     void getSpecialEquipmentByProductId_multipleFound() {
-        when(specialEquipmentRepository.findBySpecialEquipmentByProductIdAndNotDeleted("P1")).thenReturn(List.of(new SpecialEquipment(), new SpecialEquipment()));
+        when(specialEquipmentRepository.findByProductId("P1")).thenReturn(List.of(new SpecialEquipment(), new SpecialEquipment()));
 
         assertThrows(OrderException.class, () -> specialEquipmentService.getSpecialEquipmentByProductId("P1"));
     }

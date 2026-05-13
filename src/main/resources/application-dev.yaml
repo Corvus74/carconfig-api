@@ -12,6 +12,8 @@ spring:
     database-platform: "org.hibernate.dialect.PostgreSQLDialect"
   flyway:
     enabled: false
+  config:
+    import: optional:classpath:./secrets.yaml
 server:
   port: 8090
   servlet:

@@ -1,6 +1,6 @@
 package com.applicationdemo.carconfig.services.order;
 
-import com.applicationdemo.carconfig.domain.OrderUser;
+import com.applicationdemo.carconfig.domain.user.OrderUser;
 import com.applicationdemo.carconfig.domain.base.CarRim;
 import com.applicationdemo.carconfig.domain.order.CarRimOrder;
 import com.applicationdemo.carconfig.domain.order.OrderStatus;
@@ -57,7 +57,6 @@ class CarRimOrderServiceTest {
         boolean result = carRimOrderService.invalidateCarRimIfProductIdDiffers(existingOrder, "P1");
 
         assertFalse(result);
-        assertNull(existingOrder.getDeleteFlag());
         verify(carRimOrderRepository, never()).save(any(CarRimOrder.class));
     }
 
@@ -67,11 +66,12 @@ class CarRimOrderServiceTest {
         carRim.setProductId("P1");
         CarRimOrder existingOrder = new CarRimOrder();
         existingOrder.setCarRim(carRim);
+        existingOrder.setOrderStatus(new OrderStatus());
 
         boolean result = carRimOrderService.invalidateCarRimIfProductIdDiffers(existingOrder, "P2");
 
         assertTrue(result);
-        assertEquals("Y", existingOrder.getDeleteFlag());
+
         verify(carRimOrderRepository).save(existingOrder);
     }
 }

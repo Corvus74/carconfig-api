@@ -1,6 +1,6 @@
 plugins {
     java
-    id("org.springframework.boot") version "4.0.3"
+    id("org.springframework.boot") version "4.0.6"
     id("io.spring.dependency-management") version "1.1.7"
     id("org.sonarqube") version "7.2.2.6593"
 }
@@ -35,25 +35,31 @@ val mockitoVersion = "5.19.0"
 val mapstructVersion = "1.6.3"
 val swaggerOpenapiVersion = "2.8.13"
 val apacheCommons = "3.18.0"
+val jjwtVersion = "0.13.0"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
     implementation("org.springframework.boot:spring-boot-starter-flyway")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.mapstruct:mapstruct:$mapstructVersion")
     implementation("org.apache.commons:commons-lang3:$apacheCommons")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$swaggerOpenapiVersion")
+    implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
     compileOnly("org.projectlombok:lombok")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:$jjwtVersion")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jjwtVersion")
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     runtimeOnly("org.postgresql:postgresql")
     runtimeOnly("org.flywaydb:flyway-database-postgresql")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.projectlombok:lombok")
     annotationProcessor("org.mapstruct:mapstruct-processor:$mapstructVersion")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.h2database:h2")
+    testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
     testImplementation("org.springframework.boot:spring-boot-data-jpa-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
@@ -63,8 +69,7 @@ dependencies {
 
 sonarqube {
     properties {
-        property("sonar.projectKey", "carconfig-api")
-        property("sonar.organization", "corvus74") // <-- CHANGE THIS
+        property("sonar.organization", "corvus74")
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.projectKey", "Corvus74_carconfig-api")
         property("sonar.java.coveragePlugin", "jacoco")

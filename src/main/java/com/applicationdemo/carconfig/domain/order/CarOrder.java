@@ -1,8 +1,19 @@
 package com.applicationdemo.carconfig.domain.order;
 
-import com.applicationdemo.carconfig.domain.OrderUser;
+import com.applicationdemo.carconfig.domain.user.OrderUser;
 import com.applicationdemo.carconfig.domain.SimpleAuditClasses;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -60,20 +71,16 @@ public class CarOrder extends SimpleAuditClasses {
     )
     private List<SpecialEquipmentOrder> specialEquipmentOrders;
 
-    @Size(max = 1)
-    @Column(name = "delete_flag")
-    private String deleteFlag;
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         CarOrder carOrder = (CarOrder) o;
-        return Objects.equals(id, carOrder.id) && Objects.equals(carOrderId, carOrder.carOrderId) && Objects.equals(orderUser, carOrder.orderUser) && Objects.equals(carEngineOrder, carOrder.carEngineOrder) && Objects.equals(carRimOrder, carOrder.carRimOrder) && Objects.equals(carColorOrder, carOrder.carColorOrder) && Objects.equals(orderStatus, carOrder.orderStatus) && Objects.equals(description, carOrder.description) && Objects.equals(totalPrice, carOrder.totalPrice) && Objects.equals(specialEquipmentOrders, carOrder.specialEquipmentOrders) && Objects.equals(deleteFlag, carOrder.deleteFlag);
+        return Objects.equals(id, carOrder.id) && Objects.equals(carOrderId, carOrder.carOrderId) && Objects.equals(orderUser, carOrder.orderUser) && Objects.equals(carEngineOrder, carOrder.carEngineOrder) && Objects.equals(carRimOrder, carOrder.carRimOrder) && Objects.equals(carColorOrder, carOrder.carColorOrder) && Objects.equals(orderStatus, carOrder.orderStatus) && Objects.equals(description, carOrder.description) && Objects.equals(totalPrice, carOrder.totalPrice) && Objects.equals(specialEquipmentOrders, carOrder.specialEquipmentOrders);
     }
-
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), id, carOrderId, orderUser, carEngineOrder, carRimOrder, carColorOrder, orderStatus, description, totalPrice, specialEquipmentOrders, deleteFlag);
+        return Objects.hash(super.hashCode(), id, carOrderId, orderUser, carEngineOrder, carRimOrder, carColorOrder, orderStatus, description, totalPrice, specialEquipmentOrders);
     }
 }

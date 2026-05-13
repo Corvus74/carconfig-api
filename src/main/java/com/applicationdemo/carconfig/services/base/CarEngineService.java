@@ -52,7 +52,7 @@ public class CarEngineService {
      */
 
     public void addCarEngine(CarEngineLoadDto carEngineLoadDto) {
-        Optional<CarEngine> existingEngine = carEngineRepository.findByOrderNumberAndNotDeleted(carEngineLoadDto.getOrderNumber());
+        Optional<CarEngine> existingEngine = carEngineRepository.findByOrderNumber(carEngineLoadDto.getOrderNumber());
         if (existingEngine.isPresent()) {
             String errorMessage = "Car engine model '" + carEngineLoadDto.getOrderNumber() + "' and ordernumber '" + carEngineLoadDto.getOrderNumber() + "' already exists.";
             log.warn(errorMessage);
@@ -86,7 +86,7 @@ public class CarEngineService {
      */
     public CarEngine getCarEngineByProductId(String productId) {
         log.debug("Fetching a car engine by the product id: {}", productId);
-        List<CarEngine> existingCarEngines = carEngineRepository.findByCarEnginesByProductIdAndNotDeleted(productId);
+        List<CarEngine> existingCarEngines = carEngineRepository.findByProductId(productId);
         if (existingCarEngines.isEmpty()) {
             String errorMessage = "Car engine with productNumber'" + productId + "' does not exists.";
             log.warn(errorMessage);

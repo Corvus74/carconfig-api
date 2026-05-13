@@ -28,7 +28,6 @@ class CarEngineTest {
         carEngine.setTorqueNm(new BigDecimal("400"));
         carEngine.setDrivetrain("RWD");
         carEngine.setCo2(new BigDecimal("140"));
-        carEngine.setDeleteFlag("N");
 
         assertEquals(1L, carEngine.getId());
         assertEquals("E001", carEngine.getOrderNumber());
@@ -45,7 +44,6 @@ class CarEngineTest {
         assertEquals(new BigDecimal("400"), carEngine.getTorqueNm());
         assertEquals("RWD", carEngine.getDrivetrain());
         assertEquals(new BigDecimal("140"), carEngine.getCo2());
-        assertEquals("N", carEngine.getDeleteFlag());
     }
 
     @Test

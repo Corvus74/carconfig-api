@@ -1,9 +1,10 @@
 package com.applicationdemo.carconfig.services.order;
 
-import com.applicationdemo.carconfig.domain.OrderUser;
+import com.applicationdemo.carconfig.domain.user.OrderUser;
 import com.applicationdemo.carconfig.domain.base.CarEngine;
 import com.applicationdemo.carconfig.domain.order.CarEngineOrder;
 import com.applicationdemo.carconfig.domain.order.OrderStatus;
+import com.applicationdemo.carconfig.enums.OrderStatusEnum;
 import com.applicationdemo.carconfig.repositories.order.CarEngineOrderRepository;
 import com.applicationdemo.carconfig.services.base.CarEngineService;
 import org.junit.jupiter.api.Test;
@@ -57,7 +58,6 @@ class CarEngineOrderServiceTest {
         boolean result = carEngineOrderService.invalidateCarEngineIfProductIdDiffers(existingOrder, "P1");
 
         assertFalse(result);
-        assertNull(existingOrder.getDeleteFlag());
         verify(carEngineOrderRepository, never()).save(any(CarEngineOrder.class));
     }
 
@@ -67,11 +67,13 @@ class CarEngineOrderServiceTest {
         carEngine.setProductId("P1");
         CarEngineOrder existingOrder = new CarEngineOrder();
         existingOrder.setCarEngine(carEngine);
+        existingOrder.setOrderStatus(new OrderStatus());
+        existingOrder.getOrderStatus().setCurrentStatus(OrderStatusEnum.PENDING);
 
         boolean result = carEngineOrderService.invalidateCarEngineIfProductIdDiffers(existingOrder, "P2");
 
         assertTrue(result);
-        assertEquals("Y", existingOrder.getDeleteFlag());
+
         verify(carEngineOrderRepository).save(existingOrder);
     }
 }

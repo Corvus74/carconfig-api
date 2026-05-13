@@ -15,13 +15,11 @@ class SpecialEquipmentOrderTest {
         specialEquipmentOrder.setSpecialEquipmentOrderId("seo-1");
         specialEquipmentOrder.setSpecialEquipment(new SpecialEquipment());
         specialEquipmentOrder.setOrderStatus(new OrderStatus());
-        specialEquipmentOrder.setDeleteFlag("N");
 
         assertEquals(1L, specialEquipmentOrder.getId());
         assertEquals("seo-1", specialEquipmentOrder.getSpecialEquipmentOrderId());
         assertNotNull(specialEquipmentOrder.getSpecialEquipment());
         assertNotNull(specialEquipmentOrder.getOrderStatus());
-        assertEquals("N", specialEquipmentOrder.getDeleteFlag());
     }
 
     @Test

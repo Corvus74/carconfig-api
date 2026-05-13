@@ -15,13 +15,11 @@ class CarEngineOrderTest {
         carEngineOrder.setCarEngineOrderId("ceo-1");
         carEngineOrder.setCarEngine(new CarEngine());
         carEngineOrder.setOrderStatus(new OrderStatus());
-        carEngineOrder.setDeleteFlag("N");
 
         assertEquals(1L, carEngineOrder.getId());
         assertEquals("ceo-1", carEngineOrder.getCarEngineOrderId());
         assertNotNull(carEngineOrder.getCarEngine());
         assertNotNull(carEngineOrder.getOrderStatus());
-        assertEquals("N", carEngineOrder.getDeleteFlag());
     }
 
     @Test

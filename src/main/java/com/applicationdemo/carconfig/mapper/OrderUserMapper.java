@@ -1,7 +1,7 @@
 package com.applicationdemo.carconfig.mapper;
 
 import com.applicationdemo.carconfig.dto.OrderUserDto;
-import com.applicationdemo.carconfig.domain.OrderUser;
+import com.applicationdemo.carconfig.domain.user.OrderUser;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)

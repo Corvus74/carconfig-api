@@ -1,8 +1,9 @@
 package com.applicationdemo.carconfig.services.order;
 
-import com.applicationdemo.carconfig.domain.OrderUser;
+import com.applicationdemo.carconfig.domain.user.OrderUser;
 import com.applicationdemo.carconfig.domain.base.CarRim;
 import com.applicationdemo.carconfig.domain.order.CarRimOrder;
+import com.applicationdemo.carconfig.enums.OrderStatusEnum;
 import com.applicationdemo.carconfig.repositories.order.CarRimOrderRepository;
 import com.applicationdemo.carconfig.services.base.CarRimService;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +42,7 @@ public class CarRimOrderService {
         if( existingOrder.getCarRim().getProductId().equals(productId)){
             return false;
         }
-        existingOrder.setDeleteFlag("Y");
+        existingOrder.getOrderStatus().setCurrentStatus(OrderStatusEnum.CANCELLED);
         //invalidate order
         carRimOrderRepository.save(existingOrder);
         return true;

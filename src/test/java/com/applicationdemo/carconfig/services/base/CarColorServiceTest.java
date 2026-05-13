@@ -63,7 +63,7 @@ class CarColorServiceTest {
     void addCarColor_success() {
         CarColorLoadDto dto = new CarColorLoadDto();
         dto.setOrderNumber("123");
-        when(carColorRepository.findByOrderNumberAndNotDeleted("123")).thenReturn(Optional.empty());
+        when(carColorRepository.findByOrderNumber("123")).thenReturn(Optional.empty());
         when(carColorBaseMapper.toEntity(dto)).thenReturn(new CarColor());
 
         assertDoesNotThrow(() -> carColorService.addCarColor(dto));
@@ -74,7 +74,7 @@ class CarColorServiceTest {
     void addCarColor_alreadyExists() {
         CarColorLoadDto dto = new CarColorLoadDto();
         dto.setOrderNumber("123");
-        when(carColorRepository.findByOrderNumberAndNotDeleted("123")).thenReturn(Optional.of(new CarColor()));
+        when(carColorRepository.findByOrderNumber("123")).thenReturn(Optional.of(new CarColor()));
 
         assertThrows(ItemAddException.class, () -> carColorService.addCarColor(dto));
         verify(carColorRepository, never()).save(any(CarColor.class));
@@ -87,8 +87,8 @@ class CarColorServiceTest {
         CarColorLoadDto dto2 = new CarColorLoadDto();
         dto2.setOrderNumber("456"); // existing
 
-        when(carColorRepository.findByOrderNumberAndNotDeleted("123")).thenReturn(Optional.empty());
-        when(carColorRepository.findByOrderNumberAndNotDeleted("456")).thenReturn(Optional.of(new CarColor()));
+        when(carColorRepository.findByOrderNumber("123")).thenReturn(Optional.empty());
+        when(carColorRepository.findByOrderNumber("456")).thenReturn(Optional.of(new CarColor()));
         when(carColorBaseMapper.toEntity(dto1)).thenReturn(new CarColor());
 
         carColorService.addAllCarColors(List.of(dto1, dto2));
@@ -99,7 +99,7 @@ class CarColorServiceTest {
     @Test
     void getColorByProductId_success() {
         CarColor color = new CarColor();
-        when(carColorRepository.findByCarColorByProductIdAndNotDeleted("P1")).thenReturn(List.of(color));
+        when(carColorRepository.findByProductId("P1")).thenReturn(List.of(color));
 
         CarColor result = carColorService.getColorByProductId("P1");
 
@@ -108,14 +108,14 @@ class CarColorServiceTest {
 
     @Test
     void getColorByProductId_notFound() {
-        when(carColorRepository.findByCarColorByProductIdAndNotDeleted("P1")).thenReturn(Collections.emptyList());
+        when(carColorRepository.findByProductId("P1")).thenReturn(Collections.emptyList());
 
         assertThrows(OrderException.class, () -> carColorService.getColorByProductId("P1"));
     }
 
     @Test
     void getColorByProductId_multipleFound() {
-        when(carColorRepository.findByCarColorByProductIdAndNotDeleted("P1")).thenReturn(List.of(new CarColor(), new CarColor()));
+        when(carColorRepository.findByProductId("P1")).thenReturn(List.of(new CarColor(), new CarColor()));
 
         assertThrows(OrderException.class, () -> carColorService.getColorByProductId("P1"));
     }

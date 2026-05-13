@@ -63,7 +63,7 @@ class CarRimServiceTest {
     void addCarRimLoad_success() {
         CarRimLoadDto dto = new CarRimLoadDto();
         dto.setModel("ModelX");
-        when(carRimRepository.findByOrderNumberAndNotDeleted(dto.getModel())).thenReturn(Optional.empty());
+        when(carRimRepository.findByOrderNumber(dto.getModel())).thenReturn(Optional.empty());
         when(carRimBaseMapper.toEntity(dto)).thenReturn(new CarRim());
 
         assertDoesNotThrow(() -> carRimService.addCarRimLoad(dto));
@@ -74,7 +74,7 @@ class CarRimServiceTest {
     void addCarRimLoad_alreadyExists() {
         CarRimLoadDto dto = new CarRimLoadDto();
         dto.setModel("ModelX");
-        when(carRimRepository.findByOrderNumberAndNotDeleted(dto.getModel())).thenReturn(Optional.of(new CarRim()));
+        when(carRimRepository.findByOrderNumber(dto.getModel())).thenReturn(Optional.of(new CarRim()));
 
         assertThrows(ItemAddException.class, () -> carRimService.addCarRimLoad(dto));
         verify(carRimRepository, never()).save(any(CarRim.class));
@@ -87,8 +87,8 @@ class CarRimServiceTest {
         CarRimLoadDto dto2 = new CarRimLoadDto();
         dto2.setModel("ModelY"); // existing
 
-        when(carRimRepository.findByOrderNumberAndNotDeleted(dto1.getModel())).thenReturn(Optional.empty());
-        when(carRimRepository.findByOrderNumberAndNotDeleted(dto2.getModel())).thenReturn(Optional.of(new CarRim()));
+        when(carRimRepository.findByOrderNumber(dto1.getModel())).thenReturn(Optional.empty());
+        when(carRimRepository.findByOrderNumber(dto2.getModel())).thenReturn(Optional.of(new CarRim()));
         when(carRimBaseMapper.toEntity(dto1)).thenReturn(new CarRim());
 
         carRimService.addAllCarRims(List.of(dto1, dto2));
@@ -99,7 +99,7 @@ class CarRimServiceTest {
     @Test
     void getCarRimByProductId_success() {
         CarRim rim = new CarRim();
-        when(carRimRepository.findByCarRimsByProductIdAndNotDeleted("P1")).thenReturn(List.of(rim));
+        when(carRimRepository.findByProductId("P1")).thenReturn(List.of(rim));
 
         CarRim result = carRimService.getCarRimByProductId("P1");
 
@@ -108,14 +108,14 @@ class CarRimServiceTest {
 
     @Test
     void getCarRimByProductId_notFound() {
-        when(carRimRepository.findByCarRimsByProductIdAndNotDeleted("P1")).thenReturn(Collections.emptyList());
+        when(carRimRepository.findByProductId("P1")).thenReturn(Collections.emptyList());
 
         assertThrows(OrderException.class, () -> carRimService.getCarRimByProductId("P1"));
     }
 
     @Test
     void getCarRimByProductId_multipleFound() {
-        when(carRimRepository.findByCarRimsByProductIdAndNotDeleted("P1")).thenReturn(List.of(new CarRim(), new CarRim()));
+        when(carRimRepository.findByProductId("P1")).thenReturn(List.of(new CarRim(), new CarRim()));
 
         assertThrows(OrderException.class, () -> carRimService.getCarRimByProductId("P1"));
     }

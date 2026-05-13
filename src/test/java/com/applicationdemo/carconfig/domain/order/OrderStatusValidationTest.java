@@ -24,21 +24,10 @@ class OrderStatusValidationTest {
     @Test
     void whenAllFieldsAreValid_thenNoViolations() {
         OrderStatus orderStatus = new OrderStatus();
-        orderStatus.setDeleteFlag("N");
 
         Set<ConstraintViolation<OrderStatus>> violations = validator.validate(orderStatus);
 
         assertThat(violations).isEmpty();
     }
 
-    @Test
-    void whenDeleteFlagIsTooLong_thenViolation() {
-        OrderStatus orderStatus = new OrderStatus();
-        orderStatus.setDeleteFlag("NN"); // 2 chars
-
-        Set<ConstraintViolation<OrderStatus>> violations = validator.validate(orderStatus);
-
-        assertThat(violations).hasSize(1);
-        assertThat(violations.iterator().next().getPropertyPath().toString()).isEqualTo("deleteFlag");
-    }
 }

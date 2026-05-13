@@ -14,6 +14,18 @@ spring:
         persistence:
           validation:
             mode: none
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+security:
+  jwt:
+    secret-key: "MjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMQ=="
+    expiration-time: 3600000
+  api:
+    signup-key: "TEST_SIGNUP_API_KEY"
+
 cors:
   allowed-origins: "http://localhost:3000,http://localhost:4200"
 

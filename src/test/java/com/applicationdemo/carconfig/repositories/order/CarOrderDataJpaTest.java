@@ -1,7 +1,7 @@
 package com.applicationdemo.carconfig.repositories.order;
 
 import com.applicationdemo.carconfig.domain.order.*;
-import com.applicationdemo.carconfig.domain.OrderUser;
+import com.applicationdemo.carconfig.domain.user.OrderUser;
 import com.applicationdemo.carconfig.domain.base.CarColor;
 import com.applicationdemo.carconfig.domain.base.CarEngine;
 import com.applicationdemo.carconfig.domain.base.CarRim;

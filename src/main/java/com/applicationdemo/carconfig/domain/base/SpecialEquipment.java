@@ -3,7 +3,12 @@ package com.applicationdemo.carconfig.domain.base;
 import com.applicationdemo.carconfig.domain.SimpleAuditClasses;
 import com.applicationdemo.carconfig.enums.EquipmentLocation;
 import com.applicationdemo.carconfig.enums.CategoryType;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,20 +52,16 @@ public class SpecialEquipment extends SimpleAuditClasses {
     @Column(name = "price")
     private Integer price;
 
-    @Size(max = 1)
-    @Column(name = "delete_flag")
-    private String deleteFlag;
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         SpecialEquipment that = (SpecialEquipment) o;
-        return Objects.equals(id, that.id) && Objects.equals(orderNumber, that.orderNumber) && categoryType == that.categoryType && Objects.equals(equipmentName, that.equipmentName) && Objects.equals(description, that.description) && Objects.equals(productId, that.productId) && Objects.equals(price, that.price) && Objects.equals(deleteFlag, that.deleteFlag);
+        return Objects.equals(id, that.id) && Objects.equals(orderNumber, that.orderNumber) && categoryType == that.categoryType && Objects.equals(equipmentName, that.equipmentName) && Objects.equals(description, that.description) && Objects.equals(productId, that.productId) && Objects.equals(price, that.price);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), id, orderNumber, categoryType, equipmentName, description, productId, price, deleteFlag);
+        return Objects.hash(super.hashCode(), id, orderNumber, categoryType, equipmentName, description, productId, price);
     }
 }

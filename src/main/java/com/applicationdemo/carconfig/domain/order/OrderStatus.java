@@ -2,8 +2,14 @@ package com.applicationdemo.carconfig.domain.order;
 
 import com.applicationdemo.carconfig.domain.SimpleAuditClasses;
 import com.applicationdemo.carconfig.enums.OrderStatusEnum;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,20 +38,16 @@ public class OrderStatus extends SimpleAuditClasses {
     @Column(name = "delivery_date")
     private LocalDate deliveryDate;
 
-    @Size(max = 1)
-    @Column(name = "delete_flag")
-    private String deleteFlag;
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         OrderStatus that = (OrderStatus) o;
-        return Objects.equals(orderStatusId, that.orderStatusId) && currentStatus == that.currentStatus && Objects.equals(shippingDate, that.shippingDate) && Objects.equals(deliveryDate, that.deliveryDate) && Objects.equals(deleteFlag, that.deleteFlag);
+        return Objects.equals(orderStatusId, that.orderStatusId) && currentStatus == that.currentStatus && Objects.equals(shippingDate, that.shippingDate) && Objects.equals(deliveryDate, that.deliveryDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), orderStatusId, currentStatus, shippingDate, deliveryDate, deleteFlag);
+        return Objects.hash(super.hashCode(), orderStatusId, currentStatus, shippingDate, deliveryDate);
     }
 }

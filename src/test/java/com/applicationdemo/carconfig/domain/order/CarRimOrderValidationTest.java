@@ -25,7 +25,6 @@ class CarRimOrderValidationTest {
     void whenAllFieldsAreValid_thenNoViolations() {
         CarRimOrder carRimOrder = new CarRimOrder();
         carRimOrder.setCarRimOrderId("a-valid-rim-order-id");
-        carRimOrder.setDeleteFlag("N");
 
         Set<ConstraintViolation<CarRimOrder>> violations = validator.validate(carRimOrder);
 
@@ -43,14 +42,4 @@ class CarRimOrderValidationTest {
         assertThat(violations.iterator().next().getPropertyPath().toString()).isEqualTo("carRimOrderId");
     }
 
-    @Test
-    void whenDeleteFlagIsTooLong_thenViolation() {
-        CarRimOrder carRimOrder = new CarRimOrder();
-        carRimOrder.setDeleteFlag("NN"); // 2 chars
-
-        Set<ConstraintViolation<CarRimOrder>> violations = validator.validate(carRimOrder);
-
-        assertThat(violations).hasSize(1);
-        assertThat(violations.iterator().next().getPropertyPath().toString()).isEqualTo("deleteFlag");
-    }
 }

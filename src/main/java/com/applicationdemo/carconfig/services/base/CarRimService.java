@@ -53,7 +53,7 @@ public class CarRimService {
      */
 
     public void addCarRimLoad(CarRimLoadDto carRimLoadDto) {
-        Optional<CarRim> existingRim = carRimRepository.findByOrderNumberAndNotDeleted(carRimLoadDto.getModel());
+        Optional<CarRim> existingRim = carRimRepository.findByOrderNumber(carRimLoadDto.getModel());
         if (existingRim.isPresent()) {
             String errorMessage = "Car rim model '" + carRimLoadDto.getModel() + "' and ordernumber '" + carRimLoadDto.getOrderNumber() + "' already exists.";
             log.warn(errorMessage);
@@ -88,7 +88,7 @@ public class CarRimService {
      */
     public CarRim getCarRimByProductId(String productId) {
         log.debug("Fetching a car rim by the product id: {}", productId);
-        List<CarRim> existingCarRims = carRimRepository.findByCarRimsByProductIdAndNotDeleted(productId);
+        List<CarRim> existingCarRims = carRimRepository.findByProductId(productId);
         if (existingCarRims.isEmpty()) {
             String errorMessage = "Car rim with productNumber'" + productId + "' does not exists.";
             log.warn(errorMessage);

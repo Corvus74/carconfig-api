@@ -7,7 +7,7 @@ import com.applicationdemo.carconfig.dto.web.CarColorDto;
 import com.applicationdemo.carconfig.dto.web.CarEngineDto;
 import com.applicationdemo.carconfig.dto.web.CarRimDto;
 import com.applicationdemo.carconfig.dto.web.SpecialEquipmentDto;
-import com.applicationdemo.carconfig.domain.OrderUser;
+import com.applicationdemo.carconfig.domain.user.OrderUser;
 import com.applicationdemo.carconfig.domain.base.CarColor;
 import com.applicationdemo.carconfig.domain.base.CarEngine;
 import com.applicationdemo.carconfig.domain.base.CarRim;

@@ -57,8 +57,7 @@ CREATE TABLE car_color (
     material_type VARCHAR(255),
     painting_type VARCHAR(255),
     color_code_hex VARCHAR(10),
-    price INTEGER,
-    delete_flag VARCHAR(1)
+    price INTEGER
 );
 
 CREATE TABLE car_engine (
@@ -80,8 +79,7 @@ CREATE TABLE car_engine (
     horsepower_kw NUMERIC(6, 2),
     torque_nm NUMERIC(6, 2),
     drivetrain VARCHAR(50),
-    co2 NUMERIC(19, 2),
-    delete_flag VARCHAR(1)
+    co2 NUMERIC(19, 2)
 );
 
 CREATE TABLE car_rim (
@@ -96,8 +94,7 @@ CREATE TABLE car_rim (
     model VARCHAR(20),
     description VARCHAR(400),
     product_id VARCHAR(20),
-    price INTEGER,
-    delete_flag VARCHAR(1)
+    price INTEGER
 );
 
 CREATE TABLE special_equipment (
@@ -112,8 +109,7 @@ CREATE TABLE special_equipment (
     description VARCHAR(400),
     product_id VARCHAR(20),
     equipment_location VARCHAR(255),
-    price INTEGER,
-    delete_flag VARCHAR(1)
+    price INTEGER
 );
 
 -- User and Order Status tables
@@ -125,9 +121,11 @@ CREATE TABLE orders_user (
     updated_by VARCHAR(255),
     user_id VARCHAR(40) NOT NULL,
     user_name VARCHAR(20),
+    password VARCHAR(20),
+    valid_until TIMESTAMP WITHOUT TIME ZONE,
     email VARCHAR(20),
-    is_valid BOOLEAN,
-    delete_flag VARCHAR(1)
+    token VARCHAR(255),
+    is_valid BOOLEAN
 );
 
 CREATE TABLE order_status (
@@ -138,8 +136,7 @@ CREATE TABLE order_status (
     updated_by VARCHAR(255),
     current_status VARCHAR(255),
     shipping_date DATE,
-    delivery_date DATE,
-    delete_flag VARCHAR(1)
+    delivery_date DATE
 );
 
 -- Sub-order tables with foreign keys
@@ -151,8 +148,7 @@ CREATE TABLE car_colors_order (
     updated_by VARCHAR(255),
     car_color_order_id VARCHAR(40),
     car_color_id BIGINT REFERENCES car_color(id),
-    order_status_id UUID REFERENCES order_status(order_status_id),
-    delete_flag VARCHAR(1)
+    order_status_id UUID REFERENCES order_status(order_status_id)
 );
 
 CREATE TABLE car_engine_order (
@@ -163,8 +159,7 @@ CREATE TABLE car_engine_order (
     updated_by VARCHAR(255),
     car_engine_order_id VARCHAR(40),
     car_engine_id BIGINT REFERENCES car_engine(id),
-    order_status_id UUID REFERENCES order_status(order_status_id),
-    delete_flag VARCHAR(1)
+    order_status_id UUID REFERENCES order_status(order_status_id)
 );
 
 CREATE TABLE car_rims_order (
@@ -175,8 +170,7 @@ CREATE TABLE car_rims_order (
     updated_by VARCHAR(255),
     car_rim_order_id VARCHAR(40),
     car_rim_id BIGINT REFERENCES car_rim(id),
-    order_status_id UUID REFERENCES order_status(order_status_id),
-    delete_flag VARCHAR(1)
+    order_status_id UUID REFERENCES order_status(order_status_id)
 );
 
 CREATE TABLE special_equipment_order (
@@ -187,8 +181,7 @@ CREATE TABLE special_equipment_order (
     updated_by VARCHAR(255),
     special_equipment_order_id VARCHAR(40),
     special_equipment_id BIGINT REFERENCES special_equipment(id),
-    order_status_id UUID REFERENCES order_status(order_status_id),
-    delete_flag VARCHAR(1)
+    order_status_id UUID REFERENCES order_status(order_status_id)
 );
 
 -- Main order table
@@ -205,8 +198,7 @@ CREATE TABLE car_order (
     car_color_order_id BIGINT REFERENCES car_colors_order(id),
     order_status_id UUID REFERENCES order_status(order_status_id),
     description VARCHAR(400),
-    total_price INTEGER,
-    delete_flag VARCHAR(1)
+    total_price INTEGER
 );
 
 -- Join table for many-to-many relationship

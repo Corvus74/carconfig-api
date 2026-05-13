@@ -49,7 +49,7 @@ public class SpecialEquipmentService {
      */
 
     public void addSpecialEquipment(SpecialEquipmentLoadDto specialEquipmentLoadDto) {
-        Optional<SpecialEquipment> existingEquipment = specialEquipmentRepository.findByOrderNumberAndNotDeleted(specialEquipmentLoadDto.getOrderNumber());
+        Optional<SpecialEquipment> existingEquipment = specialEquipmentRepository.findByOrderNumber(specialEquipmentLoadDto.getOrderNumber());
         if (existingEquipment.isPresent()) {
             String errorMessage = "Special equipment name '" + specialEquipmentLoadDto.getEquipmentName() + "' and ordernumber '" + specialEquipmentLoadDto.getOrderNumber() +"' already exists.";
             log.warn(errorMessage);
@@ -78,7 +78,7 @@ public class SpecialEquipmentService {
      */
     public SpecialEquipment getSpecialEquipmentByProductId(String productId) {
         log.debug("Fetching a special equipment by the product id: {}", productId);
-        List<SpecialEquipment> existingSpecialEquipments = specialEquipmentRepository.findBySpecialEquipmentByProductIdAndNotDeleted(productId);
+        List<SpecialEquipment> existingSpecialEquipments = specialEquipmentRepository.findByProductId(productId);
         if (existingSpecialEquipments.isEmpty()) {
             String errorMessage = "Special equipment with productNumber'" + productId + "' does not exists.";
             log.warn(errorMessage);

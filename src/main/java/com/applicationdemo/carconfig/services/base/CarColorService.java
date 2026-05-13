@@ -53,7 +53,7 @@ public class CarColorService {
      */
     public void addCarColor(CarColorLoadDto carColorLoadDto) {
 
-        Optional<CarColor> existingColor = carColorRepository.findByOrderNumberAndNotDeleted(carColorLoadDto.getOrderNumber());
+        Optional<CarColor> existingColor = carColorRepository.findByOrderNumber(carColorLoadDto.getOrderNumber());
         if (existingColor.isPresent()) {
             String errorMessage = "Car color with orderNumber'" + carColorLoadDto.getOrderNumber() + "' already exists.";
             log.warn(errorMessage);
@@ -87,7 +87,7 @@ public class CarColorService {
      */
     public CarColor getColorByProductId(String productId) {
         log.debug("Fetching a car color by the product id: {}", productId);
-        List<CarColor> existingColors = carColorRepository.findByCarColorByProductIdAndNotDeleted(productId);
+        List<CarColor> existingColors = carColorRepository.findByProductId(productId);
         if (existingColors.isEmpty()) {
             String errorMessage = "Car color with productNumber'" + productId + "' does not exists.";
             log.warn(errorMessage);

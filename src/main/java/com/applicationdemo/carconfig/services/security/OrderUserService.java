@@ -1,7 +1,7 @@
-package com.applicationdemo.carconfig.services;
+package com.applicationdemo.carconfig.services.security;
 
 import com.applicationdemo.carconfig.dto.OrderUserDto;
-import com.applicationdemo.carconfig.domain.OrderUser;
+import com.applicationdemo.carconfig.domain.user.OrderUser;
 import com.applicationdemo.carconfig.exceptions.ItemAddException;
 import com.applicationdemo.carconfig.mapper.OrderUserMapper;
 import com.applicationdemo.carconfig.repositories.OrderUserRepository;

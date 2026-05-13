@@ -1,7 +1,7 @@
 package com.applicationdemo.carconfig.services.order;
 
 import com.applicationdemo.carconfig.domain.order.*;
-import com.applicationdemo.carconfig.domain.OrderUser;
+import com.applicationdemo.carconfig.domain.user.OrderUser;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

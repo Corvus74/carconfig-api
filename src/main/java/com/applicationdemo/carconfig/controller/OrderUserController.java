@@ -3,10 +3,11 @@ package com.applicationdemo.carconfig.controller;
 import com.applicationdemo.carconfig.dto.OrderUserDto;
 import com.applicationdemo.carconfig.dto.ResponseDto;
 import com.applicationdemo.carconfig.enums.TransferStatus;
-import com.applicationdemo.carconfig.services.OrderUserService;
+import com.applicationdemo.carconfig.services.security.OrderUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -36,6 +37,7 @@ public class OrderUserController {
      * @return A ResponseDto indicating the result of the operation.
      */
     @PostMapping(path = "/add", produces = "application/json", consumes = "application/json")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseDto setUser(@RequestBody OrderUserDto orderUserDto) {
         log.info("Attempting to save user with email: {}", orderUserDto.getEmail());
         try {

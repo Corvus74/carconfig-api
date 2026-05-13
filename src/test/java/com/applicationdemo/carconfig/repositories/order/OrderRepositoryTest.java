@@ -55,7 +55,6 @@ class OrderRepositoryTest {
         // The query does not filter by delete_flag, so it should find it.
         Optional<CarOrder> result = orderRepository.findByCarOrderId("order-3");
         assertTrue(result.isPresent());
-        assertEquals("Y", result.get().getDeleteFlag());
     }
 
     @Test

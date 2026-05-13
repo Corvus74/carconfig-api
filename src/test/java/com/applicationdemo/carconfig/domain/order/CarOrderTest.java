@@ -1,6 +1,6 @@
 package com.applicationdemo.carconfig.domain.order;
 
-import com.applicationdemo.carconfig.domain.OrderUser;
+import com.applicationdemo.carconfig.domain.user.OrderUser;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -23,7 +23,6 @@ class CarOrderTest {
         carOrder.setDescription("A standard order");
         carOrder.setTotalPrice(50000);
         carOrder.setSpecialEquipmentOrders(Collections.emptyList());
-        carOrder.setDeleteFlag("N");
 
         assertEquals(1L, carOrder.getId());
         assertEquals("order-1", carOrder.getCarOrderId());
@@ -35,7 +34,6 @@ class CarOrderTest {
         assertEquals("A standard order", carOrder.getDescription());
         assertEquals(50000, carOrder.getTotalPrice());
         assertTrue(carOrder.getSpecialEquipmentOrders().isEmpty());
-        assertEquals("N", carOrder.getDeleteFlag());
     }
 
     @Test
