@@ -87,7 +87,7 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-
+@SuppressWarnings({"java:S106","deprecation"})
   void main(String[] args) {
         SecretKey key = Keys.secretKeyFor(io.jsonwebtoken.SignatureAlgorithm.HS512); // or HS256, HS384
         String base64Key = Encoders.BASE64.encode(key.getEncoded());

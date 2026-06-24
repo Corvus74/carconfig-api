@@ -18,12 +18,6 @@ configurations {
     compileOnly {
         extendsFrom(configurations.annotationProcessor.get())
     }
-    // Define a configuration for the Mockito agent that is isolated from other plugins
-    val mockitoAgent by creating {
-        isCanBeResolved = true
-        isCanBeConsumed = false
-        isTransitive = false
-    }
 }
 
 repositories {
@@ -31,7 +25,6 @@ repositories {
 }
 
 // Define versions
-val mockitoVersion = "5.23.0"
 val mapstructVersion = "1.6.3"
 val swaggerOpenapiVersion = "3.0.3"
 val apacheCommons = "3.20.0"
@@ -63,8 +56,6 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
     testImplementation("org.springframework.boot:spring-boot-data-jpa-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    // Add the mockito-inline dependency to our isolated agent configuration
-    "mockitoAgent"("org.mockito:mockito-core:$mockitoVersion")
 }
 
 sonarqube {
@@ -79,8 +70,6 @@ sonarqube {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-    // Configure the JVM arguments for the test task to use the Mockito agent
-    jvmArgs("-javaagent:${configurations.getByName("mockitoAgent").singleFile}")
     // This tells Spring Boot to load application-test.yml for tests.
     systemProperties.put("spring.config.name", "application-test")
 }
