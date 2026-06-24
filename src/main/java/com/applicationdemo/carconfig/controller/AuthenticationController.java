@@ -3,7 +3,8 @@ package com.applicationdemo.carconfig.controller;
 import com.applicationdemo.carconfig.domain.user.OrderUser;
 import com.applicationdemo.carconfig.dto.LoginResponse;
 import com.applicationdemo.carconfig.dto.LoginUserDto;
-import com.applicationdemo.carconfig.dto.RegisterUserDto;
+import com.applicationdemo.carconfig.dto.SignUpUserRequestDto;
+import com.applicationdemo.carconfig.dto.SignUpUserResponseDto;
 import com.applicationdemo.carconfig.security.JwtService;
 import com.applicationdemo.carconfig.security.OrderUserDetails;
 import com.applicationdemo.carconfig.services.security.AuthenticationService;
@@ -28,8 +29,8 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<OrderUser> register(@RequestBody RegisterUserDto registerUserDto) {
-        OrderUser registeredUser = authenticationService.signup(registerUserDto);
+    public ResponseEntity<SignUpUserResponseDto> signup(@RequestBody SignUpUserRequestDto signUpUserRequest) {
+        SignUpUserResponseDto registeredUser = authenticationService.signup(signUpUserRequest);
         return ResponseEntity.ok(registeredUser);
     }
 

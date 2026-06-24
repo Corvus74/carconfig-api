@@ -1,7 +1,7 @@
 package com.applicationdemo.carconfig.security;
 
 import com.applicationdemo.carconfig.dto.LoginUserDto;
-import com.applicationdemo.carconfig.dto.RegisterUserDto;
+import com.applicationdemo.carconfig.dto.SignUpUserRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ class AuthenticationIntegrationTest {
     @WithMockUser(roles = "ADMIN")
     void testFullAuthenticationFlow() throws Exception {
 
-        RegisterUserDto signupRequest = new RegisterUserDto();
+        SignUpUserRequestDto signupRequest = new SignUpUserRequestDto();
         signupRequest.setEmail("testuser@example.com");
         signupRequest.setPassword("password123");
         signupRequest.setUserName("testuser");

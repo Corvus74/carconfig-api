@@ -1,6 +1,6 @@
 plugins {
     java
-    id("org.springframework.boot") version "4.0.6"
+    id("org.springframework.boot") version "4.1.0"
     id("io.spring.dependency-management") version "1.1.7"
     id("org.sonarqube") version "7.2.2.6593"
 }
@@ -31,10 +31,10 @@ repositories {
 }
 
 // Define versions
-val mockitoVersion = "5.19.0"
+val mockitoVersion = "5.23.0"
 val mapstructVersion = "1.6.3"
-val swaggerOpenapiVersion = "2.8.13"
-val apacheCommons = "3.18.0"
+val swaggerOpenapiVersion = "3.0.3"
+val apacheCommons = "3.20.0"
 val jjwtVersion = "0.13.0"
 
 dependencies {
@@ -86,11 +86,11 @@ tasks.withType<Test> {
 }
 
 // Ensure JaCoCo XML report is generated for SonarQube
-tasks.withType<org.gradle.api.tasks.testing.Test> {
-    finalizedBy(tasks.withType<org.gradle.testing.jacoco.tasks.JacocoReport>()) // report is always generated after tests run
+tasks.withType<Test> {
+    finalizedBy(tasks.withType<JacocoReport>()) // report is always generated after tests run
 }
 
-tasks.withType<org.gradle.testing.jacoco.tasks.JacocoReport> {
+tasks.withType<JacocoReport> {
     reports {
         xml.required.set(true)
         csv.required.set(false)
