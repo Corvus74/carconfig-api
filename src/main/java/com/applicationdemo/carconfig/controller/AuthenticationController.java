@@ -27,14 +27,14 @@ public class AuthenticationController {
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;
 
-    @PostMapping("/signup")
+    @PostMapping(path = "/signup", produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<SignUpUserResponseDto> signup(@RequestBody SignUpUserRequestDto signUpUserRequest) {
         SignUpUserResponseDto registeredUser = authenticationService.signup(signUpUserRequest);
         return ResponseEntity.ok(registeredUser);
     }
 
-    @PostMapping("/login")
+    @PostMapping(path="/login", produces = "application/json", consumes = "application/json")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
         try {
             OrderUser authenticatedUser = authenticationService.authenticate(loginUserDto);
