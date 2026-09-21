@@ -11,7 +11,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class AuthenticationService {
         user.setUserId(input.getUserId());
         user.setPassword(passwordEncoder.encode(input.getPassword()));
         user.setValid(true);
-        user.setValidUntil(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 365)); // 1 year
+        user.setValidUntil(LocalDate.now(ZoneId.systemDefault()).plusYears(1));
         var storedUser =userRepository.save(user);
 
         return new SignUpUserResponseDto(storedUser.getEmail(), user.getUserName(), storedUser.getUserId());
