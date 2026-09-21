@@ -23,7 +23,7 @@ COPY src src
 RUN ./gradlew --no-daemon clean bootJar -x test
 
 # --- Runtime-Stage ---
-FROM amazoncorretto:25
+FROM amazoncorretto:25-alpine
 
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup -u 1001
 
