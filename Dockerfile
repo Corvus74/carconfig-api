@@ -25,7 +25,7 @@ RUN ./gradlew --no-daemon clean bootJar -x test
 # --- Runtime-Stage ---
 FROM amazoncorretto:25
 
-RUN groupadd -r appgroup && useradd -r -g appgroup -u 1001 appuser
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup -u 1001
 
 WORKDIR /app
 

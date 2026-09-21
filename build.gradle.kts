@@ -67,6 +67,7 @@ sonarqube {
         property("sonar.projectKey", "Corvus74_carconfig-api")
         property("sonar.java.coveragePlugin", "jacoco")
         property("sonar.coverage.jacoco.xmlReportPaths", "${layout.buildDirectory}/reports/jacoco/test/jacocoTestReport.xml")
+        property("sonar.issue.ignore.multicriteria.testSecrets.resourceKey", "**/src/test/resources/**")
     }
 }
 
