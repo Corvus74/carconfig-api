@@ -39,7 +39,7 @@ build_app:
 # =====================================================
 test_app:
   stage: test
-  image: gradle:9.0-jdk24
+  image: gradle:9.6.1-jdk24
   needs:
     - build_app # Ensure this runs only after a successful build
   script:

@@ -1,6 +1,7 @@
 plugins {
     java
-    id("org.springframework.boot") version "4.1.0"
+    jacoco
+    id("org.springframework.boot") version "4.1.1"
     id("io.spring.dependency-management") version "1.1.7"
     id("org.sonarqube") version "7.2.2.6593"
 }
@@ -18,6 +19,7 @@ configurations {
     compileOnly {
         extendsFrom(configurations.annotationProcessor.get())
     }
+
 }
 
 repositories {
@@ -26,7 +28,7 @@ repositories {
 
 // Define versions
 val mapstructVersion = "1.6.3"
-val swaggerOpenapiVersion = "3.0.3"
+val swaggerOpenapiVersion = "3.1.1"
 val apacheCommons = "3.20.0"
 val jjwtVersion = "0.13.0"
 

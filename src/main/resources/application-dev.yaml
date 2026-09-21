@@ -2,25 +2,28 @@ spring:
   application:
     name: carconfig
   datasource:
-    url: "jdbc:postgresql://localhost:5432/car_config_db"
+    url: "jdbc:postgresql://host.docker.internal:5432/car_config_db"
     username: "myuserHidden123"
     password: "secret123"
   jpa:
-    hibernate:
-      ddl-auto: create-drop
+    #hibernate:
+      #ddl-auto: create-drop
     defer-datasource-initialization: true
     database-platform: "org.hibernate.dialect.PostgreSQLDialect"
   flyway:
     enabled: false
+    #enabled: true
   config:
     import: optional:classpath:./secrets.yaml
+  docker:
+    compose:
+      enabled: false
+
 server:
+  address: 0.0.0.0
   port: 8090
   servlet:
     context-path: "/api"
-
-cors:
-  allowed-origins: "http://localhost:3000,http://localhost:4200"
 
 logging:
   level:

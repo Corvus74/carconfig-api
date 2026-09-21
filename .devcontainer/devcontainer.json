@@ -1,0 +1,18 @@
+{
+  "name": "spring-app",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": "..",
+    "target": "dev"
+  },
+  "forwardPorts": [8090],
+  "mounts": [
+    "source=gradle-cache,target=/root/.gradle,type=volume"
+  ],
+  "postCreateCommand": "./gradlew --no-daemon dependencies",
+  "customizations": {
+    "jetbrains": {
+      "backend": "IntelliJ"
+    }
+  },
+}

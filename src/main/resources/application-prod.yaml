@@ -18,6 +18,7 @@ server:
 cors:
   allowed-origins: "http://localhost:8080,http://localhost:4200"
 
+
 config:
   import: optional:classpath:./secrets.yaml
 logging:
@@ -29,3 +30,6 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+springdoc:
+  api-docs:
+    enabled: false

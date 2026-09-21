@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,6 +24,7 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@Profile("prod,test")
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     private final AuthenticationProvider authenticationProvider;
@@ -33,6 +35,7 @@ public class SecurityConfiguration {
     private String[] allowedOrigins;
 
     @Bean
+    @SuppressWarnings("java:S4502") // Suppress SonarQube warning for CSRF disabling in stateless REST API
     public SecurityFilterChain securityFilterChain(HttpSecurity http){
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
