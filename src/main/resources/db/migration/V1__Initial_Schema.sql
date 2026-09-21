@@ -123,6 +123,7 @@ CREATE TABLE orders_user (
     user_name VARCHAR(20),
     password VARCHAR(20),
     valid_until TIMESTAMP WITHOUT TIME ZONE,
+    role VARCHAR(20),
     email VARCHAR(20),
     token VARCHAR(255),
     is_valid BOOLEAN
