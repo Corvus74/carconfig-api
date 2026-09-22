@@ -13,7 +13,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.Objects;
 
 @Getter
@@ -45,7 +45,7 @@ public class OrderUser extends SimpleAuditClasses {
     private boolean isValid;
 
     @Column(name = "valid_until")
-    private LocalDate validUntil;
+    private Instant validUntil;
 
     @Column(name = "token")
     private String token;
