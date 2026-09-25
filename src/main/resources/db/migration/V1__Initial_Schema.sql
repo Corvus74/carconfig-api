@@ -121,7 +121,7 @@ CREATE TABLE orders_user (
     updated_by VARCHAR(255),
     user_id VARCHAR(40) NOT NULL,
     user_name VARCHAR(20),
-    password VARCHAR(20),
+    password VARCHAR(255),
     valid_until TIMESTAMP WITHOUT TIME ZONE,
     role VARCHAR(20),
     email VARCHAR(20),
